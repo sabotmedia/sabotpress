@@ -47,7 +47,8 @@ test('local editions do not expose a normal logout flow in admin navigation', ()
   const rail = read('src/components/AdminRail.jsx')
   assert.match(rail, /isLocalRuntime/)
   assert.match(rail, /No account is required in this local edition/)
-  assert.match(rail, /localRuntime \?/[\s\S]*Log Out/)
+  assert.match(rail, /localRuntime \? <>/)
+  assert.match(rail, /: <>[\s\S]*Log Out/)
 })
 
 test('portable backup includes the core publication families and embedded media', () => {

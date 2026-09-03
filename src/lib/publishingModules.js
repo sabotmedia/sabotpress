@@ -63,6 +63,27 @@ export async function hydratePublishingSetup() {
   return setup
 }
 
+async function syncIdentityToPublicConfig(setup) {
+  const currentResponse = await fetch('/api/public-site-config', { credentials: 'same-origin', headers: { accept: 'application/json' } })
+  if (!currentResponse.ok) return false
+  const currentData = await currentResponse.json().catch(() => null)
+  if (!currentData?.ok) return false
+  const current = currentData.config || currentData.payload || {}
+  const text = { ...(current.text || {}) }
+  text['site.identity.title'] = setup.identity.name
+  text['site.identity.logoUrl'] = setup.identity.logoUrl
+  text['footer.about.title'] = setup.identity.name
+  if (setup.identity.description) text['footer.about.body'] = setup.identity.description
+  const next = { ...current, text }
+  const saveResponse = await fetch('/api/public-site-config', {
+    method: 'PUT',
+    credentials: 'same-origin',
+    headers: { 'content-type': 'application/json', accept: 'application/json' },
+    body: JSON.stringify(next),
+  })
+  return saveResponse.ok
+}
+
 export async function savePublishingSetup(input) {
   const setup = normalize(input)
   const response = await fetch('/api/publishing-setup', {
@@ -74,6 +95,7 @@ export async function savePublishingSetup(input) {
   }
   const data = await response.json()
   const saved = normalize(data.setup || setup)
+  await syncIdentityToPublicConfig(saved).catch(() => false)
   writeCache(saved)
   announce(saved)
   return saved

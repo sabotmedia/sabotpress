@@ -3,11 +3,11 @@ export const PODCAST_SETTINGS_DEFAULTS = {
   slug: '',
   rssFeedUrl: '',
   podcastTitle: '',
-  author: 'SabotPress',
+  author: '',
   description: '',
   defaultCoverArt: '',
   audioHostBaseUrl: '',
-  websiteUrl: 'https://example.invalid',
+  websiteUrl: '',
   language: 'en-us',
   category: 'News',
   explicit: false,
@@ -19,9 +19,13 @@ export const PODCAST_SETTINGS_DEFAULTS = {
   sourceFeedUrls: [],
 }
 
+function authoritativeMode(mode) {
+  return mode === 'd1' || mode === 'browser-local'
+}
+
 export function podcastFeedUrl(slug) {
   const clean = String(slug || '').trim().toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, '')
-  return clean ? `https://example.invalid/feeds/podcasts/${clean}.xml` : ''
+  return clean ? `/feeds/podcasts/${clean}.xml` : ''
 }
 
 export function loadPodcastSettings() {
@@ -62,7 +66,7 @@ export async function savePodcastSettings(settings, showId = '') {
     body: JSON.stringify({ showId: showId || next.id || '', settings: next }),
   })
   const data = await response.json().catch(() => null)
-  if (!response.ok || !data?.ok || data.mode !== 'd1') {
+  if (!response.ok || !data?.ok || !authoritativeMode(data.mode)) {
     throw new Error(data?.error || `podcast settings save failed: ${response.status}`)
   }
   return {
@@ -78,7 +82,7 @@ async function requestPodcastSettings(query) {
     headers: { accept: 'application/json' },
   })
   const data = await response.json().catch(() => null)
-  if (!response.ok || !data?.ok || data.mode !== 'd1') {
+  if (!response.ok || !data?.ok || !authoritativeMode(data.mode)) {
     throw new Error(data?.error || `podcast settings request failed: ${response.status}`)
   }
   return data

@@ -1,0 +1,151 @@
+name: build and publish 0.1.3
+
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/build-publish-0.1.3.yml']
+
+permissions:
+  contents: write
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      sha: ${{ steps.commit.outputs.sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Bump patch version
+        run: npm version 0.1.3 --no-git-tag-version
+      - run: npm test
+      - run: npm run build
+      - run: npm run build:pwa
+      - name: Commit release version
+        id: commit
+        run: |
+          git config user.name 'SabotPress contributors'
+          git config user.email 'sabotmedia@users.noreply.github.com'
+          git add package.json package-lock.json
+          git commit -m 'release 0.1.3 prep'
+          git push origin HEAD:main
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+  build:
+    needs: prepare
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            name: windows-x64
+            command: npm run desktop:dist:win -- --publish never
+          - os: macos-latest
+            name: macos-arm64
+            command: npm run desktop:dist:mac -- --arm64 --publish never
+          - os: macos-latest
+            name: macos-x64
+            command: npm run desktop:dist:mac -- --x64 --publish never
+          - os: ubuntu-latest
+            name: linux-x64
+            command: npm run desktop:dist:linux -- --x64 --publish never
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.prepare.outputs.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: ${{ matrix.command }}
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: desktop-${{ matrix.name }}-0.1.3
+          path: |
+            release/*.exe
+            release/*.dmg
+            release/*.zip
+            release/*.AppImage
+            release/*.deb
+          if-no-files-found: error
+
+  release:
+    needs: [prepare, build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.prepare.outputs.sha }}
+      - name: Tag 0.1.3
+        run: |
+          git tag v0.1.3 "${{ needs.prepare.outputs.sha }}"
+          git push origin v0.1.3
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v0.1.3
+          name: SabotPress 0.1.3
+          body: |
+            Local-first browser/PWA edition plus fixes from desktop testing.
+
+            - Adds the browser-local SabotPress edition with IndexedDB storage, offline PWA support, local media, portable backup/import, and no account requirement.
+            - Keeps desktop and self-hosted editions using the same publishing UI and core features.
+            - Adds publication logo upload in Settings. Logo URL fields now save automatically, and Settings has an explicit Save publication settings button.
+            - Fixes the desktop Publish menu routes for Backups and Domain setup.
+            - Verifies fresh desktop campaign-list requests against the local SQLite runtime so the post editor no longer hits the old campaign-list 500 path.
+            - Keeps local editions out of the normal Log Out/login dead end.
+            - Continues the neutral SabotPress product UI rather than inheriting sabot.media publication branding.
+
+            ### Unsigned desktop builds
+            SabotPress currently distributes unsigned desktop builds so the project does not require paid code-signing services or publisher identity verification.
+
+            **Windows:** SmartScreen may identify SabotPress as an unrecognized app. Click **More info**, then **Run anyway** after verifying the download came from this release page.
+
+            **macOS:** Gatekeeper may block first launch of an unsigned build. Use Finder's **Open** action or Privacy & Security controls after verifying the download came from this repository.
+          files: |
+            artifacts/**/*.exe
+            artifacts/**/*.dmg
+            artifacts/**/*.zip
+            artifacts/**/*.AppImage
+            artifacts/**/*.deb
+
+  cleanup:
+    needs: release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Remove one-time workflows
+        run: |
+          git config user.name 'SabotPress contributors'
+          git config user.email 'sabotmedia@users.noreply.github.com'
+          rm -f \
+            .github/workflows/build-publish-0.1.1.yml \
+            .github/workflows/build-publish-0.1.2.yml \
+            .github/workflows/build-publish-0.1.3.yml \
+            .github/workflows/finish-browser-local.yml \
+            .github/workflows/first-desktop-release.yml \
+            .github/workflows/fix-browser-media-path.yml \
+            .github/workflows/fix-desktop-first-run.yml \
+            .github/workflows/neutralize-public-defaults.yml \
+            .github/workflows/publish-0.1.1.yml \
+            .github/workflows/update-release-note.yml \
+            .github/workflows/validate-browser-pwa.yml
+          git add -A .github/workflows
+          git commit -m 'remove one-time release workflows'
+          git push origin HEAD:main

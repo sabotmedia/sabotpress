@@ -52,6 +52,13 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           path: artifacts
+      - name: Build SHA-256 checksum file
+        run: |
+          find artifacts -type f \( -name '*.exe' -o -name '*.dmg' -o -name '*.zip' -o -name '*.AppImage' -o -name '*.deb' \) -print0 \
+            | sort -z \
+            | xargs -0 sha256sum \
+            | sed 's#  artifacts/[^/]*/#  #' > SHA256SUMS.txt
+          cat SHA256SUMS.txt
       - uses: softprops/action-gh-release@v2
         with:
           generate_release_notes: true
@@ -61,3 +68,4 @@ jobs:
             artifacts/**/*.zip
             artifacts/**/*.AppImage
             artifacts/**/*.deb
+            SHA256SUMS.txt

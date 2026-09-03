@@ -63,7 +63,7 @@ export function DesktopPublishOnlinePage() {
             <li>Import the portable backup into that instance.</li>
             <li>Use the host-provided public address immediately.</li>
           </ol>
-          <details className="desktop-publish-details"><summary>Current hosting model</summary><p>Cloudflare Pages/Workers-style Functions with D1/R2-compatible storage is the currently tested no-cost web path. Free tiers can change. A community host or your own server can provide the same SabotPress web edition.</p></details>
+          <a className="button" href="/help.html#free-hosting">Read the $0 hosting guide</a>
         </article>
 
         <article className="desktop-publish-card">
@@ -76,6 +76,7 @@ export function DesktopPublishOnlinePage() {
           <h2>Community or collective hosting</h2>
           <p>A compatible community host can run the server edition for you. They need the SabotPress web app, persistent database storage, persistent media storage, HTTPS and a way to back both stores up.</p>
           <p>This is the closest model to the old bundled Noblogs experience without making SabotPress itself a central hosting service.</p>
+          <a className="button" href="/help.html#community-hosting">What to ask a host</a>
         </article>
 
         <article className="desktop-publish-card">
@@ -87,7 +88,7 @@ export function DesktopPublishOnlinePage() {
         <article className="desktop-publish-card">
           <h2>I have a server</h2>
           <p>Run the self-hosted web edition with a supported database/media adapter. This is the advanced path and keeps infrastructure under your control.</p>
-          <a className="button" href="https://github.com/sabotmedia/sabotpress/blob/main/docs/INSTALL.md" target="_blank" rel="noreferrer">Server guide</a>
+          <a className="button" href="/help.html#server">Server guide</a>
         </article>
       </section>
 

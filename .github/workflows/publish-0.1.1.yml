@@ -1,0 +1,23 @@
+name: publish 0.1.1
+
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/publish-0.1.1.yml']
+
+permissions:
+  contents: write
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Tag corrected desktop release
+        run: |
+          git config user.name 'sabotmedia'
+          git config user.email 'sabotmedia@users.noreply.github.com'
+          git tag -a v0.1.1 -m 'SabotPress 0.1.1'
+          git push origin v0.1.1

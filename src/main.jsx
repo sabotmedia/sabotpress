@@ -4,6 +4,7 @@ import { BrowserRouter, HashRouter } from 'react-router-dom'
 import App from './App'
 import { PublicAccessibilityGate } from './components/PublicAccessibilityGate'
 import { BrowserBackupReminder } from './components/BrowserBackupReminder'
+import { BrowserCapabilityNotice } from './components/BrowserCapabilityNotice'
 import { installBrowserLocalApi } from './lib/browserLocalApi'
 import { isBrowserLocalRuntime } from './lib/runtime'
 import { registerSabotPressServiceWorker } from './lib/pwaRuntime'
@@ -107,6 +108,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <Router>
       <App />
       <BrowserBackupReminder />
+      <BrowserCapabilityNotice />
       <PublicAccessibilityGate />
     </Router>
   </React.StrictMode>,

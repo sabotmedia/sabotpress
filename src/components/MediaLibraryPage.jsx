@@ -344,7 +344,7 @@ function UploadPanel({ onUploaded, compact = false }) {
       />
       <div>
         <strong>{busy ? 'Uploading…' : 'Upload media'}</strong>
-        <p>Files are saved to site media storage and registered in D1. Server failure is a failure; there is no browser-local pretend upload.</p>
+        <p>{isBrowserLocalRuntime() ? 'Files are stored on this device in the browser-local media library.' : isDesktopRuntime() ? 'Files are stored in the desktop publication data folder and registered locally.' : 'Files are saved to site media storage and registered in the server database.'}</p>
       </div>
       <button className="button button--primary" type="button" disabled={busy} onClick={() => inputRef.current?.click()}>
         Select Files

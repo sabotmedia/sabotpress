@@ -14,6 +14,7 @@ export const PAGE_KINDS = [
 ]
 
 function nowIso() { return new Date().toISOString() }
+function authoritativeMode(mode) { return mode === 'd1' || mode === 'browser-local' }
 function makeId(prefix = 'id') { return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}` }
 
 export function slugifyPublication(value = '') {
@@ -130,7 +131,7 @@ export async function loadPublicationsAsync(params = {}) {
   for (const [key, value] of Object.entries(params)) if (value != null && value !== '') url.searchParams.set(key, String(value))
   const res = await fetch(url.pathname + url.search, { credentials: 'same-origin', headers: { accept: 'application/json' } })
   const data = await res.json().catch(() => null)
-  if (!res.ok || !data?.ok || !Array.isArray(data.items) || data.mode !== 'd1') {
+  if (!res.ok || !data?.ok || !Array.isArray(data.items) || !authoritativeMode(data.mode)) {
     throw new Error(data?.error || `publication load failed: ${res.status}`)
   }
   return data.items.map(normalizePublication)
@@ -144,7 +145,7 @@ export async function savePublicationAsync(publication) {
     body: JSON.stringify({ publication: normalized }),
   })
   const data = await res.json().catch(() => null)
-  if (!res.ok || !data?.ok || !data.item || data.mode !== 'd1') throw new Error(data?.error || `publication save failed: ${res.status}`)
+  if (!res.ok || !data?.ok || !data.item || !authoritativeMode(data.mode)) throw new Error(data?.error || `publication save failed: ${res.status}`)
   return normalizePublication(data.item)
 }
 

@@ -1,0 +1,27 @@
+name: validate browser pwa
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/validate-browser-pwa.yml'
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+      - run: npm run build:pwa
+      - name: Verify PWA output
+        run: |
+          test -f dist-pwa/site.webmanifest
+          test -f dist-pwa/sw.js
+          grep -q 'SabotPress' dist-pwa/site.webmanifest
+          grep -q 'browser-local' dist-pwa/assets/*.js

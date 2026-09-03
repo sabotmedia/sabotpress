@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter, HashRouter } from 'react-router-dom'
 import App from './App'
 import { PublicAccessibilityGate } from './components/PublicAccessibilityGate'
+import { BrowserBackupReminder } from './components/BrowserBackupReminder'
 import { installBrowserLocalApi } from './lib/browserLocalApi'
 import { isBrowserLocalRuntime } from './lib/runtime'
 import { registerSabotPressServiceWorker } from './lib/pwaRuntime'
@@ -60,7 +61,6 @@ import './contact-secure-form.css'
 import './admin-editor-sticky-toolbar.css'
 import './public-accessibility.css'
 import './browser-local.css'
-/* Authoritative AudioLab workspace layers. */
 import './audio-lab-audacity-layout.css'
 import './audio-lab-studio-v4.css'
 import './audioLabStandalone.js'
@@ -106,6 +106,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Router>
       <App />
+      <BrowserBackupReminder />
       <PublicAccessibilityGate />
     </Router>
   </React.StrictMode>,

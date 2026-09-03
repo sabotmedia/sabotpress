@@ -3,7 +3,10 @@
   "private": false,
   "version": "0.1.0",
   "description": "Free self-hostable publishing software for independent media, collectives, archives, podcasts, campaigns and print work.",
-  "author": "SabotPress contributors",
+  "author": {
+    "name": "SabotPress contributors",
+    "email": "sabotmedia@users.noreply.github.com"
+  },
   "desktopName": "SabotPress",
   "type": "module",
   "main": "desktop/main.mjs",
@@ -57,7 +60,6 @@
       "output": "release"
     },
     "win": {
-      "icon": "public/favicon.ico",
       "target": [
         { "target": "nsis", "arch": ["x64"] },
         { "target": "portable", "arch": ["x64"] }

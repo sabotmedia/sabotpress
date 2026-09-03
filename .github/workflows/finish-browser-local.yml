@@ -1,0 +1,87 @@
+name: finish browser local integration
+
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/finish-browser-local.yml']
+
+permissions:
+  contents: write
+
+jobs:
+  finish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Finish runtime-specific seams
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          # Publications are authoritative in D1 on servers or the local API in the PWA.
+          p = Path('src/lib/publications.js')
+          s = p.read_text()
+          needle = "function nowIso() { return new Date().toISOString() }\n"
+          if "function authoritativeMode(mode)" not in s:
+              s = s.replace(needle, needle + "function authoritativeMode(mode) { return mode === 'd1' || mode === 'browser-local' }\n")
+          s = s.replace("data.mode !== 'd1'", "!authoritativeMode(data.mode)")
+          p.write_text(s)
+
+          # Media Library copy follows the actual runtime instead of claiming every upload is D1.
+          p = Path('src/components/MediaLibraryPage.jsx')
+          s = p.read_text()
+          if "../lib/runtime" not in s:
+              s = s.replace("import { saveMediaAsset } from '../lib/mediaAssetsApi'", "import { saveMediaAsset } from '../lib/mediaAssetsApi'\nimport { isBrowserLocalRuntime, isDesktopRuntime } from '../lib/runtime'")
+          old = "<p>Files are saved to site media storage and registered in D1. Server failure is a failure; there is no browser-local pretend upload.</p>"
+          new = "<p>{isBrowserLocalRuntime() ? 'Files are stored on this device in the browser-local media library.' : isDesktopRuntime() ? 'Files are stored in the desktop publication data folder and registered locally.' : 'Files are saved to site media storage and registered in the server database.'}</p>"
+          s = s.replace(old, new)
+          p.write_text(s)
+
+          # Remove leftover production-publication metadata while retaining generic routes/features.
+          p = Path('src/App.jsx')
+          s = p.read_text()
+          replacements = {
+              "['SabotPress', 'Independent reporting, essays, comics, podcasts, zines, and project-based archive work.']": "['SabotPress', 'A publication built with SabotPress.']",
+              "['Campaigns', 'SabotPress campaign hubs gathering reporting, sources, live updates, and public action materials.']": "['Campaigns', 'Campaign hubs gathering reporting, sources, updates, resources, and public materials.']",
+              "['Communications Infrastructure Is Not Terrorism', 'Campaign hub for reporting, open letters, graphics, live updates, source material, and infrastructure status related to Example Campaign.']": "['Example Campaign', 'Example campaign hub. Replace or remove this sample campaign in site settings.']",
+              "['A/I Campaign Coverage Archive', 'Search reporting, analysis and official dispatches related to the Example Campaign designation and its consequences.']": "['Campaign Coverage', 'Search reporting, analysis, sources, and updates connected to this campaign.']",
+              "['Aberdeen Local 1312 Gallery', 'Historical image archive from Aberdeen Local 1312, preserved by SabotPress.']": "['Gallery', 'Browse the publication image archive.']",
+              "['About', 'About SabotPress and its public-interest media work.']": "['About', 'About this publication.']",
+              "['Contact', 'Contact SabotPress.']": "['Contact', 'Contact this publication.']",
+              "['Submit', 'Submit tips, documents, writing, art, or project ideas to SabotPress.']": "['Submit', 'Submit work or information to this publication.']",
+              "['Support', 'Support SabotPress by reading, sharing, printing, citing, and circulating the archive.']": "['Support', 'Ways to support this publication.']",
+              "['Security', 'Security guidance and public OpenPGP key for contacting SabotPress.']": "['Security', 'Security and source-protection guidance for this publication.']",
+              "['Press', 'Press information and public-facing SabotPress materials.']": "['Press', 'Press information and public-facing materials for this publication.']",
+              "['Publications', 'Read SabotPress publications.']": "['Publications', 'Read publications and print projects.']",
+              "['Updates', 'Latest SabotPress updates.']": "['Updates', 'Latest publication updates.']"
+          }
+          for old, new in replacements.items():
+              s = s.replace(old, new)
+          p.write_text(s)
+
+          # Show the browser capability note without touching the heavy tool components.
+          p = Path('src/main.jsx')
+          s = p.read_text()
+          if "BrowserCapabilityNotice" not in s:
+              s = s.replace("import { BrowserBackupReminder } from './components/BrowserBackupReminder'", "import { BrowserBackupReminder } from './components/BrowserBackupReminder'\nimport { BrowserCapabilityNotice } from './components/BrowserCapabilityNotice'")
+              s = s.replace("      <BrowserBackupReminder />\n      <PublicAccessibilityGate />", "      <BrowserBackupReminder />\n      <BrowserCapabilityNotice />\n      <PublicAccessibilityGate />")
+          p.write_text(s)
+          PY
+      - run: npm test
+      - run: npm run build
+      - run: npm run build:pwa
+      - name: Commit integration
+        run: |
+          git config user.name 'SabotPress contributors'
+          git config user.email 'sabotmedia@users.noreply.github.com'
+          git add src/lib/publications.js src/components/MediaLibraryPage.jsx src/App.jsx src/main.jsx
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'finish browser local integration'
+          git push origin HEAD:main

@@ -1,5 +1,6 @@
 .publishing-modules-card,
-.install-readiness-card {
+.install-readiness-card,
+.desktop-publish-card {
   display: grid;
   gap: 1rem;
   margin-bottom: 1.25rem;
@@ -35,21 +36,26 @@
   gap: .5rem;
 }
 
-.publishing-modules-card__list {
+.publishing-modules-card__list,
+.desktop-publish-card__options {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: .75rem;
 }
 
-.publishing-modules-card__item {
+.publishing-modules-card__item,
+.desktop-publish-card__options article {
   display: grid;
-  grid-template-columns: auto 1fr;
   gap: .7rem;
   align-items: start;
   border: 1px solid var(--admin-border, #d7d7d7);
   border-radius: .4rem;
   padding: .85rem;
   background: var(--admin-panel, #fff);
+}
+
+.publishing-modules-card__item {
+  grid-template-columns: auto 1fr;
   cursor: pointer;
 }
 
@@ -68,6 +74,20 @@
 .install-readiness-card__row small {
   line-height: 1.35;
   opacity: .72;
+}
+
+.desktop-publish-card.is-highlighted {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+.desktop-publish-card__options article > strong {
+  font-size: 1.05rem;
+}
+
+.desktop-publish-card__options article > p {
+  margin: 0;
+  line-height: 1.45;
 }
 
 .install-readiness-card__list {
@@ -113,7 +133,8 @@
 
 @media (max-width: 640px) {
   .publishing-modules-card__identity,
-  .publishing-modules-card__list {
+  .publishing-modules-card__list,
+  .desktop-publish-card__options {
     grid-template-columns: 1fr;
   }
 

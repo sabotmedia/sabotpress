@@ -60,7 +60,7 @@ jobs:
             - Fresh desktop installs now open the SabotPress welcome/setup flow instead of dropping directly into the backend.
             - Removed the leftover Sabot Media masthead and instance-specific public defaults.
             - Added the guided Publish Online screen with a $0-first hosting path, existing-domain setup, community hosting, and own-server options.
-            - Updated desktop application icon and Windows packaging names.
+            - Updated desktop application icon and Windows packaging.
 
             ### Unsigned desktop builds
             SabotPress currently distributes unsigned desktop builds so the project does not require paid code-signing services or publisher identity verification.

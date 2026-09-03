@@ -81,4 +81,4 @@ jobs:
             artifacts/**/*.zip
             artifacts/**/*.AppImage
             artifacts/**/*.deb
-# rerun after Windows path fix
+# packaging metadata fixed

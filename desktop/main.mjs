@@ -77,12 +77,12 @@ async function createMainWindow() {
     return { action: 'allow' }
   })
 
-  await mainWindow.loadURL(`${runtime.url}/admin`)
+  await mainWindow.loadURL(`${runtime.url}/welcome`)
 }
 
 function openPublishOnline() {
   if (!mainWindow || !runtime) return
-  mainWindow.loadURL(`${runtime.url}/settings?desktop-publish=1`)
+  mainWindow.loadURL(`${runtime.url}/publish-online`)
 }
 
 ipcMain.handle('desktop:open-external', async (_event, url) => {

@@ -6,55 +6,69 @@
   <title>SabotPress Help</title>
   <style>
     :root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#17191c;background:#f3f4f5;line-height:1.55}
-    *{box-sizing:border-box} body{margin:0} header{position:sticky;top:0;background:#fff;border-bottom:1px solid #d9dde1;padding:14px 22px;z-index:2} header strong{margin-right:18px} header a{color:#1b5faa;text-decoration:none;margin-right:14px} main{max-width:920px;margin:0 auto;padding:34px 22px 70px} section{background:#fff;border:1px solid #d9dde1;border-radius:12px;padding:24px;margin:0 0 22px} h1{font-size:2rem;margin:.2em 0 .45em} h2{margin-top:0} h3{margin-bottom:.35em} code{background:#eef0f2;padding:.12em .3em;border-radius:4px} .note{background:#f7f1df;border-left:4px solid #b98716;padding:12px 14px} .good{background:#edf6ef;border-left:4px solid #2e7a40;padding:12px 14px} ul,ol{padding-left:1.35rem} a{color:#175ca8} .back{display:inline-block;margin-top:10px}
+    *{box-sizing:border-box} body{margin:0} header{position:sticky;top:0;background:#fff;border-bottom:1px solid #d9dde1;padding:14px 22px;z-index:2} header strong{margin-right:18px} header a{color:#1b5faa;text-decoration:none;margin-right:14px} main{max-width:980px;margin:0 auto;padding:34px 22px 70px} section{background:#fff;border:1px solid #d9dde1;border-radius:12px;padding:24px;margin:0 0 22px} h1{font-size:2rem;margin:.2em 0 .45em} h2{margin-top:0} h3{margin-bottom:.35em} code{background:#eef0f2;padding:.12em .3em;border-radius:4px} .note{background:#f7f1df;border-left:4px solid #b98716;padding:12px 14px} .good{background:#edf6ef;border-left:4px solid #2e7a40;padding:12px 14px} ul,ol{padding-left:1.35rem} a{color:#175ca8} .back{display:inline-block;margin-top:10px}
   </style>
 </head>
 <body>
-<header><strong>SabotPress Help</strong><a href="#install">Getting started</a><a href="#free-hosting">$0 hosting</a><a href="#community-hosting">Collective host</a><a href="#server">Server</a><a href="#noblogs">Noblogs migration</a><a href="#backups">Backups</a></header>
+<header><strong>SabotPress Help</strong><a href="#install">Getting started</a><a href="#publishing">Publishing</a><a href="#free-hosting">$0 hosting</a><a href="#community-hosting">Collective host</a><a href="#server">Server</a><a href="#noblogs">Noblogs migration</a><a href="#backups">Backups</a><a href="#storage">Storage</a></header>
 <main>
   <section id="install">
     <h1>Getting started</h1>
-    <p>SabotPress has three normal ways to run. Pick the one that matches what you need instead of learning infrastructure for sport.</p>
-    <h3>Browser / PWA</h3><p>Open the browser edition, start a publication with no account, and keep the work on that device. Export regular portable backups because clearing browser site data can remove local work.</p>
-    <h3>Desktop</h3><p>The desktop edition keeps its SQLite database and uploaded media in the operating system's SabotPress application-data folder. Reinstalling or upgrading the app normally leaves that folder alone, so your publication survives an update.</p>
-    <h3>Self-hosted web</h3><p>Use this for a shared multi-user publication or when you want the public site and storage on infrastructure you control.</p>
-    <p class="note"><strong>Reinstalling is not a factory reset.</strong> That is intentional. An update should not delete a publication. If you are testing a truly fresh install, remove the SabotPress application-data folder separately after exporting anything you want to keep.</p>
+    <p>SabotPress has three first-class ways to run. Pick the one that matches what you need rather than learning infrastructure for sport.</p>
+    <h3>Browser / PWA</h3><p>Open the browser edition, choose <strong>Start on this device</strong>, name the publication, choose modules, and enter the newsroom. No account is required for browser-local use. Work stays in that browser until you explicitly export or publish it.</p>
+    <h3>Desktop</h3><p>The desktop edition uses local SQLite plus local media storage. It is the better choice for large media libraries, AudioLab/PrintLab work, filesystem access, and long offline sessions.</p>
+    <h3>Self-hosted web</h3><p>Use this when several editors need to share one publication or when the public website should run on infrastructure you or a collective controls.</p>
+    <p class="note"><strong>Reinstalling is not a factory reset.</strong> App files and publication data are separate. Updating SabotPress should not erase somebody's publication.</p>
+  </section>
+
+  <section id="publishing">
+    <h2>Publishing basics</h2>
+    <ol><li>Create a post from <strong>New</strong> or <strong>Posts</strong>.</li><li>Add images/audio from the editor or Media Library.</li><li>Save drafts while you work.</li><li>Preview the public site before publishing.</li><li>Use <strong>Publish Online</strong> when a local publication is ready to move to a public host.</li></ol>
+    <p>Modules control which tools appear. Turning a module off hides that workflow; it does not silently delete existing publication data.</p>
   </section>
 
   <section id="free-hosting">
     <h2>$0 public hosting</h2>
-    <p>The currently tested no-cost route is a Pages/Functions style host with persistent database and media storage. SabotPress currently supports the Cloudflare Pages/Workers model with D1/R2-compatible storage. Free tiers can change.</p>
-    <ol><li>Export a complete <code>.sabotpress</code> backup from Publish Online.</li><li>Create a SabotPress web deployment on the host.</li><li>Import the backup into that deployment.</li><li>Use the host-provided address. A custom domain is optional.</li></ol>
+    <p>A local SabotPress publication is not automatically a public website. To put it online for free, you need a compatible host with persistent database and media storage. The currently tested no-cost model is Cloudflare Pages/Workers-style hosting with D1/R2-compatible storage.</p>
+    <ol><li>Export a complete <code>.sabotpress</code> backup from Publish Online.</li><li>Create a compatible SabotPress web deployment.</li><li>Attach persistent database and media storage.</li><li>Import the backup into that hosted instance.</li><li>Use the host-provided address. A custom domain is optional.</li></ol>
     <p>SabotPress does not silently create hosting accounts, buy domains, or upload local publication data merely because you opened the publishing screen.</p>
   </section>
 
   <section id="community-hosting">
     <h2>What to ask a community or collective host</h2>
-    <p>A host does not need a special SabotPress company account. They need to be willing to run the open web edition and provide:</p>
-    <ul><li>persistent database storage</li><li>persistent media/object storage</li><li>HTTPS</li><li>a stable public address</li><li>backups of both database and media</li><li>a way to update the SabotPress application without replacing publication data</li></ul>
-    <p>Useful question: <em>“Can you run a Node/edge-style web app with persistent SQL-compatible data and persistent media storage, and back both up?”</em></p>
+    <p>A host does not need a special SabotPress account. They need to be willing to run the open web edition and provide:</p>
+    <ul><li>persistent SQL-compatible database storage</li><li>persistent media/object storage</li><li>HTTPS</li><li>a stable public address</li><li>backups of both database and media</li><li>a safe application update path that does not replace publication data</li></ul>
+    <p>Plain-language version: <em>“Can you run this web app with persistent database and media storage, HTTPS, and backups?”</em></p>
   </section>
 
   <section id="server">
-    <h2>Server install guide</h2>
-    <p>The server edition is the advanced route. It is appropriate when you or a host actually want to operate the infrastructure.</p>
-    <ol><li>Deploy the SabotPress web application.</li><li>Attach the required persistent database binding.</li><li>Attach persistent media storage.</li><li>Set the admin/session secrets required by the deployment adapter.</li><li>Run the database schema setup.</li><li>Verify Site Health before publishing.</li><li>Import an existing <code>.sabotpress</code> backup if migrating from browser or desktop.</li></ol>
-    <p>Provider-specific details can vary. The repository documentation remains the maintainer reference for unusual server setups, but ordinary users should not need it for browser or desktop use.</p>
+    <h2>Server setup</h2>
+    <p>The server edition is the advanced route. It needs the SabotPress web build, persistent database storage, persistent media storage, HTTPS, admin/session secrets, and the schema initialized.</p>
+    <ol><li>Deploy the web application.</li><li>Attach database storage.</li><li>Attach media storage.</li><li>Configure admin/session secrets.</li><li>Run schema setup.</li><li>Verify Site Health.</li><li>Import a <code>.sabotpress</code> backup if migrating from browser or desktop.</li></ol>
+    <p>Provider-specific deployment details remain in repository documentation for maintainers, but ordinary desktop/browser use should not require GitHub.</p>
   </section>
 
   <section id="noblogs">
     <h2>Noblogs / WordPress migration</h2>
-    <p>The goal is to move the publication, not recreate every WordPress implementation detail.</p>
-    <ol><li>Export your old WordPress/Noblogs content before the old site disappears.</li><li>Keep a separate copy of uploads/media.</li><li>Start a SabotPress publication and choose the modules you actually need.</li><li>Import posts and media using the available import tools.</li><li>Check titles, dates, authors, categories/projects, links and featured images.</li><li>Preview the archive before making the new site public.</li><li>Only then connect a domain or redirect traffic.</li></ol>
-    <p class="good"><strong>Keep the original export.</strong> Migration is much less frightening when the source archive remains untouched somewhere you control.</p>
+    <ol><li>Export the old WordPress/Noblogs site before it disappears.</li><li>Keep the original export untouched somewhere safe.</li><li>Keep a separate copy of uploads/media if possible.</li><li>Create the SabotPress publication and enable the modules you need.</li><li>Import posts and media.</li><li>Check titles, dates, authors, categories/projects, links and featured images.</li><li>Preview the archive and important pages.</li><li>Only then connect a domain or redirect visitors.</li></ol>
+    <p class="good"><strong>Do not delete the old export after import.</strong> Keep it as the source archive until you are satisfied the migration is complete.</p>
   </section>
 
   <section id="backups">
     <h2>Backups</h2>
-    <p><strong>Portable backup:</strong> Publish Online can export a complete <code>.sabotpress</code> package for moving between browser, desktop and server editions. This is the most useful user-controlled backup.</p>
-    <p><strong>Server snapshot:</strong> the Backups admin screen exports a verified server-data snapshot. It is currently a manual action, not a scheduled backup service.</p>
-    <p><strong>Browser edition:</strong> SabotPress reminds you when meaningful local content exists and no recent portable backup has been recorded.</p>
-    <p class="note"><strong>There is currently no configurable automatic backup schedule in SabotPress.</strong> A host may run its own scheduled infrastructure backups. Desktop and browser users should use portable exports until an automatic local snapshot scheduler is added.</p>
+    <h3>Desktop automatic backups</h3>
+    <p>Automatic desktop backups are <strong>on by default</strong>. The default schedule is <strong>daily</strong>, keeping the most recent <strong>7</strong> backups. Each backup contains a safe SQLite copy plus the local media folder. In <strong>Backups</strong> you can switch automatic backups on/off, choose daily or weekly, keep 3/7/14/30 copies, run a backup immediately, and open the backup folder.</p>
+    <p class="note"><strong>Local automatic backups are still on the same computer.</strong> They protect against accidental edits or a damaged local database, but not theft, disk failure, or loss of the whole machine.</p>
+    <h3>Portable backup</h3><p><strong>Publish Online → Export complete backup</strong> creates a <code>.sabotpress</code> package for moving a publication between browser, desktop and server editions. Keep at least one portable backup somewhere outside the device running SabotPress.</p>
+    <h3>Browser edition</h3><p>Browsers do not allow a web app to silently write backup files into arbitrary folders in the background. SabotPress therefore reminds browser-local users to export a portable backup. Browser storage persistence helps, but clearing site data can still remove local work.</p>
+    <h3>Server edition</h3><p>A server host should schedule infrastructure backups for both database and media. SabotPress also provides a manual verified server snapshot, but the app cannot truthfully promise a server backup schedule unless the host has configured one.</p>
+  </section>
+
+  <section id="storage">
+    <h2>Where your work lives</h2>
+    <h3>Desktop</h3><p>The SQLite database, media, backup settings, and automatic backup folder live in the operating system's SabotPress application-data directory. Reinstalling or upgrading the app normally leaves this directory alone.</p>
+    <h3>Browser</h3><p>Browser-local SabotPress uses IndexedDB for publication records and media. It normally survives reloads and browser restarts in the same profile, but clearing site data or resetting that profile can remove it.</p>
+    <h3>Server</h3><p>Server installations use the configured persistent database and media storage. The host is responsible for making those stores durable and backing them up.</p>
   </section>
 
   <a class="back" href="./">← Back to SabotPress</a>

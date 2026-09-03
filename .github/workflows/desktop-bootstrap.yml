@@ -39,4 +39,4 @@ jobs:
           git commit -m 'refresh desktop dependencies'
           git pull --rebase origin main
           git push origin main
-# latest desktop runtime pass
+# smoke test pass

@@ -1,61 +1,100 @@
+import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { downloadPortableBackup, importPortableBackupFile } from '../lib/portableBackup'
+import { isBrowserLocalRuntime, runtimeLabel } from '../lib/runtime'
 
 export function DesktopPublishOnlinePage() {
+  const browserLocal = isBrowserLocalRuntime()
+  const importRef = useRef(null)
+  const [backupState, setBackupState] = useState('')
+
+  async function exportBackup() {
+    try {
+      setBackupState('Building complete backup…')
+      await downloadPortableBackup()
+      setBackupState('Backup saved. Keep it somewhere you control.')
+    } catch (error) {
+      setBackupState(`Backup failed: ${error?.message || error}`)
+    }
+  }
+
+  async function importBackup(file) {
+    if (!file) return
+    try {
+      setBackupState('Importing publication…')
+      const result = await importPortableBackupFile(file)
+      setBackupState(`Import complete. ${Object.values(result.imported || {}).reduce((sum, value) => sum + Number(value || 0), 0)} records/files restored${result.warnings?.length ? `, with ${result.warnings.length} warning(s)` : ''}.`)
+    } catch (error) {
+      setBackupState(`Import failed: ${error?.message || error}`)
+    } finally {
+      if (importRef.current) importRef.current.value = ''
+    }
+  }
+
   return (
     <main className="desktop-welcome desktop-publish-online">
       <section className="desktop-welcome__hero">
         <div className="desktop-welcome__mark" aria-hidden="true">S*</div>
-        <p className="desktop-welcome__eyebrow">publish online</p>
-        <h1>Your publication is ready. Putting it online can still cost $0.</h1>
-        <p>You do not need a custom domain to publish. Start with a free hosting address, connect a domain you already own later, or deploy to a server you control.</p>
+        <p className="desktop-welcome__eyebrow">publish / move / back up</p>
+        <h1>Your publication is yours before it is online.</h1>
+        <p>{runtimeLabel()}. Export a complete portable copy first, then choose whether to keep working locally, move to desktop, or put a hosted copy on the public web.</p>
       </section>
 
       <section className="desktop-publish-grid">
         <article className="desktop-publish-card desktop-publish-card--recommended">
-          <span className="desktop-publish-card__tag">recommended first</span>
-          <h2>Publish for $0</h2>
-          <p>The current tested no-cost route uses a free web host with a provided public address. A custom domain is optional.</p>
+          <span className="desktop-publish-card__tag">do this first</span>
+          <h2>Export publication</h2>
+          <p>Creates a portable <code>.sabotpress</code> backup containing publication setup, posts, collections, publications, podcasts, campaigns, translations, public settings, media metadata and local media files.</p>
+          <div className="review-card__actions">
+            <button className="button button--primary" type="button" onClick={exportBackup}>Export complete backup</button>
+            <button className="button" type="button" onClick={() => importRef.current?.click()}>Import backup</button>
+            <input ref={importRef} hidden type="file" accept=".sabotpress,application/json,application/vnd.sabotpress+json" onChange={(event) => importBackup(event.target.files?.[0])} />
+          </div>
+          {backupState ? <p className="description" role="status">{backupState}</p> : null}
+          {browserLocal ? <p><strong>Browser storage warning:</strong> clearing this site’s browser data can remove the local copy. The exported file is what makes it portable.</p> : null}
+        </article>
+
+        <article className="desktop-publish-card">
+          <h2>Publish to a supported host</h2>
+          <p>The tested no-cost route uses a compatible free host and its provided public address. SabotPress does not pretend this build can create a cloud account or silently deploy for you.</p>
           <ol>
-            <li>Create a free account with a compatible host. Cloudflare Pages/Workers with D1/R2-compatible storage is the currently tested route.</li>
-            <li>Create a new SabotPress web deployment from this project.</li>
-            <li>Use the host-provided address immediately. You do not need to buy a domain.</li>
-            <li>If you already own a domain, connect it later from Sites &amp; Domains.</li>
+            <li>Export the publication above.</li>
+            <li>Set up a SabotPress web instance on a compatible host.</li>
+            <li>Import the portable backup into that instance.</li>
+            <li>Use the host-provided public address immediately.</li>
           </ol>
-          <details className="desktop-publish-details">
-            <summary>What this does and does not do</summary>
-            <p>SabotPress desktop keeps your working copy on this computer. Publishing online creates a separate hosted copy. The desktop app does not silently upload your work, and this version does not yet provide one-click account creation or cloud deployment.</p>
-          </details>
+          <details className="desktop-publish-details"><summary>Current hosting model</summary><p>Cloudflare Pages/Workers-style Functions with D1/R2-compatible storage is the currently tested no-cost web path. Free tiers can change. A community host or your own server can provide the same SabotPress web edition.</p></details>
         </article>
 
         <article className="desktop-publish-card">
           <h2>I already own a domain</h2>
-          <p>Keep the hosting free and point your existing domain at it. SabotPress will show the DNS record your host expects.</p>
-          <Link className="button" to="/sites">Connect my domain</Link>
+          <p>A domain points at a public deployment. It does not replace hosting. Create or choose the public SabotPress instance first, then connect the domain.</p>
+          {!browserLocal ? <Link className="button" to="/sites">Domain setup</Link> : <span className="description">Domain controls become relevant after you move this publication to a hosted SabotPress instance.</span>}
         </article>
 
         <article className="desktop-publish-card">
           <h2>Community or collective hosting</h2>
-          <p>A compatible community host can run SabotPress for you. This is the closest model to the old bundled Noblogs experience.</p>
-          <details className="desktop-publish-details">
-            <summary>Hosting requirements</summary>
-            <p>A host needs the SabotPress web app plus persistent database and media storage. The current web edition supports D1/R2-compatible storage, and server deployments can use the documented adapters.</p>
-          </details>
+          <p>A compatible community host can run the server edition for you. They need the SabotPress web app, persistent database storage, persistent media storage, HTTPS and a way to back both stores up.</p>
+          <p>This is the closest model to the old bundled Noblogs experience without making SabotPress itself a central hosting service.</p>
+        </article>
+
+        <article className="desktop-publish-card">
+          <h2>Move between browser and desktop</h2>
+          <p>The same portable backup format is used by both local editions. Export here, open SabotPress desktop, and import the file. No rebuilding the publication by hand.</p>
+          {browserLocal ? <a className="button" href="https://github.com/sabotmedia/sabotpress/releases" target="_blank" rel="noreferrer">Desktop downloads</a> : null}
         </article>
 
         <article className="desktop-publish-card">
           <h2>I have a server</h2>
-          <p>Use Docker/VPS or another supported deployment adapter while keeping this desktop copy as your local working installation.</p>
-          <details className="desktop-publish-details">
-            <summary>Server route</summary>
-            <p>This is the advanced option. It is intended for people already comfortable managing a server. Ordinary desktop users do not need it.</p>
-          </details>
+          <p>Run the self-hosted web edition with a supported database/media adapter. This is the advanced path and keeps infrastructure under your control.</p>
+          <a className="button" href="https://github.com/sabotmedia/sabotpress/blob/main/docs/INSTALL.md" target="_blank" rel="noreferrer">Server guide</a>
         </article>
       </section>
 
       <section className="desktop-publish-online__actions">
         <Link className="button button--primary" to="/wp-admin">Go to my newsroom</Link>
         <Link className="button" to="/">Preview my site</Link>
-        <p>Your local copy remains local until you explicitly deploy or upload it.</p>
+        <p>No publication data is uploaded merely by opening this screen.</p>
       </section>
     </main>
   )

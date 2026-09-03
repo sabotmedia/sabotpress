@@ -12,6 +12,10 @@ const SESSION_COOKIE_NAME = 'sabot_session'
 const DEFAULT_SESSION_TTL_SECONDS = 60 * 60 * 24 * 7
 
 export async function resolvePublicSitePermission(context) {
+  if (isTrustedDesktopRuntime(context)) {
+    return bootstrapPermission('desktop-owner', 'desktop-local', 'trusted local SabotPress desktop runtime')
+  }
+
   const trustAccessHeaders = String(context?.env?.SABOT_TRUST_CF_ACCESS || '').toLowerCase() === 'true'
   const accessEmail = getCloudflareAccessEmail(context?.request)
   const db = context?.env?.BF_DB || null
@@ -61,20 +65,15 @@ export function permissionHasCapability(permission, capability) {
 }
 
 export function validateAdminLoginToken(context, token) {
+  if (isTrustedDesktopRuntime(context)) return { ok: true, reason: 'desktop local runtime' }
   const expected = String(context?.env?.SABOT_ADMIN_TOKEN || '')
   const received = String(token || '')
 
   if (!expected) {
-    return {
-      ok: false,
-      reason: 'editing locked; set SABOT_ADMIN_TOKEN',
-    }
+    return { ok: false, reason: 'editing locked; set SABOT_ADMIN_TOKEN' }
   }
 
-  return {
-    ok: timingSafeEqual(received, expected),
-    reason: 'valid admin token required',
-  }
+  return { ok: timingSafeEqual(received, expected), reason: 'valid admin token required' }
 }
 
 export async function createAdminSessionCookie(context, identity = 'admin') {
@@ -121,6 +120,7 @@ export function clearAdminSessionCookie(context) {
 }
 
 export async function verifyAdminSession(context) {
+  if (isTrustedDesktopRuntime(context)) return { valid: true, payload: { sub: 'desktop-owner', role: 'owner' } }
   const secret = getSessionSecret(context)
   if (!secret) return { valid: false, reason: 'editing locked; set SABOT_SESSION_SECRET' }
 
@@ -134,15 +134,10 @@ export async function verifyAdminSession(context) {
   if (!timingSafeEqual(signature, expectedSignature)) return { valid: false, reason: 'invalid session signature' }
 
   let payload = null
-  try {
-    payload = JSON.parse(base64UrlDecodeToString(encodedPayload))
-  } catch {
-    return { valid: false, reason: 'invalid session payload' }
-  }
+  try { payload = JSON.parse(base64UrlDecodeToString(encodedPayload)) } catch { return { valid: false, reason: 'invalid session payload' } }
 
   const now = Math.floor(Date.now() / 1000)
   if (!payload?.exp || Number(payload.exp) <= now) return { valid: false, reason: 'session expired' }
-
   return { valid: true, payload }
 }
 
@@ -150,69 +145,38 @@ export function getCloudflareAccessEmail(request) {
   return String(request?.headers?.get('cf-access-authenticated-user-email') || '').trim().toLowerCase()
 }
 
+function isTrustedDesktopRuntime(context) {
+  if (String(context?.env?.SABOT_DESKTOP_LOCAL || '').toLowerCase() !== 'true') return false
+  if (String(context?.request?.headers?.get('x-sabot-desktop') || '') !== 'local-runtime') return false
+  try {
+    const hostname = new URL(context.request.url).hostname
+    return hostname === '127.0.0.1' || hostname === 'localhost'
+  } catch { return false }
+}
+
 function permissionFromUser(user, mode, reason) {
   const capabilities = capabilitiesForRole(user?.role)
-  return {
-    canAccessAdmin: true,
-    canEdit: user?.role !== 'viewer',
-    mode,
-    reason,
-    actor: user?.email || user?.id || 'user',
-    role: user?.role || 'viewer',
-    capabilities,
-    user,
-  }
+  return { canAccessAdmin: true, canEdit: user?.role !== 'viewer', mode, reason, actor: user?.email || user?.id || 'user', role: user?.role || 'viewer', capabilities, user }
 }
 
 function bootstrapPermission(actor, mode, reason) {
-  return {
-    canAccessAdmin: true,
-    canEdit: true,
-    mode,
-    reason,
-    actor: String(actor || 'admin').slice(0, 254),
-    role: 'owner',
-    capabilities: ['*'],
-    user: null,
-    bootstrap: true,
-  }
+  return { canAccessAdmin: true, canEdit: true, mode, reason, actor: String(actor || 'admin').slice(0, 254), role: 'owner', capabilities: ['*'], user: null, bootstrap: true }
 }
 
 function deniedPermission(mode, reason) {
-  return {
-    canAccessAdmin: false,
-    canEdit: false,
-    mode,
-    reason,
-    actor: 'anonymous',
-    role: '',
-    capabilities: [],
-    user: null,
-  }
+  return { canAccessAdmin: false, canEdit: false, mode, reason, actor: 'anonymous', role: '', capabilities: [], user: null }
 }
 
-function getSessionSecret(context) {
-  return String(context?.env?.SABOT_SESSION_SECRET || '')
-}
-
-function missingSessionSecret(context) {
-  return !getSessionSecret(context)
-}
-
+function getSessionSecret(context) { return String(context?.env?.SABOT_SESSION_SECRET || '') }
+function missingSessionSecret(context) { return !getSessionSecret(context) }
 function getSessionTtlSeconds(context) {
   const raw = Number(context?.env?.SABOT_SESSION_TTL_SECONDS || 0)
   if (Number.isFinite(raw) && raw > 0) return Math.floor(raw)
   return DEFAULT_SESSION_TTL_SECONDS
 }
-
 function shouldUseSecureCookie(context) {
-  try {
-    return new URL(context.request.url).protocol === 'https:'
-  } catch {
-    return true
-  }
+  try { return new URL(context.request.url).protocol === 'https:' } catch { return true }
 }
-
 function getCookie(request, name) {
   const header = request?.headers?.get('cookie') || ''
   const prefix = `${name}=`
@@ -222,33 +186,23 @@ function getCookie(request, name) {
   }
   return ''
 }
-
 async function signSession(secret, value) {
-  const key = await crypto.subtle.importKey(
-    'raw',
-    new TextEncoder().encode(secret),
-    { name: 'HMAC', hash: 'SHA-256' },
-    false,
-    ['sign'],
-  )
+  const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign'])
   const signature = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(value))
   return base64UrlEncode(new Uint8Array(signature))
 }
-
 function createSessionId() {
   if (typeof crypto.randomUUID === 'function') return crypto.randomUUID()
   const bytes = new Uint8Array(16)
   crypto.getRandomValues(bytes)
   return Array.from(bytes, (byte) => byte.toString(16).padStart(2, '0')).join('')
 }
-
 function base64UrlEncode(value) {
   const bytes = typeof value === 'string' ? new TextEncoder().encode(value) : value
   let binary = ''
   for (const byte of bytes) binary += String.fromCharCode(byte)
   return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/g, '')
 }
-
 function base64UrlDecodeToString(value) {
   const normalized = value.replace(/-/g, '+').replace(/_/g, '/')
   const padded = normalized.padEnd(Math.ceil(normalized.length / 4) * 4, '=')
@@ -257,7 +211,6 @@ function base64UrlDecodeToString(value) {
   for (let index = 0; index < binary.length; index += 1) bytes[index] = binary.charCodeAt(index)
   return new TextDecoder().decode(bytes)
 }
-
 function serializeCookie(name, value, options = {}) {
   const parts = [`${name}=${encodeURIComponent(value)}`]
   if (options.maxAge != null) parts.push(`Max-Age=${Math.max(0, Number(options.maxAge) || 0)}`)
@@ -268,7 +221,6 @@ function serializeCookie(name, value, options = {}) {
   if (options.httpOnly) parts.push('HttpOnly')
   return parts.join('; ')
 }
-
 function timingSafeEqual(left, right) {
   const a = new TextEncoder().encode(String(left || ''))
   const b = new TextEncoder().encode(String(right || ''))

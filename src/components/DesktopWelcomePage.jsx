@@ -63,7 +63,7 @@ export function DesktopWelcomePage() {
           <article className="browser-start-card">
             <h2>Run SabotPress on a server</h2>
             <p>Self-host the web edition when you want a shared multi-user publication and server-backed storage.</p>
-            <a className="button" href="https://github.com/sabotmedia/sabotpress/blob/main/docs/INSTALL.md" target="_blank" rel="noreferrer">Self-hosting guide</a>
+            <a className="button" href="/help.html#server">Self-hosting guide</a>
           </article>
         </section>
       ) : null}

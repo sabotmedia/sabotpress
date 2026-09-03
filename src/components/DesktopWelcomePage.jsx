@@ -5,6 +5,7 @@ import { getPublishingSetup, hydratePublishingSetup } from '../lib/publishingMod
 import { isBrowserLocalRuntime, isDesktopRuntime } from '../lib/runtime'
 import { canPromptPwaInstall, isPwaStandalone, promptPwaInstall, PWA_INSTALL_EVENT } from '../lib/pwaRuntime'
 import { requestPersistentBrowserStorage } from '../lib/browserLocalDb'
+import { helpUrl } from '../lib/helpUrl'
 
 export function DesktopWelcomePage() {
   const navigate = useNavigate()
@@ -63,7 +64,7 @@ export function DesktopWelcomePage() {
           <article className="browser-start-card">
             <h2>Run SabotPress on a server</h2>
             <p>Self-host the web edition when you want a shared multi-user publication and server-backed storage.</p>
-            <a className="button" href="/help.html#server">Self-hosting guide</a>
+            <a className="button" href={helpUrl('server')}>Self-hosting guide</a>
           </article>
         </section>
       ) : null}

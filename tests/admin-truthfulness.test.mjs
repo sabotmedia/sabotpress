@@ -17,7 +17,7 @@ test('users admin uses D1-backed account APIs and no browser account persistence
 
 test('settings is the single production public config surface', () => {
   assert.match(scaffold, /<AdminPublicConfigCard\s*\/>/)
-  assert.match(scaffold, /<LegacyInfoPageRecovery\s*\/>/)
+  assert.doesNotMatch(scaffold, /LegacyInfoPageRecovery/)
   assert.doesNotMatch(pages, /AdminPublicConfigCard|CustomizeAdminPage/)
   assert.doesNotMatch(pages, /customizerLocal|saveCustomizerSettings|saveWpSettings/)
 })

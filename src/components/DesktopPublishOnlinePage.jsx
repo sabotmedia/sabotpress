@@ -2,6 +2,7 @@ import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { downloadPortableBackup, importPortableBackupFile } from '../lib/portableBackup'
 import { isBrowserLocalRuntime, runtimeLabel } from '../lib/runtime'
+import { helpUrl } from '../lib/helpUrl'
 
 export function DesktopPublishOnlinePage() {
   const browserLocal = isBrowserLocalRuntime()
@@ -63,7 +64,7 @@ export function DesktopPublishOnlinePage() {
             <li>Import the portable backup into that instance.</li>
             <li>Use the host-provided public address immediately.</li>
           </ol>
-          <a className="button" href="/help.html#free-hosting">Read the $0 hosting guide</a>
+          <a className="button" href={helpUrl('free-hosting')}>Read the $0 hosting guide</a>
         </article>
 
         <article className="desktop-publish-card">
@@ -76,7 +77,7 @@ export function DesktopPublishOnlinePage() {
           <h2>Community or collective hosting</h2>
           <p>A compatible community host can run the server edition for you. They need the SabotPress web app, persistent database storage, persistent media storage, HTTPS and a way to back both stores up.</p>
           <p>This is the closest model to the old bundled Noblogs experience without making SabotPress itself a central hosting service.</p>
-          <a className="button" href="/help.html#community-hosting">What to ask a host</a>
+          <a className="button" href={helpUrl('community-hosting')}>What to ask a host</a>
         </article>
 
         <article className="desktop-publish-card">
@@ -88,7 +89,7 @@ export function DesktopPublishOnlinePage() {
         <article className="desktop-publish-card">
           <h2>I have a server</h2>
           <p>Run the self-hosted web edition with a supported database/media adapter. This is the advanced path and keeps infrastructure under your control.</p>
-          <a className="button" href="/help.html#server">Server guide</a>
+          <a className="button" href={helpUrl('server')}>Server guide</a>
         </article>
       </section>
 

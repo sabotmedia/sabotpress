@@ -1,6 +1,8 @@
 import { canonicalizeAnalyticsPath } from '../../shared/analyticsPath'
+import { isBrowserLocalRuntime } from './runtime'
 
 export async function fetchAnalyticsReport(days = 30) {
+  if (isBrowserLocalRuntime()) return { ok: true, disabled: true, mode: 'browser-local', report: {}, items: [] }
   const response = await fetch(`/api/analytics/report?days=${encodeURIComponent(days)}`, {
     credentials: 'same-origin',
     headers: { accept: 'application/json' },
@@ -11,6 +13,7 @@ export async function fetchAnalyticsReport(days = 30) {
 }
 
 export function trackPageView({ path, title, referrer }) {
+  if (isBrowserLocalRuntime()) return
   if (navigator.doNotTrack === '1' || navigator.globalPrivacyControl === true) return
   if (!isTrackablePath(path)) return
 

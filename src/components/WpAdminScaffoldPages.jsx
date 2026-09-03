@@ -5,6 +5,7 @@ import { LegacyInfoPageRecovery } from './LegacyInfoPageRecovery'
 import { RobotVoiceSettingsCard } from './RobotVoiceSettingsCard'
 import { PublishingModulesCard } from './PublishingModulesCard'
 import { InstallReadinessCard } from './InstallReadinessCard'
+import { DesktopPublishOnlineCard } from './DesktopPublishOnlineCard'
 import { getPieces } from '../lib/pieces'
 import { adminRoutes } from '../routing/routes'
 import { publicPageRegistry, withSiteEdit } from '../lib/publicPageRegistry'
@@ -54,6 +55,7 @@ export function SettingsAdminPage() {
           <div><h1>Settings</h1><p className="description">Publication settings for normal editors. Advanced infrastructure diagnostics stay in Site Health.</p></div>
           <Link className="button button--primary" to={withSiteEdit('/')}>Edit Live</Link>
         </div>
+        <DesktopPublishOnlineCard />
         <PublishingModulesCard />
         <InstallReadinessCard />
         <AdminPublicConfigCard />

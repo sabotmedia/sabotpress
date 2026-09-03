@@ -4,6 +4,7 @@ import path from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { openDesktopDatabase } from './sqlite-d1.mjs'
 import { FilesystemBucket } from './filesystem-r2.mjs'
+import { backupRoot, createDesktopBackup, loadBackupSettings, runAutomaticBackupIfDue, saveBackupSettings } from './automatic-backups.mjs'
 
 const MIME = {
   '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8',
@@ -53,6 +54,8 @@ export async function startLocalSabotPress({ appRoot, dataRoot, port = 0 }) {
     server.listen(port, '127.0.0.1', resolve)
   })
 
+  const backupContext = { dataRoot, db, mediaRoot }
+
   return {
     url: `http://127.0.0.1:${server.address().port}`,
     close: async () => {
@@ -60,6 +63,11 @@ export async function startLocalSabotPress({ appRoot, dataRoot, port = 0 }) {
       db.close()
     },
     dataRoot,
+    backupRoot: backupRoot(dataRoot),
+    getBackupSettings: () => loadBackupSettings(dataRoot),
+    setBackupSettings: (settings) => saveBackupSettings(dataRoot, settings),
+    createBackup: (reason = 'manual') => createDesktopBackup({ ...backupContext, reason }),
+    runAutomaticBackupIfDue: () => runAutomaticBackupIfDue(backupContext),
   }
 }
 

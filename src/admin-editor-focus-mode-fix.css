@@ -1,0 +1,158 @@
+/* Strong distraction-free writing override.
+ * The first pass hid the sidebar but let older editor layout rules keep the main column tiny.
+ * This turns focus mode into a real full-viewport writing surface.
+ */
+
+body.is-sabot-distraction-free {
+  overflow: hidden !important;
+  background: #f0f0f1 !important;
+}
+
+body.is-sabot-distraction-free .wp-public-admin-bar,
+body.is-sabot-distraction-free .public-admin-toolbar,
+body.is-sabot-distraction-free .admin-frame__rail,
+body.is-sabot-distraction-free .admin-rail,
+body.is-sabot-distraction-free .wp-screen-header,
+body.is-sabot-distraction-free .native-bridge-sidebar,
+body.is-sabot-distraction-free .wp-edit-screen > .notice,
+body.is-sabot-distraction-free .wp-edit-screen .wp-admin-notices,
+body.is-sabot-distraction-free .native-content-editor__permalink {
+  display: none !important;
+}
+
+body.is-sabot-distraction-free .bare-route-shell,
+body.is-sabot-distraction-free .admin-frame,
+body.is-sabot-distraction-free .admin-frame__body,
+body.is-sabot-distraction-free .admin-frame__main,
+body.is-sabot-distraction-free #main-content {
+  width: 100vw !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  height: 100vh !important;
+  max-height: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+body.is-sabot-distraction-free .wp-edit-screen {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 999999 !important;
+  box-sizing: border-box !important;
+  width: 100vw !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  height: 100vh !important;
+  min-height: 100vh !important;
+  margin: 0 !important;
+  padding: 24px 32px 36px !important;
+  overflow: auto !important;
+  background: #f0f0f1 !important;
+}
+
+body.is-sabot-distraction-free .native-bridge-layout {
+  display: block !important;
+  width: min(1120px, calc(100vw - 64px)) !important;
+  max-width: min(1120px, calc(100vw - 64px)) !important;
+  min-width: 0 !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+}
+
+body.is-sabot-distraction-free .native-bridge-main {
+  display: block !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
+
+body.is-sabot-distraction-free .native-bridge-main > *,
+body.is-sabot-distraction-free .native-content-editor__title-field,
+body.is-sabot-distraction-free .native-content-editor__chrome,
+body.is-sabot-distraction-free .native-content-editor__visual-wrap,
+body.is-sabot-distraction-free .native-content-editor__visual,
+body.is-sabot-distraction-free .native-content-editor__textarea {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+body.is-sabot-distraction-free .native-content-editor__title-field {
+  margin-bottom: 12px !important;
+}
+
+body.is-sabot-distraction-free .native-content-editor__title-field input {
+  width: 100% !important;
+  max-width: 100% !important;
+  font-size: 28px !important;
+  line-height: 1.25 !important;
+}
+
+body.is-sabot-distraction-free .native-content-editor__chrome {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 5 !important;
+}
+
+body.is-sabot-distraction-free .wp-classic-toolbar,
+body.is-sabot-distraction-free .wp-classic-toolbar__row {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+}
+
+body.is-sabot-distraction-free .wp-classic-toolbar__row {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+}
+
+body.is-sabot-distraction-free .native-content-editor__visual-wrap {
+  min-height: calc(100vh - 220px) !important;
+  background: #fff !important;
+}
+
+body.is-sabot-distraction-free .native-content-editor__visual {
+  min-height: calc(100vh - 220px) !important;
+  padding: 44px 72px !important;
+  font-size: 20px !important;
+  line-height: 1.7 !important;
+}
+
+body.is-sabot-distraction-free .native-content-editor__textarea {
+  min-height: calc(100vh - 220px) !important;
+  padding: 28px 34px !important;
+  font-size: 16px !important;
+  line-height: 1.65 !important;
+}
+
+body.is-sabot-distraction-free .wp-classic-toolbar__fullscreen {
+  border-color: #2271b1 !important;
+  background: #fff !important;
+  color: #135e96 !important;
+}
+
+@media (max-width: 860px) {
+  body.is-sabot-distraction-free .wp-edit-screen {
+    padding: 12px !important;
+  }
+
+  body.is-sabot-distraction-free .native-bridge-layout {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  body.is-sabot-distraction-free .native-content-editor__visual {
+    padding: 26px 20px !important;
+    font-size: 18px !important;
+  }
+}

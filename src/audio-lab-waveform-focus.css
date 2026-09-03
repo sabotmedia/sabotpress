@@ -1,0 +1,231 @@
+/* AudioLab waveform-first refinement: the waveform is the editor, not the purple luggage rack below it. */
+.admin-frame:has(.audio-lab-page) .admin-frame__main {
+  inset: 32px 0 0 42px !important;
+  background: #0e151d !important;
+}
+
+.admin-frame:has(.audio-lab-page) .admin-rail {
+  width: 42px !important;
+  min-width: 42px !important;
+}
+
+.audio-lab-page .audio-lab-workbench {
+  grid-template-columns: 42px minmax(0, 1fr) !important;
+  grid-template-rows: minmax(0, 1fr) 24px !important;
+  gap: 1px !important;
+  padding: 1px !important;
+}
+
+.audio-lab-page .audio-lab-sidebar {
+  width: 42px !important;
+  min-width: 42px !important;
+}
+
+.audio-lab-page .audio-lab-sidebar.is-open {
+  left: 42px !important;
+}
+
+.audio-lab-page .audio-lab-editor {
+  grid-template-rows: 24px 28px 28px 28px minmax(0, 1fr) !important;
+}
+
+.audio-lab-page .audio-lab-project-strip,
+.audio-lab-page .audio-lab-record-panel,
+.audio-lab-page .audio-lab-selection-toolbar,
+.audio-lab-page .audio-lab-transport {
+  min-height: 0 !important;
+}
+
+.audio-lab-page .audio-lab-project-strip {
+  height: 24px !important;
+  padding: 2px 5px !important;
+}
+
+.audio-lab-page .audio-lab-record-panel,
+.audio-lab-page .audio-lab-selection-toolbar,
+.audio-lab-page .audio-lab-transport {
+  height: 28px !important;
+  padding: 2px 5px !important;
+}
+
+.audio-lab-page .audio-lab-project-strip input,
+.audio-lab-page .audio-lab-source-picker select,
+.audio-lab-page .audio-lab-selection-fields input,
+.audio-lab-page .audio-lab-time-readout,
+.audio-lab-page .button,
+.audio-lab-page button.button,
+.audio-lab-page .audio-lab-track-buttons button {
+  height: 22px !important;
+  min-height: 22px !important;
+  line-height: 1 !important;
+}
+
+.audio-lab-page .audio-lab-timeline-shell {
+  grid-template-rows: 20px minmax(0, 1fr) 92px !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  background: #0d141c !important;
+  scrollbar-width: thin;
+  touch-action: none;
+}
+
+.audio-lab-page .audio-lab-ruler {
+  position: sticky;
+  left: 0;
+  z-index: 4;
+  height: 20px !important;
+  min-height: 20px !important;
+}
+
+.audio-lab-page .audio-lab-waveform {
+  width: max(100%, var(--audiolab-waveform-width, 100%)) !important;
+  min-width: max(100%, var(--audiolab-waveform-width, 100%)) !important;
+  height: var(--audiolab-waveform-height, clamp(330px, calc(100vh - 294px), 610px)) !important;
+  min-height: 260px !important;
+  max-height: calc(100vh - 190px) !important;
+  transform: none !important;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.audio-lab-page .audio-lab-multitrack {
+  height: 92px !important;
+  max-height: 92px !important;
+  min-height: 92px !important;
+  opacity: 0.82;
+  border-top: 1px solid #3e4a58 !important;
+}
+
+.audio-lab-page .audio-lab-multitrack:hover,
+.audio-lab-page .audio-lab-multitrack:focus-within {
+  opacity: 1;
+}
+
+.audio-lab-page .audio-lab-multitrack-scroll {
+  height: 70px !important;
+  max-height: 70px !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  touch-action: none;
+}
+
+.audio-lab-page .audio-lab-multitrack-inner {
+  width: max(100%, var(--audiolab-waveform-width, 100%)) !important;
+  min-width: max(100%, var(--audiolab-waveform-width, 100%)) !important;
+}
+
+.audio-lab-page .audio-lab-multitrack-row,
+.audio-lab-page .audio-lab-multitrack-lane {
+  min-height: 68px !important;
+  max-height: 68px !important;
+  height: 68px !important;
+}
+
+.audio-lab-page .audio-lab-multitrack-row {
+  grid-template-columns: 156px minmax(0, 1fr) !important;
+}
+
+.audio-lab-page .audio-lab-multitrack-controls {
+  width: 156px !important;
+  padding: 3px 6px !important;
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 3px !important;
+  align-content: start !important;
+}
+
+.audio-lab-page .audio-lab-multitrack-controls input[aria-label="Track name"] {
+  grid-column: 1 / -1;
+  height: 22px !important;
+  min-height: 22px !important;
+  padding: 2px 6px !important;
+}
+
+.audio-lab-page .audio-lab-track-buttons {
+  grid-column: 1 / -1;
+  display: flex !important;
+  gap: 3px !important;
+}
+
+.audio-lab-page .audio-lab-multitrack-controls label {
+  font-size: 10px !important;
+  gap: 1px !important;
+}
+
+.audio-lab-page .audio-lab-multitrack-controls label input {
+  height: 22px !important;
+  min-height: 22px !important;
+  padding: 1px 5px !important;
+}
+
+.audio-lab-page .audio-lab-clip {
+  top: 12px !important;
+  min-height: 38px !important;
+  height: 38px !important;
+  border-radius: 2px !important;
+  align-content: center !important;
+  background: linear-gradient(180deg, rgba(105, 112, 225, 0.92), rgba(84, 91, 202, 0.92)) !important;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.16) !important;
+}
+
+.audio-lab-page .audio-lab-clip strong {
+  font-size: 11px !important;
+}
+
+.audio-lab-page .audio-lab-clip span {
+  display: none !important;
+}
+
+.audio-lab-page .audio-lab-project-sidebar,
+.audio-lab-page .audio-lab-project-sidebar:hover,
+.audio-lab-page .audio-lab-project-sidebar:focus-within {
+  height: 24px !important;
+  min-height: 24px !important;
+}
+
+.audio-lab-page .audio-lab-project-sidebar::before {
+  height: 22px !important;
+  content: "Inspector dock  •  click to open" !important;
+}
+
+.audio-lab-page .audio-lab-project-sidebar.is-open {
+  left: 42px !important;
+  height: min(48vh, 380px) !important;
+}
+
+.audio-lab-page.is-waveform-gesture .audio-lab-waveform {
+  box-shadow: inset 0 0 0 2px rgba(116, 167, 255, 0.72);
+}
+
+.audio-lab-zoom-toast strong {
+  display: block;
+  color: #ffffff;
+  font-size: 12px;
+}
+
+.audio-lab-zoom-toast small {
+  display: block;
+  color: #aeb8c4;
+  font-size: 10px;
+  margin-top: 2px;
+}
+
+@media (max-height: 760px) {
+  .audio-lab-page .audio-lab-waveform {
+    height: var(--audiolab-waveform-height, clamp(285px, calc(100vh - 260px), 520px)) !important;
+  }
+
+  .audio-lab-page .audio-lab-multitrack {
+    height: 78px !important;
+    max-height: 78px !important;
+    min-height: 78px !important;
+  }
+
+  .audio-lab-page .audio-lab-multitrack-scroll,
+  .audio-lab-page .audio-lab-multitrack-row,
+  .audio-lab-page .audio-lab-multitrack-lane {
+    height: 58px !important;
+    min-height: 58px !important;
+    max-height: 58px !important;
+  }
+}

@@ -1,0 +1,444 @@
+/* AudioLab v5: stop inventing a new DAW. Mimic Audacity's spatial logic.
+   Menus/toolbars live at the top, tracks own the workspace, utilities open as dialogs. */
+
+.audio-lab-page {
+  --al5-menu-h: 31px;
+  --al5-track-h: 112px;
+  --al5-track-controls: 164px;
+}
+
+/* Always-visible application menu bar. */
+.audio-lab-audacity-menubar {
+  flex: 0 0 var(--al5-menu-h);
+  min-height: var(--al5-menu-h);
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  margin: 0;
+  padding: 0 5px;
+  overflow: visible;
+  border: 1px solid #344553;
+  border-radius: 5px;
+  background: linear-gradient(180deg, #202b36, #17212b);
+  color: #eef4f8;
+  box-shadow: inset 0 1px rgba(255,255,255,.035);
+  font: 500 11px/1.2 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  position: relative;
+  z-index: 80;
+}
+
+.audio-lab-audacity-menu {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+}
+
+.audio-lab-audacity-menu > button {
+  min-width: 0 !important;
+  height: 29px !important;
+  min-height: 29px !important;
+  padding: 0 9px !important;
+  border: 0 !important;
+  border-radius: 3px !important;
+  background: transparent !important;
+  color: #e7edf3 !important;
+  font: 500 11px/29px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+}
+
+.audio-lab-audacity-menu > button:hover,
+.audio-lab-audacity-menu > button[aria-expanded="true"] {
+  background: #34485b !important;
+  color: #fff !important;
+}
+
+.audio-lab-audacity-dropdown {
+  display: none;
+  position: absolute;
+  z-index: 10060;
+  top: 29px;
+  left: 0;
+  min-width: 235px;
+  max-height: min(70vh, 520px);
+  overflow: auto;
+  padding: 5px;
+  border: 1px solid #526777;
+  border-radius: 0 5px 5px 5px;
+  background: #18232d;
+  box-shadow: 0 15px 40px rgba(0,0,0,.55);
+}
+
+.audio-lab-audacity-menu.is-open .audio-lab-audacity-dropdown { display: grid; gap: 1px; }
+.audio-lab-audacity-menu:nth-last-child(-n+2) .audio-lab-audacity-dropdown { left: auto; right: 0; }
+
+.audio-lab-audacity-dropdown button {
+  width: 100%;
+  height: 29px !important;
+  min-height: 29px !important;
+  padding: 4px 8px !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  border: 0 !important;
+  border-radius: 3px !important;
+  background: transparent !important;
+  color: #e7edf3 !important;
+  text-align: left;
+  font: 500 11px/1.2 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+}
+.audio-lab-audacity-dropdown button:hover,
+.audio-lab-audacity-dropdown button:focus-visible {
+  background: #315270 !important;
+  color: white !important;
+  outline: none !important;
+}
+.audio-lab-audacity-dropdown button:disabled { opacity: .42 !important; }
+.audio-lab-audacity-dropdown kbd {
+  padding: 1px 4px;
+  border: 0;
+  background: transparent;
+  color: #9fb1c0;
+  font: 500 9px/1.1 ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+.audio-lab-menu-rule { height: 1px; margin: 4px 3px; background: #344553; }
+
+.audio-lab-menu-spacer { flex: 1 1 auto; min-width: 10px; }
+.audio-lab-project-switcher {
+  flex: 0 1 300px;
+  min-width: 140px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin: 3px 2px 3px 8px;
+}
+.audio-lab-project-switcher span {
+  color: #93a4b4;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+.audio-lab-project-switcher select {
+  width: 100%;
+  height: 23px;
+  min-height: 23px;
+  border: 1px solid #45596a;
+  border-radius: 3px;
+  background: #0e161e;
+  color: #eef4f8;
+  padding: 1px 6px;
+  font: 600 10px/1.1 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* Remove old synthetic chrome. One top menu bar is enough. */
+.audio-lab-page .audio-lab-compact-chrome { display: none !important; }
+
+/* Keep the header tiny, like application title chrome rather than a dashboard hero. */
+.audio-lab-page:not([data-audiolab-task]) .wp-screen-header.audio-lab-header {
+  min-height: 37px !important;
+  height: 37px !important;
+  padding: 4px 8px !important;
+}
+
+/* Two compact working toolbar rows, then the audio. */
+.audio-lab-page:not([data-audiolab-task]) .audio-lab-editor {
+  grid-template-columns: minmax(0, 1.15fr) minmax(330px, .85fr) !important;
+  grid-template-areas:
+    "project record"
+    "selection transport"
+    "timeline timeline" !important;
+  grid-template-rows: 39px 39px minmax(0, 1fr) !important;
+  overflow: hidden !important;
+}
+
+.audio-lab-page .audio-lab-project-strip,
+.audio-lab-page .audio-lab-record-panel,
+.audio-lab-page .audio-lab-selection-toolbar,
+.audio-lab-page .audio-lab-transport {
+  min-height: 39px !important;
+  height: 39px !important;
+  padding: 5px 7px !important;
+}
+
+/* Do not carpet the toolbar with every edit command. The menu bar carries them. */
+.audio-lab-page .audio-lab-selection-toolbar .audio-lab-edit-actions { display: none !important; }
+.audio-lab-page .audio-lab-selection-toolbar { grid-template-columns: 1fr !important; }
+
+/* Critical fix: there are THREE visible timeline children, not four.
+   The old hidden direct-edit toolbar no longer gets a phantom grid row. */
+.audio-lab-page:not([data-audiolab-task]) .audio-lab-timeline-shell {
+  min-width: 0 !important;
+  min-height: 0 !important;
+  height: 100% !important;
+  display: grid !important;
+  grid-template-rows: 19px 62px minmax(0, 1fr) !important;
+  overflow: hidden !important;
+  background: #090f15 !important;
+}
+
+.audio-lab-page .audio-lab-direct-toolbar { display: none !important; }
+
+/* Audacity-like overview: a navigator, not the main event. */
+.audio-lab-page .audio-lab-ruler {
+  height: 19px !important;
+  min-height: 19px !important;
+  padding: 3px 7px !important;
+  background: #151f29 !important;
+  color: #9aabb8 !important;
+  font-size: 9px !important;
+}
+.audio-lab-page .audio-lab-ruler > span:first-child { font-weight: 700 !important; }
+.audio-lab-page .audio-lab-waveform {
+  height: 62px !important;
+  min-height: 62px !important;
+  max-height: 62px !important;
+  background: #0b131b !important;
+  border-bottom: 1px solid #344553 !important;
+}
+.audio-lab-page[data-audiolab-overview="hidden"] .audio-lab-timeline-shell {
+  grid-template-rows: 0 0 minmax(0, 1fr) !important;
+}
+.audio-lab-page[data-audiolab-overview="hidden"] .audio-lab-ruler,
+.audio-lab-page[data-audiolab-overview="hidden"] .audio-lab-waveform {
+  display: none !important;
+}
+
+/* Multitrack is the editor. Give it the viewport and a real scrollbar. */
+.audio-lab-page .audio-lab-multitrack {
+  min-width: 0 !important;
+  min-height: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  display: grid !important;
+  grid-template-rows: 29px minmax(0, 1fr) !important;
+  overflow: hidden !important;
+  border: 0 !important;
+  background: #0a1118 !important;
+}
+.audio-lab-page .audio-lab-timeline-actions {
+  min-height: 29px !important;
+  height: 29px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 2px 7px !important;
+  border-bottom: 1px solid #344553 !important;
+  background: #151f29 !important;
+  color: #a9b8c4 !important;
+}
+.audio-lab-page .audio-lab-timeline-actions::before {
+  content: "Tracks";
+  margin-right: auto;
+  color: #dce5ec;
+  font: 700 10px/1 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+.audio-lab-page .audio-lab-timeline-actions > button { margin-left: 10px !important; }
+.audio-lab-page .audio-lab-timeline-actions > span { margin-left: 8px !important; }
+
+.audio-lab-page .audio-lab-multitrack-scroll {
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  overflow: scroll !important;
+  scrollbar-gutter: stable both-edges;
+  scrollbar-width: auto !important;
+  scrollbar-color: #607282 #121b23 !important;
+  background: #0a1118 !important;
+}
+.audio-lab-page .audio-lab-multitrack-scroll::-webkit-scrollbar { width: 13px; height: 13px; }
+.audio-lab-page .audio-lab-multitrack-scroll::-webkit-scrollbar-track { background: #121b23; }
+.audio-lab-page .audio-lab-multitrack-scroll::-webkit-scrollbar-thumb { background: #607282; border: 2px solid #121b23; border-radius: 7px; }
+
+.audio-lab-page .audio-lab-multitrack-inner {
+  width: max(100%, 900px) !important;
+  min-width: 900px !important;
+  min-height: max-content !important;
+  height: max-content !important;
+  padding-bottom: 40px !important;
+  background: #0a1118 !important;
+}
+.audio-lab-page .audio-lab-multitrack-ruler {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 20 !important;
+  height: 25px !important;
+  min-height: 25px !important;
+  margin: 0 !important;
+  border-bottom: 1px solid #485a69 !important;
+  background: #202b35 !important;
+  color: #d3dde5 !important;
+  font: 600 9px/1 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+}
+
+.audio-lab-page .audio-lab-multitrack-row {
+  min-height: var(--al5-track-h) !important;
+  height: var(--al5-track-h) !important;
+  display: grid !important;
+  grid-template-columns: var(--al5-track-controls) minmax(736px, 1fr) !important;
+  border-bottom: 1px solid #34424e !important;
+  background: #151d25 !important;
+}
+.audio-lab-page .audio-lab-multitrack-row:nth-child(even) { background: #121a22 !important; }
+.audio-lab-page .audio-lab-multitrack-row.is-selected {
+  box-shadow: inset 3px 0 0 #69b1f4 !important;
+  background: #172330 !important;
+}
+
+/* Track controls stay parked on the left while the audio scrolls horizontally. */
+.audio-lab-page .audio-lab-multitrack-controls {
+  position: sticky !important;
+  left: 0 !important;
+  z-index: 12 !important;
+  min-width: var(--al5-track-controls) !important;
+  width: var(--al5-track-controls) !important;
+  height: var(--al5-track-h) !important;
+  padding: 7px 8px !important;
+  display: grid !important;
+  grid-template-rows: 26px 26px 1fr !important;
+  gap: 4px !important;
+  overflow: hidden !important;
+  border-right: 1px solid #485a69 !important;
+  background: #222d38 !important;
+  box-shadow: 4px 0 8px rgba(0,0,0,.14) !important;
+}
+.audio-lab-page .audio-lab-multitrack-row.is-selected .audio-lab-multitrack-controls { background: #293a4a !important; }
+.audio-lab-page .audio-lab-multitrack-controls > input {
+  width: 100% !important;
+  height: 25px !important;
+  min-height: 25px !important;
+  font-weight: 700 !important;
+}
+.audio-lab-page .audio-lab-track-buttons {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 3px !important;
+  overflow: visible !important;
+}
+.audio-lab-page .audio-lab-track-buttons button {
+  min-width: 0 !important;
+  width: 100% !important;
+  height: 24px !important;
+  min-height: 24px !important;
+  padding: 1px 3px !important;
+  font-size: 9px !important;
+  line-height: 20px !important;
+}
+.audio-lab-page .audio-lab-multitrack-controls label {
+  display: grid !important;
+  grid-template-columns: 30px 1fr !important;
+  align-items: center !important;
+  gap: 4px !important;
+  color: #b2c0ca !important;
+  font-size: 9px !important;
+}
+.audio-lab-page .audio-lab-multitrack-controls label input {
+  height: 22px !important;
+  min-height: 22px !important;
+}
+
+.audio-lab-page .audio-lab-multitrack-lane {
+  position: relative !important;
+  min-width: 736px !important;
+  height: var(--al5-track-h) !important;
+  min-height: var(--al5-track-h) !important;
+  overflow: hidden !important;
+  background-color: #111820 !important;
+  background-image:
+    linear-gradient(to right, rgba(153,173,190,.08) 1px, transparent 1px),
+    linear-gradient(to bottom, transparent calc(50% - 1px), rgba(183,201,214,.16) 50%, transparent calc(50% + 1px));
+  background-size: 44px 100%, 100% 100%;
+}
+.audio-lab-page .audio-lab-multitrack-row:nth-child(even) .audio-lab-multitrack-lane { background-color: #0e151c !important; }
+.audio-lab-page .audio-lab-clip {
+  top: 12px !important;
+  bottom: 12px !important;
+  height: auto !important;
+  min-height: 0 !important;
+  border: 1px solid #6a8fc4 !important;
+  border-radius: 3px !important;
+  background: linear-gradient(180deg, #446ba7, #354e86) !important;
+  color: #f7fbff !important;
+  box-shadow: inset 0 1px rgba(255,255,255,.12) !important;
+}
+.audio-lab-page .audio-lab-clip.is-selected {
+  border-color: #ffd45c !important;
+  box-shadow: 0 0 0 1px #ffd45c, inset 0 1px rgba(255,255,255,.13) !important;
+}
+.audio-lab-page .audio-lab-playhead { z-index: 16 !important; }
+
+/* Tool dialogs. The timeline never moves or disappears underneath them. */
+.audio-lab-page[data-audiolab-modal-open] .audio-lab-project-sidebar {
+  width: min(920px, calc(100vw - 54px)) !important;
+  height: min(78vh, 730px) !important;
+}
+.audio-lab-audacity-modal-title {
+  order: -3;
+  flex: 0 0 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 6px 8px 6px 13px;
+  border-bottom: 1px solid #344553;
+  background: #202c37;
+  color: #fff;
+  font: 700 14px/1 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+.audio-lab-audacity-modal-title button {
+  width: 30px !important;
+  height: 30px !important;
+  min-height: 30px !important;
+  padding: 0 !important;
+  font-size: 18px !important;
+}
+
+.audio-lab-audacity-backdrop {
+  position: fixed;
+  z-index: 10039;
+  inset: 0;
+  display: none;
+  background: rgba(2,6,10,.65);
+  backdrop-filter: blur(1.5px);
+}
+body.audio-lab-modal-is-open .audio-lab-audacity-backdrop { display: block; }
+
+/* Shortcuts panel looks like a useful reference, not a second settings screen. */
+.audio-lab-shortcuts-dialog {
+  position: fixed;
+  z-index: 10070;
+  top: 12vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(680px, calc(100vw - 40px));
+  max-height: 72vh;
+  overflow: auto;
+  display: none;
+  padding: 14px;
+  border: 1px solid #526777;
+  border-radius: 7px;
+  background: #18232d;
+  color: #e9f0f5;
+  box-shadow: 0 28px 80px rgba(0,0,0,.62);
+}
+body.audio-lab-shortcuts-open .audio-lab-shortcuts-dialog { display: block; }
+.audio-lab-shortcuts-dialog h2 { margin: 0 0 10px; font-size: 16px; }
+.audio-lab-shortcuts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px 18px; }
+.audio-lab-shortcuts-grid div { display: flex; justify-content: space-between; gap: 12px; padding: 5px 0; border-bottom: 1px solid #2d3d4a; font-size: 11px; }
+.audio-lab-shortcuts-grid kbd { color: #fff; font: 600 10px ui-monospace, SFMono-Regular, Consolas, monospace; }
+.audio-lab-shortcuts-dialog .button { float: right; margin-top: 12px; }
+
+@media (max-width: 900px) {
+  .audio-lab-audacity-menubar { overflow-x: auto; overflow-y: hidden; }
+  .audio-lab-project-switcher { display: none; }
+  .audio-lab-page:not([data-audiolab-task]) .audio-lab-editor {
+    grid-template-columns: 1fr !important;
+    grid-template-areas: "project" "record" "selection" "transport" "timeline" !important;
+    grid-template-rows: auto auto auto auto minmax(430px, 1fr) !important;
+    overflow: auto !important;
+  }
+  .audio-lab-page:not([data-audiolab-task]) .audio-lab-timeline-shell { min-height: 520px !important; }
+  .audio-lab-page .audio-lab-multitrack-row { grid-template-columns: 145px minmax(650px, 1fr) !important; }
+  .audio-lab-page { --al5-track-controls: 145px; }
+}

@@ -1,0 +1,414 @@
+/* Sitewide public accessibility layer. Loaded last so user-selected reading settings win. */
+.public-accessibility {
+  position: fixed;
+  right: max(14px, env(safe-area-inset-right));
+  bottom: max(14px, env(safe-area-inset-bottom));
+  z-index: 12000;
+  width: min(430px, calc(100vw - 28px));
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 14px;
+  line-height: 1.35;
+  pointer-events: none;
+}
+
+.public-accessibility button,
+.public-accessibility select,
+.public-accessibility input {
+  font: inherit;
+}
+
+.public-accessibility button,
+.public-accessibility select,
+.public-accessibility label,
+.public-accessibility__player,
+.public-accessibility__settings,
+.public-accessibility__launcher {
+  pointer-events: auto;
+}
+
+.public-accessibility__launcher {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.public-accessibility__launcher button,
+.public-accessibility__player button,
+.public-accessibility__settings button,
+.public-accessibility__player select,
+.public-accessibility__settings select {
+  min-height: 44px;
+  border: 1px solid #ece7dc;
+  border-radius: 0;
+  background: #121212;
+  color: #f4efe5;
+  padding: 9px 12px;
+  cursor: pointer;
+}
+
+.public-accessibility__launcher button:hover,
+.public-accessibility__player button:hover:not(:disabled),
+.public-accessibility__settings button:hover,
+.public-accessibility__player select:hover,
+.public-accessibility__settings select:hover {
+  border-color: #d1a52d;
+}
+
+.public-accessibility__read-button,
+.public-accessibility__transport .is-primary {
+  background: #d1a52d !important;
+  border-color: #d1a52d !important;
+  color: #111 !important;
+  font-weight: 800 !important;
+}
+
+.public-accessibility__read-button::before {
+  content: '▶';
+  margin-right: .45rem;
+  font-size: .8em;
+}
+
+.public-accessibility__settings-button {
+  font-weight: 700;
+}
+
+.public-accessibility__player,
+.public-accessibility__settings {
+  border: 1px solid #ece7dc;
+  background: #0d0d0d;
+  color: #f4efe5;
+  box-shadow: 7px 7px 0 rgba(0, 0, 0, .35);
+}
+
+.public-accessibility__player {
+  padding: 12px;
+}
+
+.public-accessibility__player-head,
+.public-accessibility__settings-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.public-accessibility__player-head > div,
+.public-accessibility__settings-head > div {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.public-accessibility__player-head strong,
+.public-accessibility__settings-head strong {
+  color: #fff;
+  font-size: 15px;
+  letter-spacing: .02em;
+}
+
+.public-accessibility__status,
+.public-accessibility__settings-head span {
+  min-width: 0;
+  color: #c9c1b5;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.public-accessibility__close,
+.public-accessibility__settings-head button {
+  min-height: 36px !important;
+  padding: 6px 9px !important;
+  border-color: rgba(236, 231, 220, .35) !important;
+  color: #d8d0c4 !important;
+  font-size: 12px !important;
+}
+
+.public-accessibility__transport {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+  margin-top: 11px;
+}
+
+.public-accessibility__transport button {
+  min-width: 0;
+  padding-inline: 8px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.public-accessibility button:disabled {
+  opacity: .42;
+  cursor: not-allowed;
+}
+
+.public-accessibility__player-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 11px;
+  margin-top: 9px;
+  color: #c9c1b5;
+  font-size: 12px;
+}
+
+.public-accessibility__player-meta > span {
+  margin-right: auto;
+  font-variant-numeric: tabular-nums;
+}
+
+.public-accessibility__player-meta label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.public-accessibility__player-meta select {
+  min-height: 36px;
+  padding: 4px 25px 4px 7px;
+  font-size: 12px;
+}
+
+.public-accessibility__inline-settings {
+  min-height: 36px !important;
+  padding: 5px 8px !important;
+  font-size: 12px !important;
+}
+
+.public-accessibility__settings {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 9px);
+  width: 100%;
+  max-height: min(680px, calc(100vh - 120px));
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 13px;
+}
+
+.public-accessibility__setting-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 13px;
+}
+
+.public-accessibility__setting-grid label {
+  min-width: 0;
+  display: grid;
+  gap: 5px;
+  color: #d8d0c4;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.public-accessibility__setting-grid select {
+  width: 100%;
+  min-width: 0;
+  padding-inline: 8px 24px;
+  font-size: 12px;
+}
+
+.public-accessibility__toggles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  margin-top: 11px;
+}
+
+.public-accessibility__toggles label {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(236, 231, 220, .24);
+  padding: 7px 9px;
+  color: #eee8de;
+  font-size: 12px;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.public-accessibility__toggles input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: #d1a52d;
+}
+
+.public-accessibility__settings-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 11px;
+}
+
+.public-accessibility__settings-actions button {
+  min-height: 38px;
+  padding: 6px 9px;
+  font-size: 12px;
+}
+
+.public-accessibility__privacy-note {
+  margin: 11px 0 0 !important;
+  padding-top: 9px;
+  border-top: 1px solid rgba(236, 231, 220, .18);
+  color: #a9a196 !important;
+  font: 11px/1.45 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+}
+
+.public-a11y-image-description {
+  display: block;
+  max-width: 42rem;
+  margin: .55rem auto 1rem;
+  border-left: 3px solid #d1a52d;
+  padding: .45rem .65rem;
+  background: rgba(209, 165, 45, .08);
+  color: inherit;
+  font: 13px/1.5 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+[data-sabot-reading-current="true"] {
+  outline: 2px solid #d1a52d !important;
+  outline-offset: 5px !important;
+  background-color: rgba(209, 165, 45, .09) !important;
+}
+
+/* Strong public focus indication even when a page's decorative styles forget it. */
+.public-route-shell :focus-visible {
+  outline: 3px solid #f3c844 !important;
+  outline-offset: 3px !important;
+}
+
+/* Reading size controls. These intentionally outrank the final typography guard. */
+html[data-sabot-a11y-text-size="large"] .public-route-shell #main-content :where(p, li, blockquote, dd, dt, figcaption, .post-body__paragraph, .post-body__block, .post-body__list-item, .post-body__link) {
+  font-size: 16px !important;
+}
+html[data-sabot-a11y-text-size="larger"] .public-route-shell #main-content :where(p, li, blockquote, dd, dt, figcaption, .post-body__paragraph, .post-body__block, .post-body__list-item, .post-body__link) {
+  font-size: 18px !important;
+}
+html[data-sabot-a11y-text-size="large"] .public-route-shell #main-content :where(h2, .post-body__heading) { font-size: 24px !important; }
+html[data-sabot-a11y-text-size="larger"] .public-route-shell #main-content :where(h2, .post-body__heading) { font-size: 27px !important; }
+html[data-sabot-a11y-text-size="large"] .public-route-shell #main-content h3 { font-size: 20px !important; }
+html[data-sabot-a11y-text-size="larger"] .public-route-shell #main-content h3 { font-size: 23px !important; }
+
+html[data-sabot-a11y-line-spacing="relaxed"] .public-route-shell #main-content :where(p, li, blockquote, dd, dt, .post-body__paragraph, .post-body__block, .post-body__list-item) {
+  line-height: 1.75 !important;
+}
+html[data-sabot-a11y-line-spacing="spacious"] .public-route-shell #main-content :where(p, li, blockquote, dd, dt, .post-body__paragraph, .post-body__block, .post-body__list-item) {
+  line-height: 1.95 !important;
+}
+html[data-sabot-a11y-line-spacing="relaxed"] .public-route-shell #main-content :where(p, .post-body__paragraph, .post-body__block) { margin-bottom: 1.15rem !important; }
+html[data-sabot-a11y-line-spacing="spacious"] .public-route-shell #main-content :where(p, .post-body__paragraph, .post-body__block) { margin-bottom: 1.4rem !important; }
+
+html[data-sabot-a11y-reading-width="narrow"] .piece-page :where(.piece-article-lead, .piece-layout, .piece-layout.piece-layout--with-meta) {
+  max-width: 660px !important;
+}
+html[data-sabot-a11y-reading-width="wide"] .piece-page :where(.piece-article-lead, .piece-layout, .piece-layout.piece-layout--with-meta) {
+  max-width: 960px !important;
+}
+html[data-sabot-a11y-reading-width="narrow"] .public-route-shell #main-content article { max-width: 660px; margin-inline: auto; }
+html[data-sabot-a11y-reading-width="wide"] .public-route-shell #main-content article { max-width: 960px; margin-inline: auto; }
+
+html[data-sabot-a11y-plain-reading="on"] .public-route-shell #main-content :where(p, li, blockquote, dd, dt, figcaption, .post-body__paragraph, .post-body__block, .post-body__list-item, .post-body__link) {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+}
+
+html[data-sabot-a11y-contrast="on"] .public-route-shell #main-content {
+  --text: #fff;
+  --text-dim: #eee;
+  --paper: #fff;
+  --paper-ink: #000;
+  color: #fff !important;
+  background: #000 !important;
+}
+html[data-sabot-a11y-contrast="on"] .public-route-shell #main-content :where(main, article, section, .piece-body-wrap, .panel, .card) {
+  border-color: rgba(255, 255, 255, .7) !important;
+}
+html[data-sabot-a11y-contrast="on"] .public-route-shell #main-content :where(p, li, blockquote, h1, h2, h3, h4, strong, small, span) {
+  color: inherit;
+}
+html[data-sabot-a11y-contrast="on"] .public-route-shell #main-content a {
+  color: #ffdc55 !important;
+  text-decoration: underline !important;
+  text-decoration-thickness: .12em !important;
+  text-underline-offset: .16em !important;
+}
+
+html[data-sabot-a11y-low-glare="on"] .public-route-shell #main-content {
+  --text: #e2d7c7;
+  --text-dim: #c4b8a7;
+  --paper: #d8cdbd;
+  --paper-ink: #1b1815;
+  color: #e2d7c7 !important;
+  background: #171411 !important;
+}
+html[data-sabot-a11y-low-glare="on"] .public-route-shell #main-content :where(.piece-body-wrap, article, section) {
+  box-shadow: none !important;
+}
+
+html[data-sabot-a11y-reduced-motion="on"] .public-route-shell *,
+html[data-sabot-a11y-reduced-motion="on"] .public-accessibility * {
+  scroll-behavior: auto !important;
+  animation-duration: .001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: .001ms !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .public-route-shell *,
+  .public-accessibility * {
+    scroll-behavior: auto !important;
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .public-accessibility {
+    right: max(8px, env(safe-area-inset-right));
+    bottom: max(8px, env(safe-area-inset-bottom));
+    width: calc(100vw - max(16px, env(safe-area-inset-left) + env(safe-area-inset-right)));
+  }
+  .public-accessibility__launcher {
+    justify-content: stretch;
+  }
+  .public-accessibility__launcher button {
+    flex: 1 1 0;
+  }
+  .public-accessibility__settings {
+    max-height: calc(100vh - 150px);
+  }
+  .public-accessibility__setting-grid {
+    grid-template-columns: 1fr;
+  }
+  .public-accessibility__toggles {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 430px) {
+  .public-accessibility__transport {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .public-accessibility__player-meta {
+    align-items: stretch;
+  }
+  .public-accessibility__player-meta > span {
+    flex: 1 0 100%;
+  }
+}
+
+@media print {
+  .public-accessibility,
+  .public-a11y-image-description {
+    display: none !important;
+  }
+  [data-sabot-reading-current="true"] {
+    outline: none !important;
+    background: transparent !important;
+  }
+}

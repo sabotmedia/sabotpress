@@ -1,0 +1,156 @@
+/*
+ * Admin editor form repair.
+ * The shared admin input rules make text fields sane, but they were also
+ * stretching checkboxes/file inputs. That turned category rows into lonely
+ * square boxes and made media controls miserable. Contain that nonsense here.
+ */
+
+.admin-frame input[type='checkbox'],
+.admin-frame input[type='radio'] {
+  width: 16px !important;
+  min-width: 16px !important;
+  max-width: 16px !important;
+  height: 16px !important;
+  min-height: 16px !important;
+  max-height: 16px !important;
+  display: inline-block !important;
+  flex: 0 0 16px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border-radius: 2px;
+  accent-color: var(--admin-blue, #2271b1);
+  vertical-align: middle;
+}
+
+.admin-frame input[type='file'] {
+  width: auto !important;
+  max-width: 100% !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+}
+
+.admin-frame input[hidden],
+.admin-frame input[type='file'][hidden] {
+  display: none !important;
+}
+
+.native-bridge-sidebar,
+.native-bridge-sidebar .wp-meta-box,
+.wp-edit-screen,
+.wp-edit-screen * {
+  min-width: 0;
+}
+
+.native-bridge-sidebar .wp-meta-box {
+  overflow-x: hidden;
+}
+
+.native-content-editor__tabs {
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.native-content-editor__tabs .button {
+  flex: 1 1 92px;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.native-content-editor__check {
+  width: 100%;
+  min-width: 0;
+  display: grid !important;
+  grid-template-columns: 18px minmax(0, 1fr) !important;
+  gap: 8px !important;
+  align-items: start !important;
+  margin: 8px 0 !important;
+  color: var(--admin-ink, #1d2327) !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  line-height: 1.35 !important;
+  cursor: pointer;
+}
+
+.native-content-editor__check span {
+  min-width: 0;
+  display: block !important;
+  overflow: visible !important;
+  color: var(--admin-ink, #1d2327) !important;
+  overflow-wrap: anywhere;
+  white-space: normal !important;
+}
+
+.native-content-editor__inline-add {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+}
+
+.native-content-editor__inline-add .button {
+  white-space: nowrap;
+}
+
+.wp-media-toolbar,
+.wp-media-modal .wp-media-toolbar {
+  min-width: 0;
+  max-width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  overflow-x: hidden;
+}
+
+.wp-media-toolbar .button,
+.wp-media-modal .wp-media-toolbar .button {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.wp-media-toolbar input,
+.wp-media-toolbar select,
+.wp-media-modal .wp-media-toolbar input,
+.wp-media-modal .wp-media-toolbar select {
+  flex: 1 1 180px;
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+
+.wp-media-layout,
+.wp-media-modal__body {
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.wp-media-grid,
+.wp-media-modal__library {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.wp-media-item {
+  min-width: 0 !important;
+  max-width: 100% !important;
+  overflow: hidden;
+}
+
+.wp-media-item__meta,
+.wp-media-details p,
+.wp-media-modal__details p {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.wp-media-details img,
+.wp-media-modal__details img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}

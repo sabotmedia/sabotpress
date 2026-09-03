@@ -1,0 +1,168 @@
+/* FINAL public reading typography guard.
+   This file is loaded after every other stylesheet so these are the actual public sizes. */
+
+.piece-page .piece-body__content,
+.piece-page .piece-body__content p,
+.piece-page .piece-body__content li,
+.piece-page .piece-body__content blockquote,
+.piece-page .piece-body__content .post-body__paragraph,
+.piece-page .piece-body__content .post-body__block,
+.piece-page .piece-body__content .post-body__list,
+.piece-page .piece-body__content .post-body__list-item,
+.piece-page .piece-body__content .post-body__link {
+  font-size: 13.5px !important;
+  line-height: 1.56 !important;
+  letter-spacing: 0 !important;
+}
+
+.piece-page .piece-body__content p,
+.piece-page .piece-body__content .post-body__paragraph,
+.piece-page .piece-body__content .post-body__block {
+  margin-top: 0 !important;
+  margin-bottom: 0.9rem !important;
+}
+
+.piece-page .piece-body__content h1,
+.piece-page .piece-body__content .post-body__heading:first-child {
+  font-size: 26px !important;
+  line-height: 1.08 !important;
+  margin: 1.4rem 0 0.7rem !important;
+}
+
+.piece-page .piece-body__content h2,
+.piece-page .piece-body__content .post-body__heading {
+  font-size: 21px !important;
+  line-height: 1.12 !important;
+  margin: 1.3rem 0 0.65rem !important;
+}
+
+.piece-page .piece-body__content h3 {
+  font-size: 17px !important;
+  line-height: 1.18 !important;
+  margin: 1.15rem 0 0.55rem !important;
+}
+
+/* Public post title. */
+.piece-page .piece-article-lead__fallback h1,
+.piece-page .piece-article-lead__title-below h1,
+.piece-page .piece-article-lead__overlay h1 {
+  width: auto !important;
+  max-width: min(92vw, 28ch) !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  font-size: clamp(28px, 3.1vw, 42px) !important;
+  line-height: 1.02 !important;
+  letter-spacing: -0.02em !important;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+  hyphens: none !important;
+  text-wrap: balance !important;
+}
+
+.piece-page .piece-article-lead__eyebrow,
+.piece-page .piece-article-lead__meta,
+.piece-page .piece-article-lead__meta span {
+  font-size: 11px !important;
+  line-height: 1.3 !important;
+}
+
+/* Zines / comics / readers: the artwork is the object. Keep the title compact. */
+body.is-sabot-preview-media .piece-article-lead__fallback h1,
+body.is-sabot-preview-media .piece-article-lead__title-below h1,
+body.is-sabot-preview-media .piece-article-lead__overlay h1 {
+  max-width: min(90vw, 34ch) !important;
+  font-size: 22px !important;
+  line-height: 1.12 !important;
+  letter-spacing: -0.01em !important;
+  text-align: center !important;
+  margin: 0 auto !important;
+}
+
+body.is-sabot-preview-media .piece-article-lead__title-below {
+  width: min(calc(100vw - 28px), 900px) !important;
+  margin: 12px auto 0 !important;
+  padding: 0 !important;
+}
+
+body.is-sabot-preview-media .piece-article-lead__eyebrow {
+  font-size: 10px !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0.1em !important;
+  margin-bottom: 5px !important;
+}
+
+body.is-sabot-preview-media .piece-body__content,
+body.is-sabot-preview-media .piece-body__content p,
+body.is-sabot-preview-media .piece-body__content li,
+body.is-sabot-preview-media .piece-body__content .post-body__paragraph,
+body.is-sabot-preview-media .piece-body__content .post-body__block,
+body.is-sabot-preview-media .piece-body__content .post-body__list,
+body.is-sabot-preview-media .piece-body__content .post-body__list-item {
+  font-size: 13px !important;
+  line-height: 1.5 !important;
+}
+
+/* Supporting descriptions should stay subordinate. */
+.archive-page .archive-card__excerpt,
+.publication-homepage .publication-hero-card p,
+.publication-homepage .publication-post-card p,
+.public-experience-panel p,
+.piece-header p,
+.archive-page .archive-results__summary {
+  font-size: 12px !important;
+  line-height: 1.45 !important;
+  letter-spacing: 0 !important;
+}
+
+.archive-page .archive-card__excerpt {
+  -webkit-line-clamp: 3 !important;
+}
+
+.archive-page .archive-card__title {
+  font-size: 17px !important;
+  line-height: 1.08 !important;
+}
+
+.archive-page .archive-page__hero p,
+.archive-page .archive-page__hero .lede,
+.archive-page .archive-page__hero .description {
+  font-size: 13px !important;
+  line-height: 1.5 !important;
+}
+
+@media (max-width: 720px) {
+  .piece-page .piece-body__content,
+  .piece-page .piece-body__content p,
+  .piece-page .piece-body__content li,
+  .piece-page .piece-body__content blockquote,
+  .piece-page .piece-body__content .post-body__paragraph,
+  .piece-page .piece-body__content .post-body__block,
+  .piece-page .piece-body__content .post-body__list,
+  .piece-page .piece-body__content .post-body__list-item {
+    font-size: 13px !important;
+    line-height: 1.52 !important;
+  }
+
+  .piece-page .piece-article-lead__fallback h1,
+  .piece-page .piece-article-lead__title-below h1,
+  .piece-page .piece-article-lead__overlay h1 {
+    max-width: calc(100vw - 28px) !important;
+    font-size: 26px !important;
+    line-height: 1.05 !important;
+  }
+
+  body.is-sabot-preview-media .piece-article-lead__fallback h1,
+  body.is-sabot-preview-media .piece-article-lead__title-below h1,
+  body.is-sabot-preview-media .piece-article-lead__overlay h1 {
+    font-size: 19px !important;
+    line-height: 1.12 !important;
+  }
+
+  .archive-page .archive-card__excerpt,
+  .publication-homepage .publication-hero-card p,
+  .publication-homepage .publication-post-card p,
+  .public-experience-panel p,
+  .piece-header p {
+    font-size: 11.5px !important;
+  }
+}

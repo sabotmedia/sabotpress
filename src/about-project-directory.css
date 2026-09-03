@@ -1,0 +1,89 @@
+.public-info-page .project-directory {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(calc(100vw - 48px), 1440px) !important;
+  max-width: 1440px !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.public-info-page .project-directory__header {
+  width: 100%;
+}
+
+.public-info-page .project-directory__grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: clamp(18px, 1.8vw, 26px) !important;
+}
+
+.public-info-page .project-directory__card {
+  min-width: 0;
+}
+
+.public-info-page .project-directory__brand {
+  min-height: clamp(250px, 24vw, 360px) !important;
+  padding: clamp(18px, 2vw, 28px) !important;
+}
+
+.public-info-page .project-directory__brand img {
+  display: block;
+  width: auto !important;
+  max-width: 92% !important;
+  height: auto !important;
+  max-height: clamp(220px, 21vw, 325px) !important;
+  object-fit: contain !important;
+}
+
+.public-info-page .project-directory__publication-brand {
+  min-height: 190px !important;
+  max-width: 620px;
+}
+
+.public-info-page .project-directory__publication-brand img {
+  max-width: 540px !important;
+  max-height: 180px !important;
+}
+
+.public-info-page .project-directory__body {
+  padding: clamp(18px, 1.8vw, 26px) !important;
+}
+
+@media (max-width: 900px) {
+  .public-info-page .project-directory {
+    width: min(calc(100vw - 28px), 760px) !important;
+  }
+
+  .public-info-page .project-directory__grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .public-info-page .project-directory__brand {
+    min-height: clamp(240px, 52vw, 340px) !important;
+  }
+
+  .public-info-page .project-directory__brand img {
+    max-height: clamp(215px, 46vw, 305px) !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .public-info-page .project-directory {
+    left: auto;
+    transform: none;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .public-info-page .project-directory__brand {
+    min-height: 220px !important;
+    padding: 14px !important;
+  }
+
+  .public-info-page .project-directory__brand img {
+    max-width: 96% !important;
+    max-height: 200px !important;
+  }
+}

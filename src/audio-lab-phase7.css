@@ -1,0 +1,27 @@
+.audio-lab-phase7-actions {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+}
+
+.audio-lab-phase7-status {
+  border-radius: 12px;
+  margin-top: 0.75rem;
+  padding: 0.6rem 0.75rem;
+}
+
+.audio-lab-phase7-status[data-status='info'] {
+  background: rgba(114, 174, 230, 0.14);
+}
+
+.audio-lab-phase7-status[data-status='success'] {
+  background: rgba(87, 180, 122, 0.14);
+}
+
+.audio-lab-phase7-status[data-status='warn'] {
+  background: rgba(240, 195, 60, 0.16);
+}
+
+.audio-lab-phase7-status[data-status='error'] {
+  background: rgba(214, 54, 56, 0.16);
+}

@@ -1,0 +1,319 @@
+.audio-lab-workbench--phase4 {
+  grid-template-columns: minmax(230px, 280px) minmax(0, 1.4fr) minmax(300px, 380px);
+}
+
+.audio-lab-workbench--phase4 .audio-lab-editor {
+  grid-template-rows: auto auto auto auto minmax(0, 1fr);
+}
+
+.audio-lab-selection-fields {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(100px, 150px));
+  gap: 8px;
+  align-items: end;
+}
+
+.audio-lab-selection-fields label {
+  display: grid;
+  gap: 4px;
+}
+
+.audio-lab-selection-fields span {
+  color: #50575e;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.audio-lab-selection-fields input {
+  width: 100%;
+  min-height: 34px;
+  border: 1px solid #8c8f94;
+  border-radius: 4px;
+  color: #1d2327;
+  font-variant-numeric: tabular-nums;
+  padding: 6px 8px;
+}
+
+.audio-lab-multitrack {
+  min-width: 0;
+  margin-top: 14px;
+  border: 1px solid #31404d;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #101820;
+}
+
+.audio-lab-timeline-actions {
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px;
+  border-bottom: 1px solid #31404d;
+  background: #202b35;
+  color: #dce7ef;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.audio-lab-multitrack-scroll {
+  max-height: 420px;
+  overflow: auto;
+  scrollbar-width: thin;
+}
+
+.audio-lab-multitrack-inner {
+  position: relative;
+  min-height: 180px;
+  background:
+    linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px) 150px 0 / 48px 100%,
+    #101820;
+}
+
+.audio-lab-multitrack-ruler {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  display: grid;
+  grid-template-columns: 150px 1fr 1fr 1fr;
+  gap: 12px;
+  padding: 8px 12px;
+  border-bottom: 1px solid #31404d;
+  background: #17212b;
+  color: #ccd6df;
+  font-size: 11px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.audio-lab-playhead {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 3;
+  width: 2px;
+  background: #f0c33c;
+  pointer-events: none;
+}
+
+.audio-lab-multitrack-selection {
+  position: absolute;
+  top: 32px;
+  bottom: 0;
+  z-index: 2;
+  background: rgba(240, 195, 60, 0.12);
+  border-left: 1px solid rgba(240, 195, 60, 0.65);
+  border-right: 1px solid rgba(240, 195, 60, 0.65);
+  pointer-events: none;
+}
+
+.audio-lab-multitrack-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 150px minmax(760px, 1fr);
+  min-height: 94px;
+  border-bottom: 1px solid #31404d;
+}
+
+.audio-lab-multitrack-row.is-selected .audio-lab-multitrack-controls {
+  background: #263747;
+}
+
+.audio-lab-multitrack-controls {
+  min-width: 0;
+  display: grid;
+  gap: 6px;
+  align-content: start;
+  padding: 8px;
+  border-right: 1px solid #31404d;
+  background: #202b35;
+  color: #f4f7fa;
+}
+
+.audio-lab-multitrack-controls input {
+  width: 100%;
+  min-width: 0;
+  min-height: 28px;
+  border: 1px solid #506171;
+  border-radius: 4px;
+  background: #111b24;
+  color: #f4f7fa;
+  font-size: 12px;
+  padding: 4px 6px;
+}
+
+.audio-lab-track-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.audio-lab-track-buttons button {
+  border: 1px solid #506171;
+  border-radius: 4px;
+  background: #16222d;
+  color: #dce7ef;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 4px 6px;
+  cursor: pointer;
+}
+
+.audio-lab-track-buttons button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.audio-lab-track-buttons button.is-active {
+  border-color: #72aee6;
+  background: #1f5f8b;
+  color: #fff;
+}
+
+.audio-lab-multitrack-controls label {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 5px;
+  align-items: center;
+  color: #b9c5cf;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.audio-lab-multitrack-lane {
+  position: relative;
+  min-height: 94px;
+  overflow: hidden;
+}
+
+.audio-lab-clip {
+  position: absolute;
+  top: 14px;
+  bottom: 14px;
+  display: grid;
+  align-content: center;
+  gap: 4px;
+  overflow: hidden;
+  border: 1px solid #72aee6;
+  border-radius: 7px;
+  background: linear-gradient(180deg, #275d83, #1f4f73);
+  color: #fff;
+  text-align: left;
+  cursor: grab;
+  padding: 8px;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.22);
+}
+
+.audio-lab-clip:active {
+  cursor: grabbing;
+}
+
+.audio-lab-clip.is-selected {
+  outline: 2px solid #f0c33c;
+  outline-offset: 2px;
+}
+
+.audio-lab-clip.is-muted {
+  opacity: 0.45;
+}
+
+.audio-lab-clip strong,
+.audio-lab-clip span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.audio-lab-clip span {
+  color: rgba(255,255,255,0.76);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+.audio-lab-source-bin__list {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.audio-lab-source-bin__item {
+  display: grid;
+  gap: 5px;
+  padding: 9px;
+  border: 1px solid #dcdcde;
+  border-radius: 7px;
+  background: #f6f7f7;
+}
+
+.audio-lab-source-bin__item strong,
+.audio-lab-source-bin__item span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.audio-lab-source-bin__item span {
+  color: #646970;
+  font-size: 12px;
+}
+
+.audio-lab-clip-inspector {
+  display: grid;
+  gap: 10px;
+}
+
+.audio-lab-checkbox {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: #1d2327;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.audio-lab-danger-button {
+  width: 100%;
+  margin-top: 8px;
+  border-color: #b32d2e !important;
+  color: #b32d2e !important;
+}
+
+.audio-lab-danger-button:hover,
+.audio-lab-danger-button:focus-visible {
+  background: #b32d2e !important;
+  color: #fff !important;
+}
+
+.audio-lab-source-bin .button,
+.audio-lab-clip-inspector .button {
+  width: 100%;
+}
+
+@media (max-width: 1240px) {
+  .audio-lab-workbench--phase4 {
+    grid-template-columns: minmax(210px, 250px) minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .audio-lab-selection-fields,
+  .audio-lab-multitrack-row {
+    grid-template-columns: 1fr;
+  }
+
+  .audio-lab-multitrack-ruler {
+    grid-template-columns: 1fr;
+  }
+
+  .audio-lab-multitrack-controls {
+    border-right: 0;
+    border-bottom: 1px solid #31404d;
+  }
+}

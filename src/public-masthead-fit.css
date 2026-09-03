@@ -1,0 +1,169 @@
+/* Public masthead isolation.
+   The legacy stylesheet contains many generations of masthead rules. This file is loaded later and deliberately gives the live mark its own class so those rules cannot touch it. */
+
+.publication-topbar--masthead {
+  position: relative !important;
+  z-index: 20 !important;
+  min-height: 0 !important;
+  height: auto !important;
+  padding: 12px 0 10px !important;
+  overflow: visible !important;
+  background: transparent !important;
+  border-bottom: 1px solid rgba(244, 220, 160, 0.14) !important;
+}
+
+.publication-topbar--masthead .publication-topbar__inner {
+  width: min(calc(100% - 24px), 1120px) !important;
+  max-width: 1120px !important;
+  min-height: 0 !important;
+  height: auto !important;
+  margin: 0 auto !important;
+  overflow: visible !important;
+}
+
+.publication-topbar--masthead .publication-topbar__brand {
+  width: 100% !important;
+  min-height: 0 !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 7px !important;
+  position: static !important;
+  transform: none !important;
+  overflow: visible !important;
+}
+
+/* The home logo has lower tooth details that need to sit fully above the nav. */
+.publication-topbar--home .publication-topbar__brand {
+  gap: 20px !important;
+}
+
+.publication-topbar--masthead .publication-topbar__brand-link--isolated {
+  width: 280px !important;
+  max-width: min(72vw, 280px) !important;
+  height: auto !important;
+  min-height: 0 !important;
+  aspect-ratio: 280 / 88 !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  display: block !important;
+  flex: 0 0 auto !important;
+  position: static !important;
+  inset: auto !important;
+  transform: none !important;
+  overflow: visible !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  line-height: 0 !important;
+}
+
+.publication-topbar--masthead .publication-topbar__brand-image--isolated {
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 1px !important;
+  min-height: 1px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: block !important;
+  position: absolute !important;
+  inset: 0 !important;
+  transform: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+}
+
+.publication-topbar--masthead .publication-topbar__brand-link--isolated {
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+/* Home uses a taller, unclipped logo stage and lifts the entire mark upward.
+   This is intentionally after the generic overflow rule above. */
+.publication-topbar--home .publication-topbar__brand-link--isolated {
+  width: 280px !important;
+  max-width: min(76vw, 280px) !important;
+  aspect-ratio: 280 / 104 !important;
+  overflow: visible !important;
+  transform: translateY(-10px) !important;
+}
+
+.publication-topbar--home .publication-topbar__brand-image--isolated {
+  object-position: center top !important;
+}
+
+.publication-topbar--inner .publication-topbar__brand-link--isolated {
+  width: 220px !important;
+  max-width: min(62vw, 220px) !important;
+}
+
+.publication-topbar--masthead .publication-topbar__nav {
+  width: auto !important;
+  min-height: 0 !important;
+  height: auto !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: clamp(18px, 3vw, 34px) !important;
+  position: static !important;
+  inset: auto !important;
+  transform: none !important;
+  overflow: visible !important;
+  background: transparent !important;
+}
+
+.publication-topbar--masthead .publication-topbar__nav a {
+  white-space: nowrap !important;
+}
+
+.publication-homepage .publication-hero-card,
+.publication-homepage .publication-recent-grid,
+.piece-page .piece-article-lead,
+.piece-page .piece-layout {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 720px) {
+  .publication-topbar--masthead {
+    padding: 9px 0 8px !important;
+  }
+
+  .publication-topbar--masthead .publication-topbar__brand {
+    gap: 5px !important;
+  }
+
+  .publication-topbar--home .publication-topbar__brand {
+    gap: 16px !important;
+  }
+
+  .publication-topbar--home .publication-topbar__brand-link--isolated {
+    width: 210px !important;
+    max-width: 68vw !important;
+    aspect-ratio: 210 / 82 !important;
+    overflow: visible !important;
+    transform: translateY(-7px) !important;
+  }
+
+  .publication-topbar--inner .publication-topbar__brand-link--isolated {
+    width: 210px !important;
+    max-width: 68vw !important;
+  }
+
+  .publication-topbar--masthead .publication-topbar__nav {
+    gap: 18px !important;
+  }
+}

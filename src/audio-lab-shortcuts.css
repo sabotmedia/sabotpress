@@ -1,0 +1,40 @@
+.audio-lab-page .audio-lab-shortcut-toast {
+  position: fixed;
+  right: 14px;
+  bottom: 46px;
+  z-index: 120;
+  padding: 7px 10px;
+  border: 1px solid rgba(116, 167, 255, 0.7);
+  background: rgba(17, 24, 33, 0.92);
+  color: #e8eef6;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity 0.16s ease, transform 0.16s ease;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+}
+
+.audio-lab-page .audio-lab-shortcut-toast.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.audio-lab-page .audio-lab-multitrack-inner {
+  transform: scaleX(var(--audiolab-zoom-scale, 1));
+  transform-origin: left top;
+}
+
+.audio-lab-page[data-audiolab-zoom] .audio-lab-multitrack-scroll {
+  scroll-behavior: smooth;
+}
+
+.audio-lab-page[data-audiolab-shortcuts-ready="true"] .audio-lab-header h1::after {
+  content: " · Space play · R record · Ctrl+S save · Ctrl+Z undo · Ctrl+1/3 zoom";
+  color: #aeb8c4;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}

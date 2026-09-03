@@ -1,0 +1,41 @@
+/* Image-only featured cards must show the artwork itself, not a cropped backdrop. */
+.publication-homepage .publication-hero-card--title-hidden,
+.publication-homepage .publication-post-card--title-hidden,
+.publication-homepage .publication-hero-card--title-hidden .publication-hero-card__image-wrap,
+.publication-homepage .publication-post-card--title-hidden .publication-post-card__link {
+  min-height: 0 !important;
+  height: auto !important;
+}
+
+.publication-homepage .publication-hero-card__image-actual,
+.publication-homepage .publication-post-card__image-actual {
+  position: static !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  display: block !important;
+  object-fit: contain !important;
+  background: #000;
+}
+
+.publication-homepage .publication-hero-card--title-hidden .publication-hero-card__overlay,
+.publication-homepage .publication-post-card--title-hidden .publication-post-card__overlay,
+.publication-homepage .publication-hero-card--title-hidden::after,
+.publication-homepage .publication-post-card--title-hidden::after {
+  display: none !important;
+  content: none !important;
+}
+
+.publication-homepage .publication-hero-card--title-hidden .screen-reader-only,
+.publication-homepage .publication-post-card--title-hidden .screen-reader-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}

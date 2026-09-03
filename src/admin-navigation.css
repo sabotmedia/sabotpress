@@ -1,0 +1,285 @@
+/* Compact admin navigation: icon rail + expandable route groups. */
+
+.admin-frame {
+  grid-template-columns: 208px minmax(0, 1fr) !important;
+  transition: grid-template-columns 160ms ease;
+}
+
+.admin-frame.admin-frame--rail-collapsed {
+  grid-template-columns: 54px minmax(0, 1fr) !important;
+}
+
+.admin-rail {
+  width: 100%;
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  background: #1d2327 !important;
+  border-right: 1px solid #2c3338 !important;
+  padding: 6px 0 14px !important;
+}
+
+.admin-rail__controls {
+  display: flex;
+  align-items: center;
+  min-height: 42px;
+  padding: 0 6px 6px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  margin-bottom: 5px;
+}
+
+.admin-rail__toggle,
+.admin-rail__group-toggle {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: #c3c4c7;
+  font: inherit;
+  cursor: pointer;
+}
+
+.admin-rail__toggle {
+  min-height: 34px;
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
+  padding: 4px 8px;
+  text-align: left;
+}
+
+.admin-rail__toggle > span:first-child {
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.admin-rail__toggle-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.admin-rail__toggle:hover,
+.admin-rail__toggle:focus-visible,
+.admin-rail__group-toggle:hover,
+.admin-rail__group-toggle:focus-visible {
+  background: #2c3338;
+  color: #72aee6;
+  outline: none;
+}
+
+.admin-rail__nav {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 3px !important;
+  padding: 0 6px;
+}
+
+.admin-rail__link,
+.admin-rail__group-toggle {
+  min-height: 38px;
+  display: grid !important;
+  grid-template-columns: 30px minmax(0, 1fr) 16px;
+  gap: 7px;
+  align-items: center;
+  padding: 5px 8px !important;
+  border: 0 !important;
+  border-radius: 4px !important;
+  background: transparent !important;
+  color: #c3c4c7 !important;
+  line-height: 1.2 !important;
+  text-align: left;
+  text-decoration: none;
+}
+
+.admin-rail__link--primary {
+  grid-template-columns: 30px minmax(0, 1fr);
+  margin-bottom: 2px;
+}
+
+.admin-rail__icon {
+  width: 30px;
+  min-width: 30px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 4px;
+  color: #a7aaad;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.admin-rail__text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.admin-rail__chevron {
+  display: grid;
+  place-items: center;
+  color: #8c8f94;
+  font-size: 18px;
+  line-height: 1;
+  transform: rotate(0deg);
+  transition: transform 120ms ease;
+}
+
+.admin-rail__group.is-open .admin-rail__chevron {
+  transform: rotate(90deg);
+}
+
+.admin-rail__group.is-active > .admin-rail__group-toggle {
+  color: #fff !important;
+  background: #2c3338 !important;
+}
+
+.admin-rail__group.is-active > .admin-rail__group-toggle .admin-rail__icon {
+  color: #72aee6;
+}
+
+.admin-rail__link:hover,
+.admin-rail__link:focus-visible,
+.admin-rail__link.is-active {
+  background: #2c3338 !important;
+  color: #fff !important;
+}
+
+.admin-rail__link.is-active {
+  box-shadow: inset 3px 0 0 #72aee6 !important;
+}
+
+.admin-rail__subnav {
+  display: grid !important;
+  gap: 1px;
+  margin: 2px 0 4px 38px;
+  padding-left: 8px;
+  border-left: 1px solid #3c434a;
+}
+
+.admin-rail__subnav[hidden] {
+  display: none !important;
+}
+
+.admin-rail__sublink {
+  min-width: 0;
+  display: block;
+  padding: 7px 8px !important;
+  border-radius: 3px;
+  color: #a7aaad !important;
+  font-size: 12px;
+  line-height: 1.25;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.admin-rail__sublink:hover,
+.admin-rail__sublink:focus-visible {
+  background: #2c3338;
+  color: #72aee6 !important;
+  outline: none;
+}
+
+.admin-rail__sublink.is-active {
+  background: #2271b1;
+  color: #fff !important;
+  font-weight: 600;
+}
+
+.admin-frame--rail-collapsed .admin-rail__controls {
+  padding-inline: 5px;
+}
+
+.admin-frame--rail-collapsed .admin-rail__toggle,
+.admin-frame--rail-collapsed .admin-rail__link,
+.admin-frame--rail-collapsed .admin-rail__group-toggle {
+  grid-template-columns: 1fr !important;
+  justify-items: center;
+  padding-inline: 4px !important;
+}
+
+.admin-frame--rail-collapsed .admin-rail__toggle-label,
+.admin-frame--rail-collapsed .admin-rail__text,
+.admin-frame--rail-collapsed .admin-rail__chevron,
+.admin-frame--rail-collapsed .admin-rail__subnav {
+  display: none !important;
+}
+
+.admin-frame--rail-collapsed .admin-rail__icon {
+  color: #c3c4c7;
+}
+
+.admin-frame--rail-collapsed .admin-rail__group.is-active > .admin-rail__group-toggle,
+.admin-frame--rail-collapsed .admin-rail__link.is-active {
+  background: #2271b1 !important;
+  box-shadow: none !important;
+}
+
+.admin-frame--rail-collapsed .admin-rail__group.is-active .admin-rail__icon,
+.admin-frame--rail-collapsed .admin-rail__link.is-active .admin-rail__icon {
+  color: #fff;
+}
+
+@media (max-width: 980px) {
+  .admin-frame,
+  .admin-frame.admin-frame--rail-collapsed {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .admin-rail {
+    position: sticky !important;
+    top: 32px !important;
+    z-index: 9000;
+    width: 100%;
+    min-height: 0 !important;
+    max-height: min(64vh, 520px);
+    border-right: 0 !important;
+    border-bottom: 1px solid #3c434a !important;
+  }
+
+  .admin-frame--rail-collapsed .admin-rail {
+    max-height: 46px;
+    overflow: hidden;
+  }
+
+  .admin-frame--rail-collapsed .admin-rail__nav {
+    display: none !important;
+  }
+
+  .admin-rail__controls {
+    min-height: 40px;
+    padding-bottom: 4px;
+  }
+
+  .admin-frame--rail-collapsed .admin-rail__toggle {
+    width: 44px;
+  }
+
+  .admin-frame:not(.admin-frame--rail-collapsed) .admin-rail__nav {
+    padding-bottom: 8px;
+  }
+
+  .admin-frame__main {
+    padding-top: 18px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .admin-frame,
+  .admin-rail__chevron {
+    transition: none;
+  }
+}

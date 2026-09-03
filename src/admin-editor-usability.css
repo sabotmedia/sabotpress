@@ -1,0 +1,66 @@
+/* Keep the post editor readable instead of squeezing it beside a scrolling sidebar. */
+.admin-frame:has(.wp-edit-screen) {
+  grid-template-columns: 180px minmax(0, 1fr) !important;
+}
+
+.admin-frame:has(.wp-edit-screen) .admin-rail {
+  width: auto !important;
+  min-width: 180px !important;
+  max-width: none !important;
+}
+
+.admin-frame:has(.wp-edit-screen) .admin-rail__nav {
+  display: block !important;
+}
+
+.admin-frame:has(.wp-edit-screen) .admin-rail__link {
+  display: block !important;
+  overflow: visible !important;
+  padding: 9px 12px !important;
+  font-size: 14px !important;
+  text-indent: 0 !important;
+  white-space: normal !important;
+}
+
+.wp-edit-screen .native-bridge-sidebar.native-bridge-sidebar--open {
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+.wp-classic-toolbar__button,
+.wp-classic-toolbar__fullscreen {
+  width: auto !important;
+  min-width: 34px !important;
+  padding: 0 8px !important;
+  font-size: 12px !important;
+}
+
+@media (max-width: 1280px) {
+  .wp-edit-screen .native-bridge-layout {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .wp-edit-screen .native-bridge-sidebar.native-bridge-sidebar--open {
+    position: static !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .wp-edit-screen .native-bridge-sidebar .wp-meta-box:first-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 800px) {
+  .admin-frame:has(.wp-edit-screen) {
+    grid-template-columns: 1fr !important;
+  }
+
+  .admin-frame:has(.wp-edit-screen) .admin-rail {
+    min-width: 0 !important;
+  }
+
+  .wp-edit-screen .native-bridge-sidebar.native-bridge-sidebar--open {
+    grid-template-columns: 1fr !important;
+  }
+}

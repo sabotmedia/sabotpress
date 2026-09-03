@@ -1,0 +1,263 @@
+/* Keep public-site visual themes out of the wp-admin configuration surface. */
+
+.admin-frame .admin-public-config-card {
+  margin: 0;
+  display: grid;
+  gap: 18px;
+  border: 1px solid #c3c4c7 !important;
+  border-radius: 4px;
+  background: #fff !important;
+  color: #1d2327 !important;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.04) !important;
+  padding: 20px;
+}
+
+.admin-frame .admin-public-config-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.admin-frame .admin-public-config-card__header h2 {
+  margin: 2px 0 7px;
+  color: #1d2327 !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.admin-frame .admin-public-config-card__eyebrow {
+  color: #646970 !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+  font-size: 11px !important;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.admin-frame .admin-public-config-card__header .description {
+  max-width: 760px;
+  margin: 0;
+}
+
+.admin-frame .admin-public-config-card__health {
+  flex: 0 0 auto;
+  min-height: 30px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid #dcdcde;
+  border-radius: 999px;
+  background: #f6f7f7;
+  color: #646970 !important;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.admin-frame .admin-public-config-card__health-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #d63638;
+}
+
+.admin-frame .admin-public-config-card__health.is-ready {
+  border-color: #9ad7a9;
+  background: #edfaef;
+  color: #116329 !important;
+}
+
+.admin-frame .admin-public-config-card__health.is-ready .admin-public-config-card__health-dot {
+  background: #00a32a;
+}
+
+.admin-frame .admin-public-config-card__error {
+  display: grid;
+  gap: 4px;
+  border-left: 4px solid #d63638;
+  background: #fcf0f1;
+  color: #1d2327 !important;
+  padding: 11px 12px;
+}
+
+.admin-frame .admin-public-config-card__error strong,
+.admin-frame .admin-public-config-card__error span {
+  color: #1d2327 !important;
+}
+
+.admin-frame .admin-public-config-card__status {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  overflow: hidden;
+  border: 1px solid #dcdcde;
+  border-radius: 4px;
+  background: #dcdcde;
+}
+
+.admin-frame .admin-public-config-card__status > span {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+  background: #f6f7f7;
+  padding: 9px 11px;
+}
+
+.admin-frame .admin-public-config-card__status small {
+  color: #646970 !important;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.admin-frame .admin-public-config-card__status strong {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #1d2327 !important;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.admin-frame .admin-public-config-card__summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.admin-frame .admin-public-config-card__summary article {
+  min-width: 0;
+  display: grid;
+  gap: 6px;
+  border: 1px solid #dcdcde;
+  border-radius: 4px;
+  background: #fff;
+  padding: 14px;
+}
+
+.admin-frame .admin-public-config-card__summary span,
+.admin-frame .admin-public-config-card__summary small {
+  color: #646970 !important;
+}
+
+.admin-frame .admin-public-config-card__summary span {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.admin-frame .admin-public-config-card__summary strong {
+  color: #1d2327 !important;
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.admin-frame .admin-public-config-card__summary small {
+  overflow-wrap: anywhere;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.admin-frame .admin-public-config-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  color: #646970 !important;
+  font-size: 11px;
+}
+
+.admin-frame .admin-public-config-card__meta span,
+.admin-frame .admin-public-config-card__meta strong {
+  color: inherit !important;
+}
+
+.admin-frame .admin-public-config-card__changes {
+  border: 1px solid #dcdcde;
+  border-radius: 4px;
+  background: #f6f7f7;
+  padding: 10px 12px;
+}
+
+.admin-frame .admin-public-config-card__changes summary {
+  color: #1d2327;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.admin-frame .admin-public-config-card__changes > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding-top: 10px;
+}
+
+.admin-frame .admin-public-config-card__changes code {
+  border: 1px solid #dcdcde;
+  border-radius: 3px;
+  background: #fff;
+  color: #3c434a;
+  padding: 3px 6px;
+  font-size: 11px;
+}
+
+.admin-frame .admin-public-config-card__clean {
+  margin: 0;
+  color: #646970 !important;
+  font-size: 12px;
+}
+
+.admin-frame .admin-public-config-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 2px;
+}
+
+@media (max-width: 760px) {
+  .admin-frame .admin-public-config-card {
+    padding: 14px;
+  }
+
+  .admin-frame .admin-public-config-card__header {
+    display: grid;
+  }
+
+  .admin-frame .admin-public-config-card__health {
+    justify-self: start;
+  }
+
+  .admin-frame .admin-public-config-card__status,
+  .admin-frame .admin-public-config-card__summary {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .admin-frame .admin-public-config-card__summary article:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 520px) {
+  .admin-frame .admin-public-config-card__status,
+  .admin-frame .admin-public-config-card__summary {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-frame .admin-public-config-card__summary article:last-child {
+    grid-column: auto;
+  }
+
+  .admin-frame .admin-public-config-card__actions {
+    display: grid;
+  }
+
+  .admin-frame .admin-public-config-card__actions .button {
+    width: 100%;
+  }
+}

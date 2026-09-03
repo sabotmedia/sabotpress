@@ -1,0 +1,219 @@
+.contact-channels {
+  display: grid;
+  gap: 1rem;
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.contact-channel,
+.secure-contact {
+  border: 1px solid var(--sabot-border, rgba(219, 200, 170, 0.22));
+  background: rgba(15, 16, 15, 0.5);
+}
+
+.contact-channel {
+  display: grid;
+  gap: 0.3rem;
+  padding: 1rem;
+}
+
+.contact-channel--general {
+  gap: 1rem;
+  padding: clamp(1rem, 2.5vw, 1.5rem);
+}
+
+.contact-channel__label,
+.secure-contact__eyebrow {
+  margin: 0;
+  color: var(--sabot-gold, #d3a62c);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.contact-channel a {
+  width: fit-content;
+  color: var(--sabot-paper, #f3ead8);
+  font-size: clamp(1rem, 2vw, 1.18rem);
+  font-weight: 750;
+  overflow-wrap: anywhere;
+  text-underline-offset: 0.18em;
+}
+
+.contact-channel p {
+  margin: 0;
+  color: var(--sabot-muted-2, #d8cbb5);
+}
+
+.contact-channel-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.secure-contact {
+  padding: clamp(1rem, 3vw, 1.5rem);
+}
+
+.secure-contact__heading,
+.secure-contact__actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.secure-contact h2 {
+  margin: 0.18rem 0 0;
+  color: var(--sabot-paper, #f3ead8);
+  font-size: clamp(1.35rem, 3vw, 2rem);
+}
+
+.secure-contact__key-state {
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  padding: 0.35rem 0.58rem;
+  color: var(--sabot-muted-2, #d8cbb5);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.secure-contact__key-state--ready {
+  color: #92d28b;
+}
+
+.secure-contact__key-state--error {
+  color: #f09a8e;
+}
+
+.secure-contact__intro {
+  max-width: 760px;
+  margin: 0.85rem 0 1.2rem;
+  color: var(--sabot-muted-2, #d8cbb5);
+}
+
+.secure-contact__form,
+.secure-contact__form label {
+  display: grid;
+  gap: 0.48rem;
+}
+
+.secure-contact__form {
+  gap: 0.9rem;
+}
+
+.secure-contact__form label {
+  color: var(--sabot-paper, #f3ead8);
+  font-size: 0.86rem;
+  font-weight: 750;
+}
+
+.secure-contact__form label span {
+  color: var(--sabot-muted, #ab9f8b);
+  font-size: 0.76rem;
+  font-weight: 500;
+}
+
+.secure-contact__field-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.secure-contact input,
+.secure-contact textarea,
+.secure-contact__output textarea {
+  box-sizing: border-box;
+  width: 100%;
+  border: 1px solid var(--sabot-border-strong, rgba(219, 200, 170, 0.38));
+  border-radius: 0;
+  background: rgba(4, 5, 4, 0.68);
+  color: var(--sabot-paper, #f3ead8);
+  font: inherit;
+}
+
+.secure-contact input,
+.secure-contact textarea {
+  min-height: 46px;
+  padding: 0.72rem 0.78rem;
+}
+
+.secure-contact textarea {
+  min-height: 10rem;
+  resize: vertical;
+}
+
+.secure-contact input:focus,
+.secure-contact textarea:focus,
+.secure-contact__output textarea:focus {
+  border-color: var(--sabot-gold, #d3a62c);
+  outline: 2px solid rgba(211, 166, 44, 0.24);
+  outline-offset: 2px;
+}
+
+.secure-contact__actions {
+  justify-content: flex-start;
+  margin-top: 0.25rem;
+}
+
+.secure-contact__actions .button:disabled {
+  cursor: wait;
+  opacity: 0.55;
+}
+
+.secure-contact__fingerprint,
+.secure-contact__status {
+  margin: 0.9rem 0 0;
+  color: var(--sabot-muted, #ab9f8b);
+  font-size: 0.78rem;
+  overflow-wrap: anywhere;
+}
+
+.secure-contact__fingerprint code {
+  color: var(--sabot-muted-2, #d8cbb5);
+}
+
+.secure-contact__status {
+  border-left: 3px solid var(--sabot-gold, #d3a62c);
+  padding: 0.65rem 0.75rem;
+  background: rgba(211, 166, 44, 0.08);
+  color: var(--sabot-paper, #f3ead8);
+}
+
+.secure-contact__output {
+  margin-top: 0.9rem;
+}
+
+.secure-contact__output summary {
+  cursor: pointer;
+  color: var(--sabot-paper, #f3ead8);
+  font-weight: 700;
+}
+
+.secure-contact__output textarea {
+  min-height: 13rem;
+  margin: 0.75rem 0;
+  padding: 0.75rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.72rem;
+}
+
+@media (max-width: 680px) {
+  .contact-channel-grid,
+  .secure-contact__field-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .secure-contact__actions .button {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .secure-contact__fingerprint code {
+    display: block;
+    margin-top: 0.25rem;
+  }
+}

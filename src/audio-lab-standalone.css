@@ -1,0 +1,212 @@
+/* AudioLab Studio is a DAW, not an admin card. When ?studio=1 is present,
+   remove SabotPress admin chrome and give the editor the entire viewport. */
+html.audio-lab-standalone-window,
+body.audio-lab-standalone-window {
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  overflow: hidden !important;
+  background: #0a1118 !important;
+}
+
+body.audio-lab-standalone-window .bare-route-shell,
+body.audio-lab-standalone-window #main-content,
+body.audio-lab-standalone-window .admin-frame,
+body.audio-lab-standalone-window .admin-frame__main {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100dvh !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  max-width: none !important;
+  max-height: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+body.audio-lab-standalone-window .wp-admin-topbar,
+body.audio-lab-standalone-window .admin-rail,
+body.audio-lab-standalone-window .public-edit-panel,
+body.audio-lab-standalone-window .skip-link {
+  display: none !important;
+}
+
+body.audio-lab-standalone-window .audio-lab-page {
+  box-sizing: border-box !important;
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100dvh !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  max-width: none !important;
+  max-height: none !important;
+  margin: 0 !important;
+  padding: 6px 6px 30px !important;
+  overflow: hidden !important;
+}
+
+body.audio-lab-standalone-window .audio-lab-workbench,
+body.audio-lab-standalone-window .audio-lab-editor,
+body.audio-lab-standalone-window .audio-lab-timeline-shell,
+body.audio-lab-standalone-window .audio-lab-multitrack,
+body.audio-lab-standalone-window .audio-lab-multitrack-scroll {
+  min-height: 0 !important;
+  height: 100% !important;
+  max-height: none !important;
+}
+
+/* The overview is only a navigator. The real tracks get the space. */
+body.audio-lab-standalone-window .audio-lab-timeline-shell {
+  grid-template-rows: 18px 58px minmax(0, 1fr) !important;
+}
+
+body.audio-lab-standalone-window .audio-lab-waveform {
+  height: 58px !important;
+  min-height: 58px !important;
+  max-height: 58px !important;
+}
+
+/* An empty project has nothing useful to summarize. Collapse the overview and
+   turn the track canvas into the obvious starting point instead. */
+body.audio-lab-standalone-window.audio-lab-empty-project .audio-lab-timeline-shell {
+  grid-template-rows: 0 0 minmax(0, 1fr) !important;
+}
+
+body.audio-lab-standalone-window.audio-lab-empty-project .audio-lab-overview-ruler,
+body.audio-lab-standalone-window.audio-lab-empty-project .audio-lab-waveform {
+  display: none !important;
+}
+
+body.audio-lab-standalone-window .audio-lab-multitrack {
+  position: relative !important;
+}
+
+body.audio-lab-standalone-window.audio-lab-empty-project .audio-lab-multitrack::after {
+  content: 'Import audio, drag a file here, or press R to record';
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: min(560px, calc(100% - 80px));
+  padding: 24px 30px;
+  border: 1px dashed rgba(114, 174, 230, 0.48);
+  border-radius: 8px;
+  background: rgba(18, 31, 43, 0.86);
+  color: rgba(235, 244, 251, 0.86);
+  text-align: center;
+  font: 600 15px/1.4 system-ui, sans-serif;
+  letter-spacing: 0.01em;
+  pointer-events: none;
+}
+
+/* Use every remaining pixel for visible track lanes. The runtime writes the
+   actual track count into --al-track-count. A few tracks expand to fill the
+   editor; many tracks retain a useful 132px minimum and then scroll. */
+body.audio-lab-standalone-window .audio-lab-multitrack-inner {
+  box-sizing: border-box !important;
+  display: grid !important;
+  grid-template-rows: 25px repeat(var(--al-track-count, 1), minmax(132px, 1fr)) !important;
+  min-height: max(100%, var(--al-track-content-min, 157px)) !important;
+  height: 100% !important;
+  max-height: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  align-content: stretch !important;
+}
+
+body.audio-lab-standalone-window.audio-lab-empty-project .audio-lab-multitrack-inner {
+  grid-template-rows: 25px minmax(0, 1fr) !important;
+  min-height: 100% !important;
+}
+
+body.audio-lab-standalone-window .audio-lab-multitrack-ruler {
+  min-height: 25px !important;
+  height: 25px !important;
+}
+
+body.audio-lab-standalone-window .audio-lab-multitrack-row {
+  min-height: 132px !important;
+  height: auto !important;
+  max-height: none !important;
+  flex: none !important;
+  align-self: stretch !important;
+}
+
+body.audio-lab-standalone-window .audio-lab-multitrack-controls,
+body.audio-lab-standalone-window .audio-lab-multitrack-lane {
+  min-height: 0 !important;
+  height: 100% !important;
+  max-height: none !important;
+}
+
+body.audio-lab-standalone-window .audio-lab-clip {
+  top: 10px !important;
+  bottom: 10px !important;
+  min-height: 72px !important;
+  height: auto !important;
+}
+
+/* Status belongs in a status bar, not stacked over the bottom-right corner. */
+body.audio-lab-standalone-window .audio-lab-notice,
+body.audio-lab-standalone-window .audio-lab-import-status {
+  box-sizing: border-box !important;
+  position: fixed !important;
+  left: 6px !important;
+  right: 6px !important;
+  bottom: 4px !important;
+  z-index: 1200 !important;
+  width: auto !important;
+  max-width: none !important;
+  min-height: 22px !important;
+  margin: 0 !important;
+  padding: 3px 9px !important;
+  border: 1px solid rgba(114, 174, 230, 0.28) !important;
+  border-radius: 3px !important;
+  background: rgba(10, 17, 24, 0.97) !important;
+  color: rgba(231, 241, 249, 0.9) !important;
+  font: 500 11px/1.35 system-ui, sans-serif !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  pointer-events: none !important;
+}
+
+body.audio-lab-standalone-window .audio-lab-import-status {
+  bottom: 30px !important;
+  border-color: rgba(114, 174, 230, 0.58) !important;
+  background: rgba(15, 31, 44, 0.98) !important;
+}
+
+body.audio-lab-standalone-window .audio-lab-import-status[data-state='error'] {
+  border-color: rgba(225, 89, 89, 0.72) !important;
+  color: #ffdada !important;
+}
+
+body.audio-lab-standalone-window .audio-lab-import-status[data-state='success'] {
+  border-color: rgba(104, 195, 138, 0.68) !important;
+  color: #dcffe7 !important;
+}
+
+/* The embedded route remains a safe fallback, but make the dedicated-window
+   action obvious if a browser or bookmark lands there directly. */
+.audio-lab-open-studio {
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  body.audio-lab-standalone-window .audio-lab-page {
+    padding: 3px 3px 28px !important;
+  }
+
+  body.audio-lab-standalone-window .audio-lab-multitrack-inner {
+    grid-template-rows: 25px repeat(var(--al-track-count, 1), minmax(116px, 1fr)) !important;
+  }
+
+  body.audio-lab-standalone-window .audio-lab-multitrack-row {
+    min-height: 116px !important;
+  }
+}

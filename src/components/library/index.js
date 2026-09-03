@@ -1,0 +1,16 @@
+export const componentLibrary = Object.freeze([
+  'InspectorPanel',
+  'Sidebar',
+  'Toolbar',
+  'CanvasViewport',
+  'PropertyGrid',
+  'PageThumbnail',
+  'MediaPicker',
+  'SourcePicker',
+  'BlockInspector',
+  'Modal',
+  'Dialog',
+  'Tabs',
+  'Card',
+  'SplitView',
+])

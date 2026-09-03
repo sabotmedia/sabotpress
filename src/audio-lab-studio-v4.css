@@ -1,0 +1,338 @@
+/* AudioLab Studio v4: dense but calm. Core transport stays visible; secondary work opens intentionally. */
+
+.audio-lab-page {
+  --audiolab-zoom-scale: 1;
+}
+
+/* Never reserve a mystery second column for tools. */
+.audio-lab-page .audio-lab-workbench,
+.audio-lab-page .audio-lab-workbench--phase4,
+.audio-lab-page .audio-lab-workbench--phase5,
+.audio-lab-page .audio-lab-workbench--phase6,
+.audio-lab-page .audio-lab-workbench--phase8,
+.audio-lab-page[data-audiolab-inspector-open="true"] .audio-lab-workbench,
+.audio-lab-page[data-audiolab-inspector-open="true"] .audio-lab-workbench--phase4,
+.audio-lab-page[data-audiolab-inspector-open="true"] .audio-lab-workbench--phase5,
+.audio-lab-page[data-audiolab-inspector-open="true"] .audio-lab-workbench--phase6,
+.audio-lab-page[data-audiolab-inspector-open="true"] .audio-lab-workbench--phase8 {
+  grid-template-columns: minmax(0, 1fr) !important;
+  grid-template-rows: minmax(0, 1fr) !important;
+}
+
+.audio-lab-page .audio-lab-editor {
+  grid-column: 1 !important;
+  width: 100% !important;
+}
+
+/* App bar: project + four compact menus, with Import/Save still on the right. */
+.audio-lab-page .wp-screen-header.audio-lab-header {
+  overflow: visible !important;
+}
+
+.audio-lab-compact-chrome {
+  min-width: 0;
+  flex: 1 1 auto;
+  display: flex !important;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 5px;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+
+.audio-lab-compact-project {
+  flex: 0 1 310px;
+  min-width: 140px;
+}
+
+.audio-lab-compact-project select {
+  width: min(310px, 24vw) !important;
+  max-width: 100% !important;
+}
+
+.audio-lab-menu-wrap {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.audio-lab-menu-toggle {
+  padding-inline: 10px !important;
+}
+
+.audio-lab-popover {
+  display: none;
+  position: absolute;
+  z-index: 10020;
+  top: calc(100% + 7px);
+  left: 0;
+  width: 260px;
+  max-height: min(70vh, 520px);
+  overflow: auto;
+  padding: 6px;
+  border: 1px solid #405161;
+  border-radius: 7px;
+  background: #111922;
+  box-shadow: 0 18px 50px rgba(0,0,0,.48), 0 1px 0 rgba(255,255,255,.04) inset;
+}
+
+.audio-lab-popover.is-open { display: grid; gap: 3px; }
+.audio-lab-shortcuts-menu .audio-lab-popover { left: auto; right: 0; width: 330px; }
+
+.audio-lab-popover button[role="menuitem"] {
+  width: 100%;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 5px 8px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: #e9f0f6;
+  text-align: left;
+  font: 600 11px/1.25 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  cursor: pointer;
+}
+
+.audio-lab-popover button[role="menuitem"]:hover,
+.audio-lab-popover button[role="menuitem"]:focus-visible,
+.audio-lab-popover button[role="menuitem"].is-active {
+  background: #243443;
+  color: #fff;
+  outline: none;
+}
+
+.audio-lab-menu-section {
+  display: grid;
+  gap: 2px;
+  padding: 4px 0;
+  border-bottom: 1px solid #2d3b48;
+}
+.audio-lab-menu-section:last-child { border-bottom: 0; }
+.audio-lab-menu-section > small {
+  padding: 3px 8px 2px;
+  color: #8496a7;
+  font: 800 9px/1 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.audio-lab-popover kbd,
+.audio-lab-shortcut-sheet kbd {
+  flex: 0 0 auto;
+  padding: 2px 5px;
+  border: 1px solid #405161;
+  border-bottom-color: #607386;
+  border-radius: 4px;
+  background: #0b1117;
+  color: #b9c7d3;
+  font: 600 9px/1.3 ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+
+.audio-lab-shortcut-sheet {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px 12px;
+  padding: 7px;
+  color: #dbe5ed;
+  font: 500 10px/1.35 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+.audio-lab-shortcut-sheet > strong { grid-column: 1 / -1; font-size: 12px; color: #fff; }
+.audio-lab-shortcut-sheet > span { display: grid; gap: 3px; }
+
+/* Selection coordinates stay visible. Edit button carpets do not. */
+.audio-lab-page .audio-lab-selection-toolbar {
+  grid-template-columns: minmax(0, 1fr) !important;
+}
+.audio-lab-page .audio-lab-selection-toolbar .audio-lab-edit-actions {
+  display: none !important;
+}
+.audio-lab-page .audio-lab-selection-fields {
+  justify-content: flex-start !important;
+}
+.audio-lab-page .audio-lab-selection-fields::before {
+  content: "Selection";
+  color: #93a4b4;
+  font: 800 9px/1 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  margin-right: 3px;
+}
+
+/* The old injected direct-edit strip is now represented by Edit. */
+.audio-lab-page .audio-lab-direct-toolbar { display: none !important; }
+
+/* Intentional modal, not accidental floating UI. */
+.audio-lab-modal-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 10040;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: rgba(3,7,11,.67);
+  backdrop-filter: blur(2px);
+  cursor: default;
+}
+body.audio-lab-modal-is-open .audio-lab-modal-backdrop { display: block; }
+
+.audio-lab-page .audio-lab-project-sidebar,
+.audio-lab-page .audio-lab-project-sidebar:hover,
+.audio-lab-page .audio-lab-project-sidebar:focus-within,
+.audio-lab-page .audio-lab-project-sidebar.is-open,
+.audio-lab-page[data-audiolab-inspector-open="true"] .audio-lab-project-sidebar {
+  display: none !important;
+}
+
+.audio-lab-page[data-audiolab-modal-open] .audio-lab-project-sidebar,
+.audio-lab-page[data-audiolab-modal-open] .audio-lab-project-sidebar:hover,
+.audio-lab-page[data-audiolab-modal-open] .audio-lab-project-sidebar:focus-within {
+  display: flex !important;
+  position: fixed !important;
+  z-index: 10050 !important;
+  inset: 8vh auto auto 50% !important;
+  transform: translateX(-50%) !important;
+  width: min(920px, calc(100vw - 48px)) !important;
+  height: min(78vh, 720px) !important;
+  min-width: 0 !important;
+  min-height: 340px !important;
+  max-width: 920px !important;
+  max-height: 720px !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  border: 1px solid #485b6d !important;
+  border-radius: 9px !important;
+  background: #101820 !important;
+  box-shadow: 0 30px 90px rgba(0,0,0,.62) !important;
+}
+
+.audio-lab-modal-heading {
+  order: -2;
+  flex: 0 0 auto;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 8px 6px 13px;
+  border-bottom: 1px solid #344655;
+  background: linear-gradient(180deg, #1b2935, #16212b);
+  color: #f4f8fb;
+  font: 700 14px/1 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.audio-lab-modal-close {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 1px solid #435568;
+  border-radius: 5px;
+  background: #101820;
+  color: #dae5ee;
+  font: 400 22px/26px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  cursor: pointer;
+}
+.audio-lab-modal-close:hover { background: #263746; color: #fff; }
+
+.audio-lab-page[data-audiolab-modal-open] .audio-lab-inspector-tabs {
+  order: -1;
+  position: relative !important;
+  top: auto !important;
+  flex: 0 0 auto;
+  display: flex !important;
+  gap: 3px !important;
+  padding: 6px 8px !important;
+  overflow-x: auto !important;
+  border-bottom: 1px solid #344655 !important;
+  background: #141e27 !important;
+}
+.audio-lab-page[data-audiolab-modal-open] .audio-lab-inspector-tabs button[hidden] { display: none !important; }
+.audio-lab-page[data-audiolab-modal-open] .audio-lab-inspector-tabs button {
+  min-height: 28px !important;
+  padding: 4px 9px !important;
+  border: 1px solid transparent !important;
+  border-radius: 5px !important;
+  background: transparent !important;
+  color: #9eb0bf !important;
+}
+.audio-lab-page[data-audiolab-modal-open] .audio-lab-inspector-tabs button.is-active {
+  border-color: #4d6680 !important;
+  background: #213244 !important;
+  color: #fff !important;
+}
+
+.audio-lab-page[data-audiolab-modal-open] .audio-lab-project-sidebar > .audio-lab-panel {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  overflow: auto !important;
+  margin: 0 !important;
+  padding: 16px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: #131c25 !important;
+  color: #e7eef4 !important;
+}
+.audio-lab-page[data-audiolab-modal-open] .audio-lab-project-sidebar > .audio-lab-panel[hidden] { display: none !important; }
+.audio-lab-page[data-audiolab-modal-open] .audio-lab-panel h2,
+.audio-lab-page[data-audiolab-modal-open] .audio-lab-panel h3,
+.audio-lab-page[data-audiolab-modal-open] .audio-lab-panel strong { color: #f4f8fb !important; }
+.audio-lab-page[data-audiolab-modal-open] .audio-lab-panel .description,
+.audio-lab-page[data-audiolab-modal-open] .audio-lab-panel small,
+.audio-lab-page[data-audiolab-modal-open] .audio-lab-panel label { color: #aab9c6 !important; }
+.audio-lab-page[data-audiolab-modal-open] .audio-lab-panel input,
+.audio-lab-page[data-audiolab-modal-open] .audio-lab-panel select,
+.audio-lab-page[data-audiolab-modal-open] .audio-lab-panel textarea {
+  border-color: #405161 !important;
+  background: #0c141b !important;
+  color: #edf3f8 !important;
+}
+
+/* Mouse editing language. */
+.audio-lab-page[data-audiolab-direct-mode="select"] .audio-lab-waveform,
+.audio-lab-page[data-audiolab-direct-mode="select"] .audio-lab-multitrack-lane { cursor: text !important; }
+.audio-lab-page[data-audiolab-direct-mode="move"] .audio-lab-waveform,
+.audio-lab-page[data-audiolab-direct-mode="move"] .audio-lab-multitrack-lane { cursor: ew-resize !important; }
+.audio-lab-page[data-audiolab-direct-mode="gain"] .audio-lab-waveform,
+.audio-lab-page[data-audiolab-direct-mode="gain"] .audio-lab-multitrack-lane { cursor: ns-resize !important; }
+
+.audio-lab-multitrack-ruler { cursor: pointer !important; }
+
+.audio-lab-studio-status {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  z-index: 10080;
+  transform: translate(-50%, 10px);
+  opacity: 0;
+  pointer-events: none;
+  padding: 7px 11px;
+  border: 1px solid #405161;
+  border-radius: 6px;
+  background: #101820;
+  color: #e7eef4;
+  box-shadow: 0 9px 30px rgba(0,0,0,.35);
+  font: 600 11px/1.2 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  transition: opacity .12s ease, transform .12s ease;
+}
+.audio-lab-studio-status.is-visible { opacity: 1; transform: translate(-50%, 0); }
+.audio-lab-studio-status.is-error { border-color: #a54b52; color: #ffd8db; }
+
+@media (max-width: 900px) {
+  .audio-lab-compact-project { flex: 1 1 180px; }
+  .audio-lab-compact-project select { width: 100% !important; }
+  .audio-lab-page .wp-screen-header.audio-lab-header { flex-wrap: wrap !important; }
+  .audio-lab-compact-chrome { order: 3; flex: 1 1 100%; flex-wrap: wrap; }
+  .audio-lab-page[data-audiolab-modal-open] .audio-lab-project-sidebar {
+    inset: 52px 10px 10px 10px !important;
+    transform: none !important;
+    width: auto !important;
+    height: auto !important;
+    max-width: none !important;
+    max-height: none !important;
+  }
+}

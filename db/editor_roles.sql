@@ -1,0 +1,11 @@
+CREATE TABLE IF NOT EXISTS editor_roles (
+  id TEXT PRIMARY KEY,
+  principal TEXT NOT NULL UNIQUE,
+  role TEXT NOT NULL DEFAULT 'viewer',
+  notes TEXT NOT NULL DEFAULT '',
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX IF NOT EXISTS idx_editor_roles_role
+ON editor_roles(role);

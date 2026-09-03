@@ -1,0 +1,22 @@
+{
+  "name": "Sabot Media",
+  "short_name": "Sabot",
+  "description": "Sabot Media archive and public publishing site.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#120f0d",
+  "theme_color": "#120f0d",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

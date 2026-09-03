@@ -1,0 +1,86 @@
+.audio-lab-workbench--phase6 .audio-lab-project-sidebar {
+  gap: 12px;
+}
+
+.audio-lab-rendered-panel,
+.audio-lab-transcript-panel,
+.audio-lab-markers-panel,
+.audio-lab-episode-meta-panel {
+  min-width: 0;
+}
+
+.audio-lab-rendered-panel .audio-lab-edit-actions,
+.audio-lab-transcript-panel .audio-lab-edit-actions,
+.audio-lab-markers-panel .audio-lab-edit-actions {
+  margin-top: 10px;
+}
+
+.audio-lab-cue-list,
+.audio-lab-marker-list {
+  display: grid;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.audio-lab-cue-row,
+.audio-lab-marker-row {
+  display: grid;
+  gap: 6px;
+  padding: 10px;
+  border: 1px solid #dcdcde;
+  border-radius: 6px;
+  background: #f6f7f7;
+}
+
+.audio-lab-cue-row {
+  grid-template-columns: minmax(64px, 82px) minmax(64px, 82px) minmax(80px, 1fr);
+}
+
+.audio-lab-cue-row textarea,
+.audio-lab-marker-row textarea {
+  grid-column: 1 / -1;
+  min-width: 0;
+}
+
+.audio-lab-cue-row .button,
+.audio-lab-marker-row .button {
+  justify-self: start;
+}
+
+.audio-lab-marker-row {
+  grid-template-columns: minmax(72px, 96px) minmax(120px, 1fr);
+}
+
+.audio-lab-cue-row input,
+.audio-lab-cue-row textarea,
+.audio-lab-marker-row input,
+.audio-lab-marker-row textarea {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid #8c8f94;
+  border-radius: 4px;
+  color: #1d2327;
+  font-size: 12px;
+  padding: 7px 8px;
+}
+
+.audio-lab-rendered-panel .audio-lab-facts {
+  margin-bottom: 10px;
+}
+
+.audio-lab-episode-meta-panel .audio-lab-checkbox {
+  margin-top: 8px;
+}
+
+.audio-lab-transcript-panel label.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 900px) {
+  .audio-lab-cue-row,
+  .audio-lab-marker-row {
+    grid-template-columns: 1fr;
+  }
+}

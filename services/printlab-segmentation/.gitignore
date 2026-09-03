@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+.venv/
+.env
+models/
+checkpoints/
+*.pth
+*.pt
+*.onnx
+*.safetensors

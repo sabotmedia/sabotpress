@@ -1,0 +1,313 @@
+/* AudioLab professional polish pass.
+   This file intentionally loads last and only tightens layout containment.
+   No new behavior, no global admin surgery, no duct tape cosplay. */
+
+html:has(.audio-lab-page),
+body:has(.audio-lab-page) {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden !important;
+  background: #111820 !important;
+}
+
+.admin-frame:has(.audio-lab-page),
+.admin-frame:has(.audio-lab-page) .admin-frame__main,
+.audio-lab-page,
+.audio-lab-page .audio-lab-workbench,
+.audio-lab-page .audio-lab-editor,
+.audio-lab-page .audio-lab-timeline-shell {
+  max-width: 100vw !important;
+  max-height: 100vh !important;
+  overflow: hidden !important;
+}
+
+.audio-lab-page {
+  --al-control-h: 24px;
+  --al-polish-gap: 3px;
+}
+
+.audio-lab-page .wp-screen-header.audio-lab-header {
+  border-bottom-color: #536170 !important;
+  box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.audio-lab-page .audio-lab-header h1 {
+  max-width: calc(100vw - 460px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.audio-lab-page .audio-lab-header .review-card__actions {
+  min-width: max-content;
+}
+
+.audio-lab-page .audio-lab-project-strip,
+.audio-lab-page .audio-lab-record-panel,
+.audio-lab-page .audio-lab-selection-toolbar,
+.audio-lab-page .audio-lab-transport {
+  min-width: 0 !important;
+  overflow: hidden !important;
+  box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.035);
+}
+
+.audio-lab-page .audio-lab-project-strip {
+  grid-template-columns: minmax(120px, 1fr) minmax(120px, 240px) !important;
+}
+
+.audio-lab-page .audio-lab-field,
+.audio-lab-page .audio-lab-source-picker,
+.audio-lab-page .audio-lab-selection-fields label {
+  min-width: 0 !important;
+}
+
+.audio-lab-page .audio-lab-field input,
+.audio-lab-page .audio-lab-field select,
+.audio-lab-page .audio-lab-source-picker select,
+.audio-lab-page .audio-lab-selection-fields input,
+.audio-lab-page .audio-lab-multitrack-controls input,
+.audio-lab-page .audio-lab-multitrack-controls select {
+  min-width: 0 !important;
+  max-width: 100% !important;
+  height: var(--al-control-h) !important;
+  min-height: var(--al-control-h) !important;
+  line-height: 1.1 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+}
+
+.audio-lab-page .audio-lab-edit-actions,
+.audio-lab-page .audio-lab-record-actions,
+.audio-lab-page .review-card__actions {
+  min-width: 0 !important;
+  overflow: hidden !important;
+}
+
+.audio-lab-page .button,
+.audio-lab-page button.button,
+.audio-lab-page .audio-lab-track-buttons button {
+  white-space: nowrap !important;
+  max-width: 130px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.audio-lab-page .audio-lab-record-actions .button,
+.audio-lab-page .audio-lab-edit-actions .button {
+  flex: 0 0 auto;
+}
+
+.audio-lab-page .audio-lab-record-meter {
+  min-width: 60px;
+  overflow: hidden;
+}
+
+/* Keep waveform art inside the waveform surface. Canvas transforms are rude unless boxed in. */
+.audio-lab-page .audio-lab-timeline-shell {
+  position: relative;
+  isolation: isolate;
+  border-top: 1px solid #536170 !important;
+  border-bottom: 1px solid #536170 !important;
+  background: #0f1720 !important;
+}
+
+.audio-lab-page .audio-lab-ruler,
+.audio-lab-page .audio-lab-timeline-actions,
+.audio-lab-page .audio-lab-multitrack-ruler {
+  position: relative;
+  z-index: 5;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.audio-lab-page .audio-lab-waveform {
+  position: relative;
+  z-index: 1;
+  clip-path: inset(0);
+  contain: paint;
+  border-bottom: 1px solid rgba(116, 167, 255, 0.22) !important;
+}
+
+.audio-lab-page .audio-lab-waveform:focus-visible {
+  outline: 2px solid rgba(116, 167, 255, 0.8);
+  outline-offset: -2px;
+}
+
+/* The clip arrangement lane should read as a lane, not a second giant editor eating the master view. */
+.audio-lab-page .audio-lab-multitrack {
+  position: relative;
+  z-index: 2;
+  min-height: 96px !important;
+  max-height: 132px !important;
+  overflow: hidden !important;
+  border-top: 1px solid #536170 !important;
+  background: #131b24 !important;
+}
+
+.audio-lab-page .audio-lab-multitrack-scroll {
+  height: 100% !important;
+  max-height: 110px !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  scrollbar-width: thin;
+}
+
+.audio-lab-page .audio-lab-multitrack-inner {
+  min-height: 100% !important;
+  height: 100% !important;
+}
+
+.audio-lab-page .audio-lab-multitrack-row {
+  min-height: 82px !important;
+  height: 82px !important;
+  max-height: 82px !important;
+  overflow: hidden !important;
+  grid-template-columns: 176px minmax(0, 1fr) !important;
+  border-bottom: 0 !important;
+}
+
+.audio-lab-page .audio-lab-multitrack-controls {
+  height: 82px !important;
+  max-height: 82px !important;
+  padding: 5px 6px !important;
+  overflow: hidden !important;
+  display: grid !important;
+  grid-template-rows: 22px 24px 22px !important;
+  gap: 3px !important;
+  align-content: start !important;
+}
+
+.audio-lab-page .audio-lab-multitrack-controls > input {
+  height: 22px !important;
+  min-height: 22px !important;
+  font-size: 11px !important;
+}
+
+.audio-lab-page .audio-lab-track-buttons {
+  display: flex !important;
+  gap: 3px !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+}
+
+.audio-lab-page .audio-lab-track-buttons button {
+  flex: 0 1 auto;
+  min-width: 0 !important;
+  padding-inline: 5px !important;
+}
+
+.audio-lab-page .audio-lab-multitrack-controls label {
+  display: grid !important;
+  grid-template-columns: 36px minmax(0, 1fr) !important;
+  align-items: center !important;
+  gap: 4px !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  font-size: 10px !important;
+  color: #c9d4df !important;
+}
+
+.audio-lab-page .audio-lab-multitrack-controls label input {
+  height: 20px !important;
+  min-height: 20px !important;
+  padding: 1px 4px !important;
+  font-size: 10px !important;
+}
+
+.audio-lab-page .audio-lab-multitrack-lane {
+  min-height: 82px !important;
+  height: 82px !important;
+  max-height: 82px !important;
+  overflow: hidden !important;
+  position: relative;
+  background: linear-gradient(180deg, #151e28 0%, #121a23 100%) !important;
+}
+
+.audio-lab-page .audio-lab-clip {
+  top: 12px !important;
+  min-height: 52px !important;
+  height: 52px !important;
+  max-height: 52px !important;
+  overflow: hidden !important;
+  padding: 6px 10px !important;
+  border: 1px solid rgba(158, 177, 255, 0.7) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.audio-lab-page .audio-lab-clip strong,
+.audio-lab-page .audio-lab-clip span {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.audio-lab-page .audio-lab-playhead {
+  z-index: 8 !important;
+  pointer-events: none;
+}
+
+/* The inspector dock should sit like a status bar, not trip the page into extra scroll. */
+.audio-lab-page .audio-lab-project-sidebar,
+.audio-lab-page .audio-lab-project-sidebar:hover,
+.audio-lab-page .audio-lab-project-sidebar:focus-within {
+  max-width: 100% !important;
+  overflow: hidden !important;
+  border-top-color: #536170 !important;
+}
+
+.audio-lab-page .audio-lab-project-sidebar::before {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+.audio-lab-page .audio-lab-project-sidebar.is-open {
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+}
+
+.audio-lab-page .audio-lab-panel {
+  min-width: 0 !important;
+  overflow-wrap: anywhere;
+}
+
+.audio-lab-page .audio-lab-panel .audio-lab-field textarea,
+.audio-lab-page .audio-lab-panel .audio-lab-field input,
+.audio-lab-page .audio-lab-panel .audio-lab-field select {
+  max-width: 100% !important;
+}
+
+.audio-lab-page .audio-lab-facts,
+.audio-lab-page .audio-lab-effect-param-grid {
+  min-width: 0 !important;
+}
+
+.audio-lab-page .audio-lab-facts dd,
+.audio-lab-page .audio-lab-facts dt {
+  min-width: 0 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+/* Prevent browser-level scrollbars from appearing because one nested panel got ambitious. */
+.audio-lab-page .audio-lab-sidebar,
+.audio-lab-page .audio-lab-editor,
+.audio-lab-page .audio-lab-project-sidebar {
+  contain: layout paint;
+}
+
+@media (max-width: 1100px) {
+  .audio-lab-page .audio-lab-project-strip {
+    grid-template-columns: minmax(110px, 1fr) minmax(100px, 190px) !important;
+  }
+
+  .audio-lab-page .audio-lab-selection-toolbar {
+    grid-template-columns: 230px minmax(0, 1fr) !important;
+  }
+
+  .audio-lab-page .button,
+  .audio-lab-page button.button {
+    max-width: 96px;
+  }
+}

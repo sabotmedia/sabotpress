@@ -1,0 +1,188 @@
+/* Final AudioLab dialog + timeline authority.
+   Menus open real centered tools; tracks consume the editing viewport. */
+
+.audio-lab-page {
+  --al-track-working-height: clamp(132px, 18vh, 184px);
+}
+
+/* Menu tools are dialogs, not the old docked inspector. The menu runtime marks
+   the page with data-audiolab-modal-open and supplies the backdrop. */
+.audio-lab-page[data-audiolab-modal-open] .audio-lab-project-sidebar,
+.audio-lab-page[data-audiolab-modal-open] .audio-lab-project-sidebar:hover,
+.audio-lab-page[data-audiolab-modal-open] .audio-lab-project-sidebar:focus-within,
+.audio-lab-page[data-audiolab-modal-open] .audio-lab-project-sidebar.is-open {
+  display: flex !important;
+  position: fixed !important;
+  z-index: 10060 !important;
+  top: 50% !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
+  grid-column: auto !important;
+  grid-row: auto !important;
+  transform: translate(-50%, -50%) !important;
+  width: min(920px, calc(100vw - 32px)) !important;
+  height: min(78vh, 730px) !important;
+  max-width: 920px !important;
+  max-height: calc(100vh - 32px) !important;
+  min-width: min(520px, calc(100vw - 32px)) !important;
+  min-height: min(340px, calc(100vh - 32px)) !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  border: 1px solid #607585 !important;
+  border-radius: 7px !important;
+  background: #111a23 !important;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, .72), 0 0 0 1px rgba(255,255,255,.04) inset !important;
+}
+
+.audio-lab-page[data-audiolab-modal-open] .audio-lab-project-sidebar > .audio-lab-inspector-tabs {
+  display: none !important;
+}
+
+.audio-lab-page[data-audiolab-modal-open] .audio-lab-audacity-modal-title {
+  display: flex !important;
+  flex: 0 0 42px !important;
+}
+
+.audio-lab-page[data-audiolab-modal-open] .audio-lab-project-sidebar > .audio-lab-panel:not([hidden]) {
+  display: block !important;
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  overflow: auto !important;
+  padding: 16px !important;
+}
+
+.audio-lab-page[data-audiolab-modal-open] .audio-lab-project-sidebar > .audio-lab-panel[hidden] {
+  display: none !important;
+}
+
+body.audio-lab-modal-is-open {
+  overflow: hidden !important;
+}
+
+body.audio-lab-modal-is-open .audio-lab-audacity-backdrop {
+  display: block !important;
+  z-index: 10040 !important;
+}
+
+/* The overview is a navigator, not the editor. */
+.audio-lab-page:not([data-audiolab-task]) .audio-lab-timeline-shell {
+  min-height: 0 !important;
+  height: 100% !important;
+  display: grid !important;
+  grid-template-rows: 19px 52px minmax(0, 1fr) !important;
+  overflow: hidden !important;
+}
+
+.audio-lab-page .audio-lab-waveform {
+  height: 52px !important;
+  min-height: 52px !important;
+  max-height: 52px !important;
+}
+
+/* Multitrack is the heart of AudioLab. Force every inherited layout layer to
+   give the scroll viewport the entire remaining editor height. */
+.audio-lab-page .audio-lab-multitrack {
+  min-width: 0 !important;
+  min-height: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  display: grid !important;
+  grid-template-rows: 30px minmax(0, 1fr) !important;
+  overflow: hidden !important;
+  align-self: stretch !important;
+  background: #0a1118 !important;
+}
+
+.audio-lab-page .audio-lab-timeline-actions {
+  min-height: 30px !important;
+  height: 30px !important;
+}
+
+.audio-lab-page .audio-lab-multitrack-scroll {
+  min-width: 0 !important;
+  min-height: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-height: none !important;
+  overflow-x: auto !important;
+  overflow-y: auto !important;
+  align-self: stretch !important;
+  background: #0a1118 !important;
+}
+
+/* The ruler is fixed-height. Every track after it flexes into whatever height
+   remains. If the minimum heights exceed the viewport, normal vertical scroll
+   takes over. This mirrors Audacity's fit-height behavior instead of leaving a
+   black basement beneath a couple of tiny lanes. */
+.audio-lab-page .audio-lab-multitrack-inner {
+  position: relative !important;
+  box-sizing: border-box !important;
+  min-height: 100% !important;
+  height: 100% !important;
+  max-height: none !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  justify-content: flex-start !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: #0a1118 !important;
+}
+
+.audio-lab-page .audio-lab-multitrack-ruler {
+  flex: 0 0 25px !important;
+  min-height: 25px !important;
+  height: 25px !important;
+}
+
+.audio-lab-page .audio-lab-playhead {
+  position: absolute !important;
+  top: 25px !important;
+  bottom: 0 !important;
+  z-index: 16 !important;
+}
+
+.audio-lab-page .audio-lab-multitrack-row {
+  position: relative !important;
+  flex: 1 1 var(--al-track-working-height) !important;
+  min-height: var(--al-track-working-height) !important;
+  height: auto !important;
+  max-height: none !important;
+  align-items: stretch !important;
+}
+
+.audio-lab-page .audio-lab-multitrack-controls,
+.audio-lab-page .audio-lab-multitrack-lane {
+  min-height: 100% !important;
+  height: 100% !important;
+  max-height: none !important;
+}
+
+.audio-lab-page .audio-lab-clip {
+  top: 12px !important;
+  bottom: 12px !important;
+  height: auto !important;
+  min-height: 62px !important;
+  max-height: none !important;
+}
+
+@media (max-width: 900px) {
+  .audio-lab-page {
+    --al-track-working-height: 142px;
+  }
+
+  .audio-lab-page[data-audiolab-modal-open] .audio-lab-project-sidebar,
+  .audio-lab-page[data-audiolab-modal-open] .audio-lab-project-sidebar:hover,
+  .audio-lab-page[data-audiolab-modal-open] .audio-lab-project-sidebar:focus-within,
+  .audio-lab-page[data-audiolab-modal-open] .audio-lab-project-sidebar.is-open {
+    top: max(10px, env(safe-area-inset-top)) !important;
+    left: 10px !important;
+    transform: none !important;
+    width: calc(100vw - 20px) !important;
+    min-width: 0 !important;
+    height: calc(100dvh - 20px) !important;
+    max-height: calc(100dvh - 20px) !important;
+  }
+}

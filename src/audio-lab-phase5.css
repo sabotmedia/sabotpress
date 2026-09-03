@@ -1,0 +1,96 @@
+.audio-lab-workbench--phase5 .audio-lab-project-sidebar {
+  gap: 12px;
+}
+
+.audio-lab-effects-panel {
+  display: grid;
+  gap: 12px;
+}
+
+.audio-lab-effect-builder,
+.audio-lab-effect-presets,
+.audio-lab-effect-chain {
+  display: grid;
+  gap: 8px;
+  padding-top: 10px;
+  border-top: 1px solid #dcdcde;
+}
+
+.audio-lab-effect-builder .button--primary {
+  width: 100%;
+}
+
+.audio-lab-effect-presets {
+  grid-template-columns: 1fr;
+}
+
+.audio-lab-effect-param-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.audio-lab-effect-chain__item {
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid #dcdcde;
+  border-left: 4px solid #2271b1;
+  border-radius: 7px;
+  background: #fff;
+}
+
+.audio-lab-effect-chain__item.is-bypassed {
+  border-left-color: #8c8f94;
+  opacity: 0.72;
+}
+
+.audio-lab-effect-chain__item strong,
+.audio-lab-effect-chain__item span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.audio-lab-effect-chain__item strong {
+  color: #1d2327;
+  font-size: 13px;
+}
+
+.audio-lab-effect-chain__item span {
+  color: #646970;
+  font-size: 12px;
+}
+
+.audio-lab-effect-chain__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.audio-lab-effects-panel select,
+.audio-lab-effects-panel input {
+  width: 100%;
+  min-height: 34px;
+  border: 1px solid #8c8f94;
+  border-radius: 4px;
+  background: #fff;
+  color: #1d2327;
+  padding: 6px 8px;
+}
+
+.audio-lab-checkbox {
+  display: inline-flex;
+  gap: 7px;
+  align-items: center;
+  color: #1d2327;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+@media (max-width: 900px) {
+  .audio-lab-effect-param-grid {
+    grid-template-columns: 1fr;
+  }
+}

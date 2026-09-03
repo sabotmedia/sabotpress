@@ -1,0 +1,433 @@
+/* AudioLab workspace-first correction pass. Scoped to the AudioLab route only. */
+.admin-frame:has(.audio-lab-page) .admin-rail {
+  width: 48px !important;
+  min-width: 48px !important;
+  overflow: hidden !important;
+}
+
+.admin-frame:has(.audio-lab-page) .admin-rail__label {
+  display: none !important;
+}
+
+.admin-frame:has(.audio-lab-page) .admin-rail__nav {
+  padding-top: 4px !important;
+}
+
+.admin-frame:has(.audio-lab-page) .admin-rail__link {
+  min-height: 30px !important;
+  padding: 7px 6px !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  text-indent: -999px !important;
+  position: relative !important;
+}
+
+.admin-frame:has(.audio-lab-page) .admin-rail__link::after {
+  content: attr(aria-current);
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: inherit;
+  text-indent: 0;
+  font-size: 0;
+}
+
+.admin-frame:has(.audio-lab-page) .admin-rail__link:nth-child(1)::after { content: "⌂"; font-size: 15px; }
+.admin-frame:has(.audio-lab-page) .admin-rail__link:nth-child(2)::after { content: "P"; font-size: 12px; font-weight: 800; }
+.admin-frame:has(.audio-lab-page) .admin-rail__link:nth-child(3)::after { content: "Pr"; font-size: 11px; font-weight: 800; }
+.admin-frame:has(.audio-lab-page) .admin-rail__link:nth-child(4)::after { content: "Au"; font-size: 11px; font-weight: 800; }
+.admin-frame:has(.audio-lab-page) .admin-rail__link:nth-child(5)::after { content: "+"; font-size: 16px; font-weight: 800; }
+.admin-frame:has(.audio-lab-page) .admin-rail__link:nth-child(6)::after { content: "M"; font-size: 12px; font-weight: 800; }
+.admin-frame:has(.audio-lab-page) .admin-rail__link:nth-child(n+7)::after { content: "•"; font-size: 16px; }
+
+.admin-frame:has(.audio-lab-page) .admin-rail:hover,
+.admin-frame:has(.audio-lab-page) .admin-rail:focus-within {
+  width: 148px !important;
+  min-width: 148px !important;
+  z-index: 90;
+  box-shadow: 8px 0 20px rgba(0, 0, 0, 0.38);
+}
+
+.admin-frame:has(.audio-lab-page) .admin-rail:hover .admin-rail__link,
+.admin-frame:has(.audio-lab-page) .admin-rail:focus-within .admin-rail__link {
+  text-indent: 0 !important;
+  padding-left: 10px !important;
+}
+
+.admin-frame:has(.audio-lab-page) .admin-rail:hover .admin-rail__link::after,
+.admin-frame:has(.audio-lab-page) .admin-rail:focus-within .admin-rail__link::after {
+  content: none !important;
+}
+
+.admin-frame:has(.audio-lab-page) .admin-frame__main {
+  margin-left: 48px !important;
+  width: calc(100vw - 48px) !important;
+}
+
+.audio-lab-page .wp-screen-header.audio-lab-header {
+  min-height: 34px !important;
+  height: 34px !important;
+  padding: 4px 8px !important;
+}
+
+.audio-lab-page .audio-lab-header .audio-lab-eyebrow {
+  display: none !important;
+}
+
+.audio-lab-page .audio-lab-header h1 {
+  font-size: 14px !important;
+  letter-spacing: 0.01em;
+}
+
+.audio-lab-page .audio-lab-workbench {
+  padding: 2px !important;
+  gap: 2px !important;
+  grid-template-columns: 48px minmax(0, 1fr) !important;
+  grid-template-rows: minmax(0, 1fr) 34px !important;
+  grid-template-areas:
+    "projects editor"
+    "inspector inspector" !important;
+}
+
+.audio-lab-page .audio-lab-sidebar {
+  width: 48px !important;
+  min-width: 48px !important;
+  overflow: hidden !important;
+  position: relative;
+  z-index: 30;
+}
+
+.audio-lab-page .audio-lab-sidebar:hover,
+.audio-lab-page .audio-lab-sidebar:focus-within {
+  width: 236px !important;
+  min-width: 236px !important;
+  overflow: auto !important;
+  box-shadow: 10px 0 24px rgba(0, 0, 0, 0.42);
+}
+
+.audio-lab-page .audio-lab-sidebar__header {
+  min-height: 30px !important;
+  padding: 4px !important;
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+}
+
+.audio-lab-page .audio-lab-sidebar__header > div {
+  display: none !important;
+}
+
+.audio-lab-page .audio-lab-sidebar__header .button {
+  width: 38px !important;
+  min-width: 38px !important;
+  padding: 4px !important;
+}
+
+.audio-lab-page .audio-lab-sidebar:hover .audio-lab-sidebar__header,
+.audio-lab-page .audio-lab-sidebar:focus-within .audio-lab-sidebar__header {
+  grid-template-columns: 1fr auto !important;
+  padding: 6px !important;
+}
+
+.audio-lab-page .audio-lab-sidebar:hover .audio-lab-sidebar__header > div,
+.audio-lab-page .audio-lab-sidebar:focus-within .audio-lab-sidebar__header > div {
+  display: block !important;
+}
+
+.audio-lab-page .audio-lab-project-list {
+  padding: 4px !important;
+}
+
+.audio-lab-page .audio-lab-project-card {
+  width: 38px !important;
+  height: 38px !important;
+  padding: 4px !important;
+  display: block !important;
+  overflow: hidden !important;
+}
+
+.audio-lab-page .audio-lab-project-card strong {
+  display: block !important;
+  width: 28px !important;
+  height: 28px !important;
+  overflow: hidden !important;
+  text-align: center !important;
+  line-height: 28px !important;
+  font-size: 0 !important;
+}
+
+.audio-lab-page .audio-lab-project-card strong::first-letter {
+  font-size: 13px !important;
+}
+
+.audio-lab-page .audio-lab-project-card span,
+.audio-lab-page .audio-lab-project-card small {
+  display: none !important;
+}
+
+.audio-lab-page .audio-lab-sidebar:hover .audio-lab-project-card,
+.audio-lab-page .audio-lab-sidebar:focus-within .audio-lab-project-card {
+  width: 100% !important;
+  height: auto !important;
+  padding: 8px !important;
+  display: grid !important;
+}
+
+.audio-lab-page .audio-lab-sidebar:hover .audio-lab-project-card strong,
+.audio-lab-page .audio-lab-sidebar:focus-within .audio-lab-project-card strong {
+  width: auto !important;
+  height: auto !important;
+  line-height: 1.25 !important;
+  text-align: left !important;
+  font-size: 13px !important;
+}
+
+.audio-lab-page .audio-lab-sidebar:hover .audio-lab-project-card span,
+.audio-lab-page .audio-lab-sidebar:hover .audio-lab-project-card small,
+.audio-lab-page .audio-lab-sidebar:focus-within .audio-lab-project-card span,
+.audio-lab-page .audio-lab-sidebar:focus-within .audio-lab-project-card small {
+  display: block !important;
+}
+
+.audio-lab-page .audio-lab-editor {
+  grid-template-rows: 28px 30px 31px 31px minmax(0, 1fr) !important;
+}
+
+.audio-lab-page .audio-lab-project-strip {
+  min-height: 28px !important;
+  padding: 3px 6px !important;
+  grid-template-columns: minmax(160px, 1fr) minmax(160px, 260px) !important;
+}
+
+.audio-lab-page .audio-lab-project-strip .audio-lab-field > span,
+.audio-lab-page .audio-lab-source-picker > span {
+  display: none !important;
+}
+
+.audio-lab-page .audio-lab-project-strip input,
+.audio-lab-page .audio-lab-source-picker select {
+  min-height: 22px !important;
+  height: 24px !important;
+  padding: 2px 8px !important;
+  font-size: 12px !important;
+}
+
+.audio-lab-page .audio-lab-record-panel {
+  min-height: 30px !important;
+  padding: 3px 6px !important;
+  grid-template-columns: 88px minmax(160px, 1fr) auto !important;
+}
+
+.audio-lab-page .audio-lab-record-panel__meta span {
+  font-size: 18px !important;
+}
+
+.audio-lab-page .audio-lab-record-meter {
+  height: 12px !important;
+}
+
+.audio-lab-page .audio-lab-selection-toolbar {
+  min-height: 31px !important;
+  padding: 3px 6px !important;
+  grid-template-columns: 250px minmax(0, 1fr) !important;
+}
+
+.audio-lab-page .audio-lab-selection-fields label > span {
+  display: none !important;
+}
+
+.audio-lab-page .audio-lab-selection-fields input {
+  min-height: 22px !important;
+  height: 24px !important;
+  padding: 2px 6px !important;
+  font-size: 12px !important;
+}
+
+.audio-lab-page .audio-lab-transport {
+  min-height: 31px !important;
+  padding: 3px 6px !important;
+  grid-template-columns: auto auto 88px minmax(260px, 1fr) !important;
+}
+
+.audio-lab-page .audio-lab-time-readout {
+  min-height: 24px !important;
+  padding: 2px 8px !important;
+  background: #f2f4f7 !important;
+  color: #101820 !important;
+}
+
+.audio-lab-page .audio-lab-time-readout strong,
+.audio-lab-page .audio-lab-time-readout span {
+  color: #101820 !important;
+  font-size: 12px !important;
+}
+
+.audio-lab-page .button,
+.audio-lab-page button.button,
+.audio-lab-page .audio-lab-track-buttons button {
+  min-height: 24px !important;
+  height: 24px !important;
+  padding: 2px 7px !important;
+  font-size: 11px !important;
+}
+
+.audio-lab-page .audio-lab-timeline-shell {
+  grid-template-rows: 22px minmax(170px, 29vh) minmax(300px, 1fr) !important;
+  min-height: 0 !important;
+}
+
+.audio-lab-page .audio-lab-ruler {
+  min-height: 22px !important;
+  padding: 2px 10px !important;
+  font-size: 11px !important;
+}
+
+.audio-lab-page .audio-lab-waveform {
+  height: clamp(170px, 28vh, 300px) !important;
+  min-height: 170px !important;
+}
+
+.audio-lab-page .audio-lab-multitrack {
+  grid-template-rows: 22px minmax(0, 1fr) !important;
+}
+
+.audio-lab-page .audio-lab-timeline-actions,
+.audio-lab-page .audio-lab-multitrack-ruler {
+  min-height: 22px !important;
+  padding: 2px 8px !important;
+  font-size: 11px !important;
+}
+
+.audio-lab-page .audio-lab-multitrack-row,
+.audio-lab-page .audio-lab-multitrack-lane {
+  min-height: 156px !important;
+}
+
+.audio-lab-page .audio-lab-multitrack-row {
+  grid-template-columns: 176px minmax(0, 1fr) !important;
+}
+
+.audio-lab-page .audio-lab-multitrack-controls {
+  width: 176px !important;
+}
+
+.audio-lab-page .audio-lab-clip {
+  top: 18px !important;
+  min-height: 110px !important;
+  display: grid !important;
+  align-content: center !important;
+  border-radius: 2px !important;
+}
+
+.audio-lab-page .audio-lab-project-sidebar {
+  grid-area: inspector !important;
+  height: 34px !important;
+  min-height: 34px !important;
+  overflow: hidden !important;
+  display: flex !important;
+  gap: 2px !important;
+  padding: 0 !important;
+  border: 1px solid var(--al-border) !important;
+  background: #1d232b !important;
+  z-index: 35;
+}
+
+.audio-lab-page .audio-lab-project-sidebar::before {
+  content: "Inspector dock  •  hover or tab into this bar to open render, sources, clip, effects, transcript, markers, metadata, feed";
+  min-width: 100%;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  color: var(--al-muted);
+  font-size: 11px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.audio-lab-page .audio-lab-project-sidebar > .audio-lab-panel {
+  display: none !important;
+}
+
+.audio-lab-page .audio-lab-project-sidebar:hover,
+.audio-lab-page .audio-lab-project-sidebar:focus-within {
+  position: fixed !important;
+  left: 48px !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  height: min(44vh, 360px) !important;
+  min-height: 280px !important;
+  overflow: auto !important;
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(260px, 1fr)) !important;
+  align-items: start !important;
+  padding: 6px !important;
+  background: #20262f !important;
+  box-shadow: 0 -14px 28px rgba(0, 0, 0, 0.42);
+}
+
+.audio-lab-page .audio-lab-project-sidebar:hover::before,
+.audio-lab-page .audio-lab-project-sidebar:focus-within::before {
+  content: none;
+}
+
+.audio-lab-page .audio-lab-project-sidebar:hover > .audio-lab-panel,
+.audio-lab-page .audio-lab-project-sidebar:focus-within > .audio-lab-panel {
+  display: block !important;
+  min-height: 0 !important;
+  max-height: calc(min(44vh, 360px) - 16px) !important;
+  overflow: auto !important;
+}
+
+.audio-lab-page .audio-lab-panel {
+  border-radius: 0 !important;
+}
+
+.audio-lab-page .audio-lab-panel h2,
+.audio-lab-page .audio-lab-panel h3 {
+  font-size: 13px !important;
+  margin-bottom: 6px !important;
+}
+
+.audio-lab-page .audio-lab-facts {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+
+.audio-lab-page[data-audiolab-shortcuts-ready="true"] .audio-lab-header h1::after {
+  content: "  ·  shortcuts on";
+  color: var(--al-muted);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+@media (max-width: 900px) {
+  .admin-frame:has(.audio-lab-page) .admin-frame__main {
+    margin-left: 0 !important;
+    width: 100vw !important;
+  }
+
+  .admin-frame:has(.audio-lab-page) .admin-rail {
+    display: none !important;
+  }
+
+  .audio-lab-page .audio-lab-workbench {
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-areas:
+      "editor"
+      "inspector" !important;
+  }
+
+  .audio-lab-page .audio-lab-sidebar {
+    display: none !important;
+  }
+
+  .audio-lab-page .audio-lab-editor {
+    grid-template-rows: auto auto auto auto minmax(0, 1fr) !important;
+  }
+
+  .audio-lab-page .audio-lab-project-sidebar:hover,
+  .audio-lab-page .audio-lab-project-sidebar:focus-within {
+    left: 0 !important;
+    grid-template-columns: 1fr !important;
+  }
+}

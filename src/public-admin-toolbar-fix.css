@@ -1,0 +1,122 @@
+/*
+ * Keep the logged-in public editor toolbar out of public mobile typography/media rules.
+ * Public mobile styles are for reader-facing content, not this tiny admin strip.
+ */
+
+.public-route-shell .wp-public-admin-bar {
+  width: 100% !important;
+  min-width: 0 !important;
+  min-height: 40px !important;
+  height: 40px !important;
+  max-height: 40px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  overflow: hidden !important;
+  padding: 0 12px !important;
+  background: #1d2327 !important;
+  color: #f0f0f1 !important;
+  border: 0 !important;
+  position: relative !important;
+  z-index: 1000 !important;
+}
+
+.public-route-shell .wp-public-admin-bar *,
+.public-route-shell .wp-public-admin-bar *::before,
+.public-route-shell .wp-public-admin-bar *::after {
+  box-sizing: border-box !important;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+}
+
+.public-route-shell .wp-public-admin-bar__left,
+.public-route-shell .wp-public-admin-bar__right {
+  min-width: 0 !important;
+  height: 40px !important;
+  max-height: 40px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  overflow: hidden !important;
+}
+
+.public-route-shell .wp-public-admin-bar__left {
+  flex: 1 1 auto !important;
+}
+
+.public-route-shell .wp-public-admin-bar__right {
+  flex: 0 0 auto !important;
+}
+
+.public-route-shell .wp-public-admin-bar__item,
+.public-route-shell .wp-public-admin-bar button.wp-public-admin-bar__item {
+  width: auto !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  height: 40px !important;
+  max-height: 40px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex: 0 0 auto !important;
+  margin: 0 !important;
+  padding: 0 4px !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  color: #f0f0f1 !important;
+  font: 600 12px/1.2 Arial, sans-serif !important;
+  letter-spacing: 0 !important;
+  text-decoration: none !important;
+  text-transform: none !important;
+  white-space: nowrap !important;
+}
+
+.public-route-shell .wp-public-admin-bar__brand {
+  width: auto !important;
+  min-width: 0 !important;
+  height: 40px !important;
+  max-height: 40px !important;
+  padding: 0 8px 0 0 !important;
+}
+
+.public-route-shell .wp-public-admin-bar__brand-logo {
+  display: block !important;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: 140px !important;
+  height: 28px !important;
+  min-height: 0 !important;
+  max-height: 28px !important;
+  object-fit: contain !important;
+  object-position: left center !important;
+}
+
+.public-route-shell .wp-public-admin-bar__status {
+  height: 40px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  color: #c3c4c7 !important;
+  font: 600 12px/1.2 Arial, sans-serif !important;
+  white-space: nowrap !important;
+}
+
+@media (max-width: 700px) {
+  .public-route-shell .wp-public-admin-bar {
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .public-route-shell .wp-public-admin-bar__left,
+  .public-route-shell .wp-public-admin-bar__right {
+    overflow: visible !important;
+  }
+
+  .public-route-shell .wp-public-admin-bar__brand-logo {
+    max-width: 104px !important;
+    height: 24px !important;
+    max-height: 24px !important;
+  }
+}

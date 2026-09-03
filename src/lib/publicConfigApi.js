@@ -1,3 +1,7 @@
+function authoritativeMode(mode) {
+  return mode === 'd1' || mode === 'browser-local'
+}
+
 export async function savePublicConfigPayload(payload) {
   const res = await fetch('/api/public-site-config', {
     method: 'PUT',
@@ -6,8 +10,8 @@ export async function savePublicConfigPayload(payload) {
     body: JSON.stringify(payload),
   })
   const data = await safeJson(res)
-  if (!res.ok || !data?.ok || data.mode !== 'd1' || data.saved !== true) {
-    throw new Error(data?.error || `public config save was not confirmed by D1: ${res.status}`)
+  if (!res.ok || !data?.ok || !authoritativeMode(data.mode) || data.saved !== true) {
+    throw new Error(data?.error || `public config save was not confirmed by authoritative storage: ${res.status}`)
   }
   return data
 }
@@ -19,8 +23,8 @@ export async function loadPublicConfigPayload() {
     headers: { accept: 'application/json' },
   })
   const data = await safeJson(res)
-  if (!res.ok || !data?.ok || data.mode !== 'd1') {
-    throw new Error(data?.error || `public config load was not confirmed by D1: ${res.status}`)
+  if (!res.ok || !data?.ok || !authoritativeMode(data.mode)) {
+    throw new Error(data?.error || `public config load was not confirmed by authoritative storage: ${res.status}`)
   }
   return data
 }

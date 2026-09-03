@@ -3,6 +3,7 @@ import { usePublicEdit } from '../components/PublicEditContext'
 import { resolvePublicConfig } from './publicConfig'
 
 const EMPTY_CONFIG = { text: {}, styles: {}, blocks: {} }
+function authoritativeMode(mode) { return mode === 'd1' || mode === 'browser-local' }
 
 export function useResolvedConfig() {
   const {
@@ -15,16 +16,13 @@ export function useResolvedConfig() {
   } = usePublicEdit()
 
   return useMemo(() => {
-    // Published public pages must be device-independent. Never let a browser-local
-    // draft or legacy saved-config cache override D1 unless an authenticated editor
-    // is explicitly in edit mode.
     if (isAdmin && isEditing) {
       return resolvePublicConfig(effectiveConfig || EMPTY_CONFIG)
     }
 
-    // Until the authoritative D1 config has loaded, render repository defaults
-    // rather than a stale localStorage snapshot from this particular browser.
-    if (backendMode !== 'd1' || loadState !== 'loaded') {
+    // Public rendering uses only the authoritative store for the active runtime:
+    // server/desktop D1-compatible storage or the explicit browser-local database.
+    if (!authoritativeMode(backendMode) || loadState !== 'loaded') {
       return resolvePublicConfig(EMPTY_CONFIG)
     }
 

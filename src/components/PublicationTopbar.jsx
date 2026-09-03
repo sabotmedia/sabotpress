@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom'
-import { sabotMastheadTransparent } from '../lib/sabotMastheadTransparent'
+import sabotPressMasthead from '../assets/sabotpress-masthead.svg'
 import { EditableLink } from './EditableLink'
 import { editableContentRegistry } from '../lib/editableContentRegistry'
 import { publicRoutes } from '../routing/routes'
@@ -13,6 +13,12 @@ export function PublicationTopbar() {
   const masthead = getConfiguredBlock(resolvedConfig, 'site.masthead') || {}
 
   const siteTitle = String(getConfiguredText(resolvedConfig, 'site.identity.title', 'SabotPress')).trim() || 'SabotPress'
+  const configuredLogo = String(
+    masthead.logoUrl ||
+    getConfiguredText(resolvedConfig, 'site.identity.logoUrl', '') ||
+    ''
+  ).trim()
+  const logoUrl = configuredLogo || sabotPressMasthead
   const mastheadSize = ['compact', 'medium', 'large'].includes(masthead.size)
     ? masthead.size
     : 'medium'
@@ -32,9 +38,8 @@ export function PublicationTopbar() {
           >
             <img
               className="publication-topbar__brand-image publication-topbar__brand-image--isolated"
-              src={sabotMastheadTransparent}
-              alt=""
-              aria-hidden="true"
+              src={logoUrl}
+              alt={configuredLogo ? siteTitle : 'SabotPress'}
             />
           </Link>
 
@@ -48,9 +53,8 @@ export function PublicationTopbar() {
                 labelField={item.labelField}
               />
             ))}
-            {SHOW_AI_CAMPAIGN_LINKS ? <EditableLink className="publication-topbar__campaign-link" labelField="nav.campaign.label" hrefField="nav.campaign.href" defaultLabel="A/I Campaign" defaultHref={publicRoutes.aiCampaign} /> : null}
+            {SHOW_AI_CAMPAIGN_LINKS ? <EditableLink className="publication-topbar__campaign-link" labelField="nav.campaign.label" hrefField="nav.campaign.href" defaultLabel="Campaign" defaultHref={publicRoutes.aiCampaign} /> : null}
             <EditableLink className="publication-topbar__campaigns-link" labelField="nav.campaigns.label" hrefField="nav.campaigns.href" defaultLabel="Campaigns" defaultHref={publicRoutes.campaigns} />
-            <EditableLink labelField="nav.gallery.label" hrefField="nav.gallery.href" defaultLabel="Gallery" defaultHref="/aberdeen-local-1312-gallery" />
           </nav>
         </div>
       </div>

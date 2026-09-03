@@ -1,5 +1,6 @@
 name: build and publish 0.1.3
 
+# final retry after desktop campaign and menu-route regression fixes
 on:
   push:
     branches: [main]

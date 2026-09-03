@@ -34,6 +34,10 @@ class DesktopD1Database {
     return transaction(statements)
   }
 
+  async backup(destination) {
+    return this.sqlite.backup(destination)
+  }
+
   close() { this.sqlite.close() }
 }
 

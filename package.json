@@ -23,7 +23,7 @@
     "desktop:dev": "npm run build && electron . --dev",
     "desktop:pack": "npm run build && electron-builder --dir",
     "desktop:dist": "npm run build && electron-builder",
-    "desktop:dist:win": "npm run build && electron-builder --win",
+    "desktop:dist:win": "npm run build && electron-builder --win nsis --x64",
     "desktop:dist:mac": "npm run build && electron-builder --mac",
     "desktop:dist:linux": "npm run build && electron-builder --linux"
   },
@@ -66,15 +66,9 @@
           "arch": [
             "x64"
           ]
-        },
-        {
-          "target": "portable",
-          "arch": [
-            "x64"
-          ]
         }
       ],
-      "artifactName": "SabotPress-${version}-Windows-${arch}-${target}.${ext}",
+      "artifactName": "SabotPress-${version}-Windows-${arch}.${ext}",
       "icon": "public/sabotpress.ico"
     },
     "nsis": {

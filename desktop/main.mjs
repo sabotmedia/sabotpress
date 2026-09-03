@@ -53,10 +53,10 @@ function buildMenu() {
     {
       label: 'Help',
       submenu: [
-        { label: 'Getting started', click: () => openLocal('/help#getting-started') },
-        { label: '$0 hosting and publishing', click: () => openLocal('/help#free-hosting') },
-        { label: 'Noblogs / WordPress migration', click: () => openLocal('/help#noblogs') },
-        { label: 'Backups', click: () => openLocal('/help#backups') },
+        { label: 'Getting started', click: () => openLocal('/help.html#install') },
+        { label: '$0 hosting and publishing', click: () => openLocal('/help.html#free-hosting') },
+        { label: 'Noblogs / WordPress migration', click: () => openLocal('/help.html#noblogs') },
+        { label: 'Backups', click: () => openLocal('/help.html#backups') },
       ],
     },
   ])

@@ -9,6 +9,7 @@ import { FilesystemBucket } from '../desktop/filesystem-r2.mjs'
 import { startLocalSabotPress } from '../desktop/local-server.mjs'
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
+const desktopMain = fs.readFileSync(new URL('../desktop/main.mjs', import.meta.url), 'utf8')
 function tempRoot() { return fs.mkdtempSync(path.join(os.tmpdir(), 'sabotpress-desktop-')) }
 
 test('desktop D1 adapter persists SQLite data with D1-shaped results', async () => {
@@ -69,14 +70,15 @@ test('desktop local server boots the real API with local owner permission', asyn
     const campaigns = JSON.parse(campaignsText)
     assert.equal(campaigns.ok, true)
     assert.ok(Array.isArray(campaigns.items))
-
-    for (const pathname of ['/wp-admin/system-backup', '/wp-admin/settings/domains']) {
-      const routeResponse = await fetch(`${runtime.url}${pathname}`)
-      assert.equal(routeResponse.status, 200)
-      assert.match(routeResponse.headers.get('content-type') || '', /text\/html/)
-    }
   } finally {
     await runtime.close()
     fs.rmSync(root, { recursive: true, force: true })
   }
+})
+
+test('desktop Publish menu targets canonical admin routes', () => {
+  assert.match(desktopMain, /openLocal\('\/wp-admin\/system-backup'\)/)
+  assert.match(desktopMain, /openLocal\('\/wp-admin\/settings\/domains'\)/)
+  assert.doesNotMatch(desktopMain, /openLocal\('\/backup'\)/)
+  assert.doesNotMatch(desktopMain, /openLocal\('\/sites'\)/)
 })

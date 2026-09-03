@@ -11,6 +11,11 @@ function appRoot() {
   return app.isPackaged ? app.getAppPath() : path.resolve(__dirname, '..')
 }
 
+function openLocal(pathname) {
+  if (!mainWindow || !runtime) return
+  mainWindow.loadURL(`${runtime.url}${pathname}`)
+}
+
 function buildMenu() {
   return Menu.buildFromTemplate([
     {
@@ -28,8 +33,8 @@ function buildMenu() {
       label: 'Publish',
       submenu: [
         { label: 'Publish Online…', accelerator: 'CmdOrCtrl+Shift+P', click: () => openPublishOnline() },
-        { label: 'Domain setup', click: () => mainWindow?.loadURL(`${runtime.url}/sites`) },
-        { label: 'Backups', click: () => mainWindow?.loadURL(`${runtime.url}/backup`) },
+        { label: 'Domain setup', click: () => openLocal('/wp-admin/settings/domains') },
+        { label: 'Backups', click: () => openLocal('/wp-admin/system-backup') },
       ],
     },
     {
@@ -81,8 +86,7 @@ async function createMainWindow() {
 }
 
 function openPublishOnline() {
-  if (!mainWindow || !runtime) return
-  mainWindow.loadURL(`${runtime.url}/publish-online`)
+  openLocal('/publish-online')
 }
 
 ipcMain.handle('desktop:open-external', async (_event, url) => {

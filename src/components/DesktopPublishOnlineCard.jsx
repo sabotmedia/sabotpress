@@ -1,5 +1,6 @@
 import { Link, useSearchParams } from 'react-router-dom'
 import { adminRoutes } from '../routing/routes'
+import { helpUrl } from '../lib/helpUrl'
 
 export function DesktopPublishOnlineCard() {
   const [searchParams] = useSearchParams()
@@ -21,7 +22,7 @@ export function DesktopPublishOnlineCard() {
         <article>
           <strong>$0 public hosting</strong>
           <p>Use a free hosting tier and its provided address. SabotPress currently documents Cloudflare Pages as the supported no-cost production route. You can add your own domain later.</p>
-          <div className="review-card__actions"><a className="button button--primary" href="/help.html#free-hosting">Free setup instructions</a></div>
+          <div className="review-card__actions"><a className="button button--primary" href={helpUrl('free-hosting')}>Free setup instructions</a></div>
         </article>
         <article>
           <strong>I already own a domain</strong>
@@ -31,12 +32,12 @@ export function DesktopPublishOnlineCard() {
         <article>
           <strong>Community or collective host</strong>
           <p>A compatible host can run SabotPress for you. This is the closest model to Noblogs: somebody else handles the server while you just publish.</p>
-          <div className="review-card__actions"><a className="button" href="/help.html#community-hosting">What to ask a host</a></div>
+          <div className="review-card__actions"><a className="button" href={helpUrl('community-hosting')}>What to ask a host</a></div>
         </article>
         <article>
           <strong>My own server</strong>
           <p>Use Docker/VPS deployment when you actually want to manage infrastructure. This is an advanced route, not homework for everybody else.</p>
-          <div className="review-card__actions"><a className="button" href="/help.html#server">Server install guide</a></div>
+          <div className="review-card__actions"><a className="button" href={helpUrl('server')}>Server install guide</a></div>
         </article>
       </div>
 

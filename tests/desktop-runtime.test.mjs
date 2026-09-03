@@ -64,8 +64,9 @@ test('desktop local server boots the real API with local owner permission', asyn
     assert.equal(setup.mode, 'd1')
 
     const campaignsResponse = await fetch(`${runtime.url}/api/campaigns?includeDrafts=1`)
-    assert.equal(campaignsResponse.status, 200)
-    const campaigns = await campaignsResponse.json()
+    const campaignsText = await campaignsResponse.text()
+    assert.equal(campaignsResponse.status, 200, campaignsText)
+    const campaigns = JSON.parse(campaignsText)
     assert.equal(campaigns.ok, true)
     assert.ok(Array.isArray(campaigns.items))
 

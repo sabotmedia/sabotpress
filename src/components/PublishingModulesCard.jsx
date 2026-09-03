@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import {
   PUBLISHING_MODULES,
   PUBLISHING_PRESETS,
@@ -12,8 +12,12 @@ export function PublishingModulesCard({ onboarding = false, onComplete }) {
   const [setup, setSetup] = useState(() => getPublishingSetup())
   const [state, setState] = useState('idle')
   const [notice, setNotice] = useState('')
+  const [logoState, setLogoState] = useState('idle')
+  const [logoNotice, setLogoNotice] = useState('')
+  const identitySaveTimer = useRef(null)
 
   useEffect(() => { hydratePublishingSetup().then(setSetup).catch(() => {}) }, [])
+  useEffect(() => () => { if (identitySaveTimer.current) clearTimeout(identitySaveTimer.current) }, [])
 
   const presetMatches = useMemo(() => Object.entries(PUBLISHING_PRESETS).find(([, preset]) => (
     preset.modules.length === setup.modules.length && preset.modules.every((id) => setup.modules.includes(id))
@@ -33,23 +37,74 @@ export function PublishingModulesCard({ onboarding = false, onComplete }) {
     }))
   }
 
-  async function save() {
+  async function persist(nextSetup = setup, { completed = false, identityOnly = false } = {}) {
     setState('saving')
     setNotice('')
     try {
       const saved = await savePublishingSetup({
-        ...setup,
+        ...nextSetup,
         preset: presetMatches,
-        firstRunComplete: onboarding ? true : setup.firstRunComplete,
+        firstRunComplete: completed ? true : nextSetup.firstRunComplete,
       })
       setSetup(saved)
-      setNotice('Saved for every editor on this site.')
+      setNotice(identityOnly ? 'Publication identity saved.' : 'Saved.')
       setState('saved')
-      onComplete?.(saved)
+      if (completed) onComplete?.(saved)
+      return saved
     } catch (error) {
       setState('error')
       setNotice(String(error?.message || error))
+      throw error
     }
+  }
+
+  function scheduleIdentitySave(nextSetup) {
+    if (onboarding) return
+    if (identitySaveTimer.current) clearTimeout(identitySaveTimer.current)
+    identitySaveTimer.current = setTimeout(() => {
+      persist(nextSetup, { identityOnly: true }).catch(() => {})
+    }, 700)
+  }
+
+  function updateIdentity(field, value) {
+    const nextSetup = { ...setup, identity: { ...setup.identity, [field]: value } }
+    setSetup(nextSetup)
+    scheduleIdentitySave(nextSetup)
+  }
+
+  async function uploadLogo(file) {
+    if (!file) return
+    if (!String(file.type || '').startsWith('image/')) {
+      setLogoState('error')
+      setLogoNotice('Choose an image file for the publication logo.')
+      return
+    }
+    setLogoState('uploading')
+    setLogoNotice('')
+    try {
+      const form = new FormData()
+      form.append('file', file)
+      form.append('title', `${setup.identity.name || 'Publication'} logo`)
+      form.append('role', 'publication-logo')
+      const response = await fetch('/api/media/files', { method: 'POST', credentials: 'same-origin', body: form })
+      const data = await response.json().catch(() => ({}))
+      if (!response.ok || data?.ok === false) throw new Error(data.error || `Logo upload failed (${response.status})`)
+      const media = data.media || data.asset || data.item || {}
+      const url = String(media.publicUrl || media.url || media.downloadUrl || '')
+      if (!url) throw new Error('Logo uploaded but no usable media URL was returned.')
+      const nextSetup = { ...setup, identity: { ...setup.identity, logoUrl: url } }
+      setSetup(nextSetup)
+      await persist(nextSetup, { identityOnly: true })
+      setLogoState('saved')
+      setLogoNotice('Logo uploaded and saved.')
+    } catch (error) {
+      setLogoState('error')
+      setLogoNotice(String(error?.message || error))
+    }
+  }
+
+  async function save() {
+    await persist(setup, { completed: onboarding })
   }
 
   return (
@@ -62,11 +117,21 @@ export function PublishingModulesCard({ onboarding = false, onComplete }) {
       </div>
 
       <div className="publishing-modules-card__identity">
-        <label><strong>Publication name</strong><input value={setup.identity.name} onChange={(event) => setSetup({ ...setup, identity: { ...setup.identity, name: event.target.value } })} placeholder="Your publication" /></label>
-        <label><strong>Short description</strong><textarea rows="2" value={setup.identity.description} onChange={(event) => setSetup({ ...setup, identity: { ...setup.identity, description: event.target.value } })} placeholder="What do you publish?" /></label>
-        <label><strong>Logo URL <small>(optional)</small></strong><input value={setup.identity.logoUrl} onChange={(event) => setSetup({ ...setup, identity: { ...setup.identity, logoUrl: event.target.value } })} placeholder="https://…" /></label>
-        <label><strong>Primary editor <small>(optional)</small></strong><input value={setup.identity.primaryEditor} onChange={(event) => setSetup({ ...setup, identity: { ...setup.identity, primaryEditor: event.target.value } })} placeholder="Name or role" /></label>
+        <label><strong>Publication name</strong><input value={setup.identity.name} onChange={(event) => updateIdentity('name', event.target.value)} placeholder="Your publication" /></label>
+        <label><strong>Short description</strong><textarea rows="2" value={setup.identity.description} onChange={(event) => updateIdentity('description', event.target.value)} placeholder="What do you publish?" /></label>
+        <label><strong>Logo URL <small>(optional)</small></strong><input value={setup.identity.logoUrl} onChange={(event) => updateIdentity('logoUrl', event.target.value)} onBlur={() => !onboarding && persist(setup, { identityOnly: true }).catch(() => {})} placeholder="https://…" /></label>
+        <label><strong>Upload logo <small>(recommended)</small></strong><input type="file" accept="image/*" onChange={(event) => uploadLogo(event.target.files?.[0])} disabled={logoState === 'uploading'} /><small>{logoState === 'uploading' ? 'Uploading…' : 'PNG, JPG, WebP, SVG, or another browser-supported image.'}</small></label>
+        {setup.identity.logoUrl ? <div className="publishing-modules-card__logo-preview"><img src={setup.identity.logoUrl} alt="Current publication logo" /><button type="button" className="button" onClick={() => updateIdentity('logoUrl', '')}>Remove logo</button></div> : null}
+        <label><strong>Primary editor <small>(optional)</small></strong><input value={setup.identity.primaryEditor} onChange={(event) => updateIdentity('primaryEditor', event.target.value)} placeholder="Name or role" /></label>
       </div>
+
+      {!onboarding ? (
+        <div className="review-card__actions publishing-modules-card__identity-actions">
+          <button type="button" className="button button--primary" onClick={() => persist(setup, { identityOnly: true })} disabled={state === 'saving'}>{state === 'saving' ? 'Saving…' : 'Save publication settings'}</button>
+          <span className="description">Identity fields also save automatically after you stop typing.</span>
+        </div>
+      ) : null}
+      {logoNotice ? <p className={logoState === 'error' ? 'notice notice--error' : 'description'}>{logoNotice}</p> : null}
 
       <div className="publishing-preset-row" role="group" aria-label="Publishing presets">
         {Object.entries(PUBLISHING_PRESETS).map(([id, preset]) => (

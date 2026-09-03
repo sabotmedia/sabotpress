@@ -3,6 +3,8 @@
   "private": false,
   "version": "0.1.0",
   "description": "Free self-hostable publishing software for independent media, collectives, archives, podcasts, campaigns and print work.",
+  "author": "SabotPress contributors",
+  "desktopName": "SabotPress",
   "type": "module",
   "main": "desktop/main.mjs",
   "scripts": {
@@ -55,6 +57,7 @@
       "output": "release"
     },
     "win": {
+      "icon": "public/favicon.ico",
       "target": [
         { "target": "nsis", "arch": ["x64"] },
         { "target": "portable", "arch": ["x64"] }
@@ -68,11 +71,14 @@
       "createStartMenuShortcut": true
     },
     "mac": {
+      "icon": "public/icon-512.png",
       "target": ["dmg", "zip"],
       "category": "public.app-category.productivity",
       "artifactName": "SabotPress-${version}-macOS-${arch}.${ext}"
     },
     "linux": {
+      "icon": "public/icon-512.png",
+      "syncDesktopName": true,
       "target": ["AppImage", "deb"],
       "category": "Office",
       "artifactName": "SabotPress-${version}-Linux-${arch}.${ext}"

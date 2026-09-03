@@ -14,20 +14,23 @@ test('published public config never implicitly falls back to browser localStorag
   assert.match(resolveBody, /mergeSchemaConfigs\(publicSiteDefaults, runtimeConfig \|\| \{\}\)/)
 })
 
-test('non-editing public pages require loaded D1 config and ignore local drafts', () => {
-  assert.match(resolvedConfig, /backendMode !== 'd1'/)
+test('non-editing public pages require loaded authoritative config and ignore edit drafts', () => {
+  assert.match(resolvedConfig, /authoritativeMode\(backendMode\)/)
+  assert.match(resolvedConfig, /mode === 'd1'/)
+  assert.match(resolvedConfig, /mode === 'browser-local'/)
   assert.match(resolvedConfig, /loadState !== 'loaded'/)
   assert.match(resolvedConfig, /isAdmin && isEditing/)
   assert.match(resolvedConfig, /savedConfig \|\| EMPTY_CONFIG/)
-  const publishedPath = resolvedConfig.slice(resolvedConfig.indexOf("if (backendMode !== 'd1'"))
+  const publishedPath = resolvedConfig.slice(resolvedConfig.indexOf('if (!authoritativeMode(backendMode)'))
   assert.doesNotMatch(publishedPath, /effectiveConfig \|\| EMPTY_CONFIG/)
 })
 
 test('legacy local edit caches cannot become the published source of truth', () => {
   assert.match(editContext, /sabot-public-edit-draft-v2/)
   assert.match(editContext, /effectiveConfig/)
-  assert.match(resolvedConfig, /authenticated editor/)
-  assert.match(resolvedConfig, /Published public pages must be device-independent/)
+  assert.match(resolvedConfig, /isAdmin && isEditing/)
+  assert.match(resolvedConfig, /authoritative store for the active runtime/)
+  assert.doesNotMatch(resolvedConfig, /getStoredPublicConfig/)
 })
 
 test('about contact submit support and security share the authoritative PublicInfoPage renderer', () => {

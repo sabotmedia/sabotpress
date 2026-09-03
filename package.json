@@ -2,7 +2,9 @@
   "name": "sabotpress",
   "private": false,
   "version": "0.1.0",
+  "description": "Free self-hostable publishing software for independent media, collectives, archives, podcasts, campaigns and print work.",
   "type": "module",
+  "main": "desktop/main.mjs",
   "scripts": {
     "dev": "vite",
     "prebuild": "node scripts/prepare-flite-tts-assets.mjs",
@@ -11,9 +13,17 @@
     "check": "npm test && npm run build",
     "preview": "vite preview",
     "import:wordpress": "node scripts/import-wordpress.mjs",
-    "segmentation:dev": "cd services/printlab-segmentation && uvicorn app:app --reload --port 8000"
+    "segmentation:dev": "cd services/printlab-segmentation && uvicorn app:app --reload --port 8000",
+    "desktop": "npm run build && electron .",
+    "desktop:dev": "npm run build && electron . --dev",
+    "desktop:pack": "npm run build && electron-builder --dir",
+    "desktop:dist": "npm run build && electron-builder",
+    "desktop:dist:win": "npm run build && electron-builder --win",
+    "desktop:dist:mac": "npm run build && electron-builder --mac",
+    "desktop:dist:linux": "npm run build && electron-builder --linux"
   },
   "dependencies": {
+    "better-sqlite3": "^11.10.0",
     "fast-xml-parser": "^4.5.0",
     "openpgp": "^6.3.1",
     "react": "^18.3.1",
@@ -22,6 +32,50 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.4",
+    "electron": "^37.2.6",
+    "electron-builder": "^26.0.12",
     "vite": "^5.4.21"
+  },
+  "build": {
+    "appId": "media.sabotpress.desktop",
+    "productName": "SabotPress",
+    "asar": true,
+    "asarUnpack": [
+      "node_modules/better-sqlite3/**/*"
+    ],
+    "files": [
+      "dist/**/*",
+      "desktop/**/*",
+      "functions/**/*",
+      "db/**/*",
+      "package.json",
+      "LICENSE"
+    ],
+    "directories": {
+      "output": "release"
+    },
+    "win": {
+      "target": [
+        { "target": "nsis", "arch": ["x64"] },
+        { "target": "portable", "arch": ["x64"] }
+      ],
+      "artifactName": "SabotPress-${version}-Windows-${arch}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    },
+    "mac": {
+      "target": ["dmg", "zip"],
+      "category": "public.app-category.productivity",
+      "artifactName": "SabotPress-${version}-macOS-${arch}.${ext}"
+    },
+    "linux": {
+      "target": ["AppImage", "deb"],
+      "category": "Office",
+      "artifactName": "SabotPress-${version}-Linux-${arch}.${ext}"
+    }
   }
 }

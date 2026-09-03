@@ -39,6 +39,13 @@ export function SystemBackupPage() {
         {error ? <div className="notice notice-error" role="alert"><p><strong>Backup failed:</strong> {error}</p><p>No incomplete snapshot was downloaded. Check Site Health and retry after the reported backend problem is fixed.</p></div> : null}
 
         <section className="wp-meta-box">
+          <h2>Backup schedule</h2>
+          <p className="description"><strong>SabotPress is not currently running automatic scheduled backups.</strong> This screen creates a backup only when you click the export button below. Browser-local users get periodic reminders to export a portable backup, and a server host may have its own infrastructure backup schedule.</p>
+          <p className="description">For a backup you can move between browser, desktop and server editions, use <strong>Publish Online → Export complete backup</strong>. Automatic local snapshots are a separate feature and are not being silently created in the background.</p>
+          <div className="review-card__actions"><a className="button" href="/help.html#backups">Backup help</a></div>
+        </section>
+
+        <section className="wp-meta-box">
           <h2>Verified server export</h2>
           <p className="description">Includes native content and D1 revision history, taxonomy, safe user identity/role metadata, legacy editor-role records, audit events, media metadata, collections, campaigns and campaign revisions, the campaign coverage archive, publications, Sites &amp; Domains, persisted feed and podcast settings, and public-site configuration.</p>
           <p className="description"><strong>Password hashes and salts are deliberately excluded.</strong> The snapshot also contains media metadata and public asset URLs, not duplicate copies of R2 binary objects.</p>

@@ -1,7 +1,9 @@
 import imported from '../content/pieces.imported.json'
 import overrides from '../content/piece-overrides.json'
+import { isLocalRuntime } from './runtime'
 
 export function getPieces() {
+  if (isLocalRuntime()) return []
   const items = imported.items || []
   return items
     .map((piece) => mergePiece(piece, overrides[piece.slug] || {}))

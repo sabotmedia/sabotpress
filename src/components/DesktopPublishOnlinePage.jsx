@@ -1,10 +1,5 @@
 import { Link } from 'react-router-dom'
 
-function openExternal(url) {
-  if (window.sabotDesktop?.openExternal) return window.sabotDesktop.openExternal(url)
-  window.open(url, '_blank', 'noopener,noreferrer')
-}
-
 export function DesktopPublishOnlinePage() {
   return (
     <main className="desktop-welcome desktop-publish-online">
@@ -19,14 +14,17 @@ export function DesktopPublishOnlinePage() {
         <article className="desktop-publish-card desktop-publish-card--recommended">
           <span className="desktop-publish-card__tag">recommended first</span>
           <h2>Publish for $0</h2>
-          <p>Use a supported free hosting tier and its provided address. No domain purchase is required.</p>
+          <p>The current tested no-cost route uses a free web host with a provided public address. A custom domain is optional.</p>
           <ol>
-            <li>Create a free hosting account.</li>
-            <li>Deploy the SabotPress web edition.</li>
-            <li>Use the provided public address immediately.</li>
-            <li>Connect your own domain later if you ever want one.</li>
+            <li>Create a free account with a compatible host. Cloudflare Pages/Workers with D1/R2-compatible storage is the currently tested route.</li>
+            <li>Create a new SabotPress web deployment from this project.</li>
+            <li>Use the host-provided address immediately. You do not need to buy a domain.</li>
+            <li>If you already own a domain, connect it later from Sites &amp; Domains.</li>
           </ol>
-          <button className="button button--primary" type="button" onClick={() => openExternal('https://github.com/sabotmedia/sabotpress/blob/main/docs/INSTALL.md')}>Open free setup instructions</button>
+          <details className="desktop-publish-details">
+            <summary>What this does and does not do</summary>
+            <p>SabotPress desktop keeps your working copy on this computer. Publishing online creates a separate hosted copy. The desktop app does not silently upload your work, and this version does not yet provide one-click account creation or cloud deployment.</p>
+          </details>
         </article>
 
         <article className="desktop-publish-card">
@@ -38,13 +36,19 @@ export function DesktopPublishOnlinePage() {
         <article className="desktop-publish-card">
           <h2>Community or collective hosting</h2>
           <p>A compatible community host can run SabotPress for you. This is the closest model to the old bundled Noblogs experience.</p>
-          <button className="button" type="button" onClick={() => openExternal('https://github.com/sabotmedia/sabotpress/blob/main/docs/INSTALL.md')}>Hosting requirements</button>
+          <details className="desktop-publish-details">
+            <summary>Hosting requirements</summary>
+            <p>A host needs the SabotPress web app plus persistent database and media storage. The current web edition supports D1/R2-compatible storage, and server deployments can use the documented adapters.</p>
+          </details>
         </article>
 
         <article className="desktop-publish-card">
           <h2>I have a server</h2>
           <p>Use Docker/VPS or another supported deployment adapter while keeping this desktop copy as your local working installation.</p>
-          <button className="button" type="button" onClick={() => openExternal('https://github.com/sabotmedia/sabotpress/blob/main/docs/INSTALL.md')}>Server instructions</button>
+          <details className="desktop-publish-details">
+            <summary>Server route</summary>
+            <p>This is the advanced option. It is intended for people already comfortable managing a server. Ordinary desktop users do not need it.</p>
+          </details>
         </article>
       </section>
 

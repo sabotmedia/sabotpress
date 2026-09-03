@@ -1,0 +1,47 @@
+name: update unsigned install note
+
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/update-release-note.yml']
+
+permissions:
+  contents: write
+
+jobs:
+  note:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update v0.1.0 release notes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          current="$(gh release view v0.1.0 --repo "$GITHUB_REPOSITORY" --json body --jq .body)"
+          marker='## Windows SmartScreen / macOS Gatekeeper'
+          if printf '%s' "$current" | grep -Fq "$marker"; then
+            echo 'Install warning note already present.'
+            exit 0
+          fi
+          cat > /tmp/note.md <<'EOF'
+          ## Windows SmartScreen / macOS Gatekeeper
+
+          SabotPress desktop builds are currently **unsigned**. Windows may show **“Windows protected your PC”** or identify SabotPress as an **unknown/unrecognized publisher**. macOS may also warn that the app is from an unidentified developer.
+
+          This warning is expected for the current release. It does **not** mean Windows or macOS detected malware; it means the executable has not been signed with a paid identity-verified platform certificate.
+
+          **Windows:** click **More info** → **Run anyway** if you downloaded SabotPress from this release page and intend to run it.
+
+          **macOS:** if Gatekeeper blocks the app, open **System Settings → Privacy & Security**, find the blocked SabotPress notice, and choose **Open Anyway**. macOS wording varies by version.
+
+          Every release asset is published directly through this repository's release workflow and GitHub records a SHA-256 digest for each uploaded binary. The source code for the release is available in this repository. SabotPress does not currently require paid code-signing certificates or identity verification to publish builds.
+
+          ---
+          EOF
+          {
+            cat /tmp/note.md
+            printf '\n%s\n' "$current"
+          } > /tmp/release.md
+          gh release edit v0.1.0 --repo "$GITHUB_REPOSITORY" --notes-file /tmp/release.md

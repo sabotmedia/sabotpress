@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
 import { AdminFrame } from './AdminRail'
 import { AdminPublicConfigCard } from './AdminPublicConfigCard'
-import { LegacyInfoPageRecovery } from './LegacyInfoPageRecovery'
 import { RobotVoiceSettingsCard } from './RobotVoiceSettingsCard'
 import { PublishingModulesCard } from './PublishingModulesCard'
 import { InstallReadinessCard } from './InstallReadinessCard'
@@ -60,7 +59,6 @@ export function SettingsAdminPage() {
         <InstallReadinessCard />
         <AdminPublicConfigCard />
         <RobotVoiceSettingsCard />
-        <LegacyInfoPageRecovery />
         <section className="wp-meta-box">
           <h2>More settings</h2>
           <p className="description">Open these only when you need them. Day-to-day publishing does not depend on understanding the underlying infrastructure.</p>
@@ -70,6 +68,7 @@ export function SettingsAdminPage() {
             <Link className="button" to={adminRoutes.backup}>Backups</Link>
             <Link className="button" to={adminRoutes.sites}>Domain setup</Link>
             <Link className="button" to={adminRoutes.siteHealth}>Advanced / Site Health</Link>
+            <a className="button" href="/help.html#install">Help</a>
           </div>
         </section>
       </main>

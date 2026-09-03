@@ -25,7 +25,7 @@ jobs:
           python - <<'PY'
           from pathlib import Path
 
-          for filename in ['src/routing/routes.js', 'src/components/PublicationTopbar.jsx', 'src/App.jsx']:
+          for filename in ['src/routing/routes.js', 'src/components/PublicationTopbar.jsx', 'src/components/PublicationFooter.jsx', 'src/App.jsx']:
               p = Path(filename)
               s = p.read_text()
               s = s.replace('aiCampaignCoverage', 'featuredCampaignCoverage')
@@ -33,6 +33,8 @@ jobs:
               s = s.replace('SHOW_AI_CAMPAIGN_LINKS', 'SHOW_FEATURED_CAMPAIGN_LINKS')
               s = s.replace("gallery: '/aberdeen-local-1312-gallery'", "gallery: '/gallery'")
               s = s.replace("'/aberdeen-local-1312-gallery':", "'/gallery':")
+              s = s.replace('defaultLabel="A/I Campaign"', 'defaultLabel="Featured Campaign"')
+              s = s.replace('defaultHref="/aberdeen-local-1312-gallery"', 'defaultHref="/gallery"')
               p.write_text(s)
 
           p = Path('src/config/campaignVisibility.js')

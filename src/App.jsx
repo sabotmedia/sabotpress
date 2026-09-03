@@ -55,6 +55,8 @@ import { buildPostMeta, setDocumentMeta } from './lib/documentMeta'
 import { trackPageView } from './lib/analyticsApi'
 import { canonicalizeAnalyticsPath } from '../shared/analyticsPath'
 import { getPublicPageMeta } from './lib/publicPageRegistry'
+import { DesktopWelcomePage } from './components/DesktopWelcomePage'
+import { DesktopPublishOnlinePage } from './components/DesktopPublishOnlinePage'
 
 const pieces = getPieces()
 const featured = getFeaturedPiece(pieces)
@@ -66,7 +68,7 @@ const ADMIN_SHELL_PATHS = [
   '/podcasts', '/draft', '/overrides', '/system-backup', '/taxonomy', '/roles', '/audit-log', '/analytics',
   '/design-system', '/platform-map', '/media', '/pages', '/collections-admin', '/campaigns-admin', '/publications-admin', '/feeds-admin',
   '/users', '/menus', '/customize', '/site-editor', '/advanced-draft-tools', '/tools', '/site-health', '/printlab',
-  '/audiolab', '/settings', '/sites', '/wp-admin',
+  '/audiolab', '/settings', '/sites', '/wp-admin', '/welcome', '/publish-online',
 ]
 
 function shouldUseBareShell(pathname) {
@@ -280,6 +282,8 @@ export default function App() {
           <AnalyticsTracker />
           <Layout>
             <Routes>
+              <Route path="/welcome" element={<DesktopWelcomePage />} />
+              <Route path="/publish-online" element={<DesktopPublishOnlinePage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/wp-login" element={<LoginPage />} />
               <Route path="/logout" element={<LogoutPage />} />

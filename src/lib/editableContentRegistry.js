@@ -224,16 +224,16 @@ export const editableContentRegistry = {
   about: {
     eyebrow: {
       field: 'info.about.eyebrow',
-      defaultText: 'about / publication / harbor',
+      defaultText: 'about / publication',
     },
     title: {
       field: 'info.about.title',
-      defaultText: 'About SabotPress',
+      defaultText: 'About this publication',
     },
     body: {
       field: 'info.about.body',
       defaultText:
-        'SabotPress publishes independent reporting, essays, comics, podcasts, zines, and project-based archive work rooted in Grays Harbor and connected to wider struggles.',
+        'Add a description of your publication, collective, project, or archive here.',
     },
     actions: [
       { id: 'archive', labelField: 'info.about.actions.archive.label', hrefField: 'info.about.actions.archive.href', defaultLabel: 'Browse archive', defaultHref: '/archive' },
@@ -289,7 +289,7 @@ export const editableContentRegistry = {
     body: {
       field: 'info.support.body',
       defaultText:
-        'Support SabotPress by reading, sharing, printing, citing, and circulating work from the archive. Direct support details can be added here when they are ready.',
+        'Add the ways readers can support this publication here.',
     },
     actions: [
       { id: 'zines', labelField: 'info.support.actions.zines.label', hrefField: 'info.support.actions.zines.href', defaultLabel: 'Print material', defaultHref: '/archive?format=zine' },
@@ -308,7 +308,7 @@ export const editableContentRegistry = {
     body: {
       field: 'info.security.body',
       defaultText:
-        `Some people contact SabotPress with information that may carry personal, legal, professional, or political risk.
+        `Some people contact publications with information that may carry personal, legal, professional, or political risk.
 
 We take that seriously.
 
@@ -330,7 +330,7 @@ General:
 
 
 Submissions:
-submit@sabot.media
+
 
 Tips:
 
@@ -359,19 +359,19 @@ If your message is sensitive, use OpenPGP.
 
 ## Our OpenPGP key
 
-Use this key to encrypt email to SabotPress.
+Add your publication OpenPGP key here if you use one.
 
 Identity:
-SabotPress <>
+Add your publication identity here.
 
 Fingerprint:
-3166 FF41 1CC8 71E7 2D15 344C AC26 8457 855E 57BA
+Add your OpenPGP fingerprint here.
 
 Key ID:
-AC268457855E57BA
+Add your key ID here.
 
 Download our public key:
-https://example.invalid/keys/info-sabot-media.asc
+
 
 Before sending sensitive information, verify that the fingerprint above matches the key you imported.
 
@@ -423,7 +423,7 @@ https://proton.me/mail
 
 2. Download our public key.
 
-https://example.invalid/keys/info-sabot-media.asc
+
 
 3. Import the key into your OpenPGP tool.
 

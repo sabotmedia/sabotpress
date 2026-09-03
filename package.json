@@ -1,7 +1,7 @@
 {
   "name": "sabotpress",
   "private": false,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Free self-hostable publishing software for independent media, collectives, archives, podcasts, campaigns and print work.",
   "author": {
     "name": "SabotPress contributors",
@@ -61,10 +61,21 @@
     },
     "win": {
       "target": [
-        { "target": "nsis", "arch": ["x64"] },
-        { "target": "portable", "arch": ["x64"] }
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
       ],
-      "artifactName": "SabotPress-${version}-Windows-${arch}.${ext}"
+      "artifactName": "SabotPress-${version}-Windows-${arch}-${target}.${ext}",
+      "icon": "public/sabotpress.ico"
     },
     "nsis": {
       "oneClick": false,
@@ -73,15 +84,21 @@
       "createStartMenuShortcut": true
     },
     "mac": {
-      "icon": "public/icon-512.png",
-      "target": ["dmg", "zip"],
+      "icon": "public/sabotpress-icon.png",
+      "target": [
+        "dmg",
+        "zip"
+      ],
       "category": "public.app-category.productivity",
       "artifactName": "SabotPress-${version}-macOS-${arch}.${ext}"
     },
     "linux": {
-      "icon": "public/icon-512.png",
+      "icon": "public/sabotpress-icon.png",
       "syncDesktopName": true,
-      "target": ["AppImage", "deb"],
+      "target": [
+        "AppImage",
+        "deb"
+      ],
       "category": "Office",
       "artifactName": "SabotPress-${version}-Linux-${arch}.${ext}"
     }

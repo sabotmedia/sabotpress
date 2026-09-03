@@ -23,13 +23,15 @@ for (const file of files) {
   })
 }
 
-test('public site config fails closed when D1 is unavailable', () => {
+test('public site config fails closed on the server and only accepts explicit authoritative runtimes', () => {
   const api = fs.readFileSync(new URL('../functions/api/public-site-config.js', import.meta.url), 'utf8')
   const client = fs.readFileSync(new URL('../src/lib/publicConfigApi.js', import.meta.url), 'utf8')
   assert.match(api, /databaseUnavailable\('public site config reads'\)/)
   assert.match(api, /databaseUnavailable\('public site config writes'\)/)
   assert.doesNotMatch(api, /mode:\s*'scaffold'[\s\S]*saved:\s*true/)
-  assert.match(client, /data\.mode !== 'd1'/)
+  assert.match(client, /mode === 'd1'/)
+  assert.match(client, /mode === 'browser-local'/)
+  assert.doesNotMatch(client, /mode === 'scaffold'/)
 })
 
 test('native translation API keeps writes behind editorial auth', () => {

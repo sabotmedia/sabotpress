@@ -62,6 +62,18 @@ test('desktop local server boots the real API with local owner permission', asyn
     const setup = await setupResponse.json()
     assert.equal(setup.ok, true)
     assert.equal(setup.mode, 'd1')
+
+    const campaignsResponse = await fetch(`${runtime.url}/api/campaigns?includeDrafts=1`)
+    assert.equal(campaignsResponse.status, 200)
+    const campaigns = await campaignsResponse.json()
+    assert.equal(campaigns.ok, true)
+    assert.ok(Array.isArray(campaigns.items))
+
+    for (const pathname of ['/wp-admin/system-backup', '/wp-admin/settings/domains']) {
+      const routeResponse = await fetch(`${runtime.url}${pathname}`)
+      assert.equal(routeResponse.status, 200)
+      assert.match(routeResponse.headers.get('content-type') || '', /text\/html/)
+    }
   } finally {
     await runtime.close()
     fs.rmSync(root, { recursive: true, force: true })

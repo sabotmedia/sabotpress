@@ -163,4 +163,229 @@
   }
 }
 
-.desktop-welcome{min-height:100vh;background:#111;color:#f5f5ee;padding:clamp(2rem,5vw,5rem);font-family:system-ui,sans-serif}.desktop-welcome__hero{max-width:920px;margin:0 auto 2rem}.desktop-welcome__mark{display:grid;place-items:center;width:84px;height:84px;border-radius:18px;background:#f5f5ee;color:#111;font-size:2rem;font-weight:900;margin-bottom:1.5rem}.desktop-welcome__eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:.78rem;font-weight:800;opacity:.72}.desktop-welcome h1{font-size:clamp(2.2rem,5vw,4.6rem);line-height:.98;letter-spacing:-.04em;max-width:900px}.desktop-welcome__hero>p:last-child{font-size:1.15rem;line-height:1.55;max-width:760px;opacity:.82}.desktop-welcome__steps{max-width:1080px;margin:0 auto 2rem;display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem}.desktop-welcome__steps>div{border:1px solid #444;padding:1rem;border-radius:12px;display:grid;gap:.35rem}.desktop-welcome__steps strong{font-size:1.5rem}.desktop-welcome .wp-meta-box{max-width:1080px;margin-left:auto;margin-right:auto;background:#f5f5ee;color:#111;border-radius:14px;padding:1.25rem}.desktop-welcome__footnote,.desktop-publish-online__actions{max-width:1080px;margin:1rem auto;opacity:.76}.desktop-publish-grid{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}.desktop-publish-card{border:1px solid #444;border-radius:14px;padding:1.35rem;background:#191919}.desktop-publish-card--recommended{border-color:#f5f5ee}.desktop-publish-card__tag{display:inline-block;font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;font-weight:800;margin-bottom:.5rem}.desktop-publish-card h2{margin:.25rem 0 .6rem}.desktop-publish-card li{margin:.45rem 0}.desktop-publish-online__actions{display:flex;gap:.75rem;align-items:center;flex-wrap:wrap}@media(max-width:760px){.desktop-welcome__steps,.desktop-publish-grid{grid-template-columns:1fr}.desktop-welcome{padding:1.25rem}}
+/* Desktop onboarding is product UI, not a copy of any publication theme. */
+.desktop-welcome {
+  min-height: 100vh;
+  padding: clamp(2rem, 5vw, 4.5rem);
+  background: #f3f5f7;
+  color: #1b2026;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.desktop-welcome *,
+.desktop-welcome button,
+.desktop-welcome input,
+.desktop-welcome textarea,
+.desktop-welcome select,
+.desktop-welcome .button {
+  font-family: inherit;
+  text-shadow: none;
+}
+
+.desktop-welcome__hero {
+  max-width: 920px;
+  margin: 0 auto 2rem;
+}
+
+.desktop-welcome__mark {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border: 1px solid #b8c0c8;
+  border-radius: 12px;
+  background: #fff;
+  color: #1b2026;
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin-bottom: 1.25rem;
+}
+
+.desktop-welcome__eyebrow {
+  margin: 0 0 .65rem;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  font-size: .76rem;
+  font-weight: 700;
+  color: #5b6570;
+}
+
+.desktop-welcome h1 {
+  margin: 0;
+  max-width: 850px;
+  font-family: inherit;
+  font-size: clamp(2rem, 4.5vw, 4rem);
+  font-weight: 720;
+  line-height: 1.03;
+  letter-spacing: -.035em;
+  color: #15191e;
+}
+
+.desktop-welcome__hero > p:last-child {
+  max-width: 760px;
+  margin-top: 1rem;
+  font-size: 1.08rem;
+  line-height: 1.6;
+  color: #515b65;
+}
+
+.desktop-welcome__steps {
+  max-width: 1080px;
+  margin: 0 auto 2rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: .75rem;
+}
+
+.desktop-welcome__steps > div {
+  display: grid;
+  gap: .35rem;
+  padding: 1rem;
+  border: 1px solid #d4d9de;
+  border-radius: 10px;
+  background: #fff;
+  color: #39424c;
+}
+
+.desktop-welcome__steps strong {
+  font-size: 1.25rem;
+  color: #171c21;
+}
+
+.desktop-welcome .wp-meta-box {
+  max-width: 1080px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1.25rem;
+  border: 1px solid #d4d9de;
+  border-radius: 12px;
+  background: #fff;
+  color: #1b2026;
+  box-shadow: 0 8px 28px rgba(21, 25, 30, .06);
+}
+
+.desktop-welcome .publishing-preset-row .button,
+.desktop-welcome .review-card__actions .button,
+.desktop-welcome .desktop-publish-online__actions .button,
+.desktop-welcome .desktop-publish-card .button {
+  min-height: 42px;
+  padding: .62rem .95rem;
+  border: 1px solid #9da7b1;
+  border-radius: 8px;
+  background: #fff;
+  color: #20262d;
+  font-weight: 650;
+  opacity: 1;
+}
+
+.desktop-welcome .publishing-preset-row .button:hover,
+.desktop-welcome .review-card__actions .button:hover,
+.desktop-welcome .desktop-publish-online__actions .button:hover,
+.desktop-welcome .desktop-publish-card .button:hover {
+  border-color: #4f5964;
+  background: #f0f2f4;
+  color: #11161b;
+}
+
+.desktop-welcome .publishing-preset-row .button.button--primary,
+.desktop-welcome .review-card__actions .button.button--primary,
+.desktop-welcome .desktop-publish-online__actions .button.button--primary,
+.desktop-welcome .desktop-publish-card .button.button--primary {
+  border-color: #20262d;
+  background: #20262d;
+  color: #fff;
+}
+
+.desktop-welcome .publishing-modules-card__item {
+  border-color: #d4d9de;
+  background: #fbfcfd;
+}
+
+.desktop-welcome .publishing-modules-card__item small {
+  color: #5c6670;
+  opacity: 1;
+}
+
+.desktop-welcome__footnote,
+.desktop-publish-online__actions {
+  max-width: 1080px;
+  margin: 1rem auto;
+  color: #59636d;
+}
+
+.desktop-publish-grid {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.desktop-publish-card {
+  border: 1px solid #d4d9de;
+  border-radius: 12px;
+  padding: 1.35rem;
+  background: #fff;
+  color: #2b333b;
+  box-shadow: 0 5px 20px rgba(21, 25, 30, .04);
+}
+
+.desktop-publish-card--recommended {
+  border-color: #77828d;
+  box-shadow: 0 0 0 1px #77828d, 0 6px 22px rgba(21, 25, 30, .05);
+}
+
+.desktop-publish-card__tag {
+  display: inline-block;
+  margin-bottom: .5rem;
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  font-weight: 750;
+  color: #5b6570;
+}
+
+.desktop-publish-card h2 {
+  margin: .25rem 0 .6rem;
+  font-family: inherit;
+  color: #171c21;
+}
+
+.desktop-publish-card li {
+  margin: .45rem 0;
+}
+
+.desktop-publish-details {
+  margin-top: .5rem;
+  padding-top: .75rem;
+  border-top: 1px solid #e0e4e8;
+}
+
+.desktop-publish-details summary {
+  cursor: pointer;
+  font-weight: 650;
+  color: #29313a;
+}
+
+.desktop-publish-details p {
+  line-height: 1.55;
+  color: #59636d;
+}
+
+.desktop-publish-online__actions {
+  display: flex;
+  gap: .75rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 760px) {
+  .desktop-welcome__steps,
+  .desktop-publish-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .desktop-welcome {
+    padding: 1.25rem;
+  }
+}

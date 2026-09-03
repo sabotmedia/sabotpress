@@ -1,8 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, HashRouter } from 'react-router-dom'
 import App from './App'
 import { PublicAccessibilityGate } from './components/PublicAccessibilityGate'
+import { installBrowserLocalApi } from './lib/browserLocalApi'
+import { isBrowserLocalRuntime } from './lib/runtime'
+import { registerSabotPressServiceWorker } from './lib/pwaRuntime'
 import './styles.css'
 import './public-mobile.css'
 import './public-admin-toolbar-fix.css'
@@ -56,15 +59,11 @@ import './instagram-connect.css'
 import './contact-secure-form.css'
 import './admin-editor-sticky-toolbar.css'
 import './public-accessibility.css'
+import './browser-local.css'
 /* Authoritative AudioLab workspace layers. */
 import './audio-lab-audacity-layout.css'
 import './audio-lab-studio-v4.css'
-/* A cold Studio popup first requests /?audiolab-studio=1. This module rewrites
-   that guaranteed root document to the real protected AudioLab route before
-   every route-aware AudioLab runtime below evaluates. */
 import './audioLabStandalone.js'
-/* Own audio-file change events before the legacy React importer so source files
-   are preserved first and unsupported decodes produce visible feedback. */
 import './audioLabImportReliability.js'
 import './audioLabKeyboardShortcuts.js'
 import './audioLabTaskPages.js'
@@ -84,23 +83,30 @@ import './audioLabDirectManipulation.js'
 import './audioLabAudacityParity.js'
 import './audioLabFliteVoice.js'
 import './audioLabWorkspaceV2.js'
-/* Final AudioLab layer: menus, visible tracks, standard Audacity spatial hierarchy. */
 import './audio-lab-audacity-v5.css'
 import './audio-lab-audacity-tools.css'
 import './audio-lab-dialog-track-focus.css'
 import './audio-lab-standalone.css'
 import './audioLabAudacityMenu.js'
 import './audioLabAudacityQuickTools.js'
-/* React Router uses pushState, which does not emit popstate. This bridge makes
-   all route-aware AudioLab enhancements initialize when the page is entered
-   through normal SPA admin navigation instead of requiring a hard refresh. */
 import './audioLabSpaRuntimeGuard.js'
+
+const browserLocal = isBrowserLocalRuntime()
+installBrowserLocalApi()
+registerSabotPressServiceWorker()
+
+if (browserLocal) {
+  document.documentElement.dataset.sabotRuntime = 'browser-local'
+  if (!window.location.hash) window.location.hash = '#/welcome'
+}
+
+const Router = browserLocal ? HashRouter : BrowserRouter
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <Router>
       <App />
       <PublicAccessibilityGate />
-    </BrowserRouter>
+    </Router>
   </React.StrictMode>,
 )

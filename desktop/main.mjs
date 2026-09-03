@@ -6,6 +6,7 @@ import { startLocalSabotPress } from './local-server.mjs'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 let runtime = null
 let mainWindow = null
+let backupTimer = null
 
 function appRoot() {
   return app.isPackaged ? app.getAppPath() : path.resolve(__dirname, '..')
@@ -52,10 +53,10 @@ function buildMenu() {
     {
       label: 'Help',
       submenu: [
-        { label: 'Getting started / install help', click: () => openLocal('/help.html#install') },
-        { label: '$0 hosting and publishing', click: () => openLocal('/help.html#free-hosting') },
-        { label: 'Noblogs / WordPress migration', click: () => openLocal('/help.html#noblogs') },
-        { label: 'Backups', click: () => openLocal('/help.html#backups') },
+        { label: 'Getting started', click: () => openLocal('/help#getting-started') },
+        { label: '$0 hosting and publishing', click: () => openLocal('/help#free-hosting') },
+        { label: 'Noblogs / WordPress migration', click: () => openLocal('/help#noblogs') },
+        { label: 'Backups', click: () => openLocal('/help#backups') },
       ],
     },
   ])
@@ -91,19 +92,36 @@ function openPublishOnline() {
   openLocal('/publish-online')
 }
 
+async function checkAutomaticBackup() {
+  try {
+    await runtime?.runAutomaticBackupIfDue?.()
+  } catch (error) {
+    console.error('automatic backup failed', error)
+  }
+}
+
 ipcMain.handle('desktop:open-external', async (_event, url) => {
   if (!/^https?:\/\//i.test(url)) return false
   await shell.openExternal(url)
   return true
 })
 ipcMain.handle('desktop:open-data-folder', async () => shell.openPath(app.getPath('userData')))
+ipcMain.handle('desktop:open-backup-folder', async () => {
+  if (!runtime?.backupRoot) return ''
+  return shell.openPath(runtime.backupRoot)
+})
 ipcMain.handle('desktop:publish-online', async () => { openPublishOnline(); return true })
 ipcMain.handle('desktop:app-info', async () => ({ platform: process.platform, version: app.getVersion(), dataRoot: app.getPath('userData') }))
+ipcMain.handle('desktop:backup-settings', async () => runtime?.getBackupSettings?.() || null)
+ipcMain.handle('desktop:set-backup-settings', async (_event, settings) => runtime?.setBackupSettings?.(settings) || null)
+ipcMain.handle('desktop:backup-now', async () => runtime?.createBackup?.('manual') || null)
 
 app.whenReady().then(async () => {
   runtime = await startLocalSabotPress({ appRoot: appRoot(), dataRoot: app.getPath('userData') })
   Menu.setApplicationMenu(buildMenu())
   await createMainWindow()
+  setTimeout(checkAutomaticBackup, 5_000)
+  backupTimer = setInterval(checkAutomaticBackup, 60 * 60 * 1000)
   app.on('activate', async () => { if (BrowserWindow.getAllWindows().length === 0) await createMainWindow() })
 }).catch((error) => {
   console.error(error)
@@ -111,4 +129,7 @@ app.whenReady().then(async () => {
 })
 
 app.on('window-all-closed', () => { if (process.platform !== 'darwin') app.quit() })
-app.on('before-quit', () => { runtime?.close?.().catch?.(() => {}) })
+app.on('before-quit', () => {
+  if (backupTimer) clearInterval(backupTimer)
+  runtime?.close?.().catch?.(() => {})
+})

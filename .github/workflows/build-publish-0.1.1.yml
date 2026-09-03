@@ -1,0 +1,78 @@
+name: build and publish 0.1.1
+
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/build-publish-0.1.1.yml']
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            command: npm run desktop:dist:win -- --publish never
+          - os: macos-latest
+            command: npm run desktop:dist:mac -- --publish never
+          - os: ubuntu-latest
+            command: npm run desktop:dist:linux -- --publish never
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: ${{ matrix.command }}
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: desktop-${{ runner.os }}-0.1.1
+          path: |
+            release/*.exe
+            release/*.dmg
+            release/*.zip
+            release/*.AppImage
+            release/*.deb
+          if-no-files-found: error
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v0.1.1
+          name: SabotPress 0.1.1
+          body: |
+            Corrected desktop first-run release.
+
+            - Fresh desktop installs now open the SabotPress welcome/setup flow instead of dropping directly into the backend.
+            - Removed the leftover Sabot Media masthead and instance-specific public defaults.
+            - Added the guided Publish Online screen with a $0-first hosting path, existing-domain setup, community hosting, and own-server options.
+            - Updated desktop application icon and Windows packaging names.
+
+            ### Unsigned desktop builds
+            SabotPress currently distributes unsigned desktop builds so the project does not require paid code-signing services or publisher identity verification.
+
+            **Windows:** Microsoft Defender SmartScreen may show “Windows protected your PC” or identify SabotPress as an unrecognized app. This is expected for an unsigned independent build and does not by itself mean malware was detected. Click **More info**, then **Run anyway** if you downloaded the installer from this release page.
+
+            **macOS:** Gatekeeper may similarly block the first launch of an unsigned build. Use Finder’s **Open** action / Privacy & Security controls to approve the app after verifying you downloaded it from this repository.
+
+            GitHub records SHA-256 digests for release assets so downloads can be checked against the values shown on this release page.
+          files: |
+            artifacts/**/*.exe
+            artifacts/**/*.dmg
+            artifacts/**/*.zip
+            artifacts/**/*.AppImage
+            artifacts/**/*.deb

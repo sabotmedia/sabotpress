@@ -7,10 +7,6 @@ export function DesktopPublishOnlineCard() {
   const requested = searchParams.get('desktop-publish') === '1'
   if (!desktop) return null
 
-  async function open(url) {
-    try { await window.sabotDesktop.openExternal(url) } catch { window.open(url, '_blank', 'noopener,noreferrer') }
-  }
-
   return (
     <section className={`wp-meta-box desktop-publish-card${requested ? ' is-highlighted' : ''}`}>
       <div className="wp-screen-header">
@@ -25,7 +21,7 @@ export function DesktopPublishOnlineCard() {
         <article>
           <strong>$0 public hosting</strong>
           <p>Use a free hosting tier and its provided address. SabotPress currently documents Cloudflare Pages as the supported no-cost production route. You can add your own domain later.</p>
-          <div className="review-card__actions"><button type="button" className="button button--primary" onClick={() => open('https://github.com/sabotmedia/sabotpress/blob/main/docs/PUBLISH_ONLINE.md')}>Free setup instructions</button></div>
+          <div className="review-card__actions"><a className="button button--primary" href="/help.html#free-hosting">Free setup instructions</a></div>
         </article>
         <article>
           <strong>I already own a domain</strong>
@@ -35,12 +31,12 @@ export function DesktopPublishOnlineCard() {
         <article>
           <strong>Community or collective host</strong>
           <p>A compatible host can run SabotPress for you. This is the closest model to Noblogs: somebody else handles the server while you just publish.</p>
-          <div className="review-card__actions"><button type="button" className="button" onClick={() => open('https://github.com/sabotmedia/sabotpress/blob/main/docs/PUBLISH_ONLINE.md#community-hosting')}>What to ask a host</button></div>
+          <div className="review-card__actions"><a className="button" href="/help.html#community-hosting">What to ask a host</a></div>
         </article>
         <article>
           <strong>My own server</strong>
           <p>Use Docker/VPS deployment when you actually want to manage infrastructure. This is an advanced route, not homework for everybody else.</p>
-          <div className="review-card__actions"><button type="button" className="button" onClick={() => open('https://github.com/sabotmedia/sabotpress/blob/main/docs/INSTALL.md')}>Server install guide</button></div>
+          <div className="review-card__actions"><a className="button" href="/help.html#server">Server install guide</a></div>
         </article>
       </div>
 

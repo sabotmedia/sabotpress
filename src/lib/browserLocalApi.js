@@ -15,16 +15,7 @@ const DEFAULT_SETUP = {
   identity: { name: 'SabotPress', description: '', logoUrl: '', primaryEditor: '' },
 }
 
-const DEFAULT_PUBLIC_CONFIG = {
-  siteTitle: 'SabotPress',
-  siteDescription: '',
-  footerTagline: '',
-  about: '',
-  contact: '',
-  submit: '',
-  support: '',
-  security: '',
-}
+const DEFAULT_PUBLIC_CONFIG = { text: {}, styles: {}, blocks: {} }
 
 let installed = false
 let originalFetch = null

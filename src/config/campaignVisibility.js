@@ -1,3 +1,2 @@
-// Keep the A/I hub reachable by direct URL while its public launch links are paused.
-// Set this to true when the campaign is ready to be unveiled.
-export const SHOW_AI_CAMPAIGN_LINKS = false
+// Optional direct link to one featured campaign. Generic campaign listings remain available separately.
+export const SHOW_FEATURED_CAMPAIGN_LINKS = false

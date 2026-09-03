@@ -159,7 +159,7 @@ function RouteMeta({ pieces = [] }) {
       '/campaigns/example-campaign': ['Example Campaign', 'Example campaign hub. Replace or remove this sample campaign in site settings.'],
       '/campaigns/example-campaign/coverage': ['Campaign Coverage', 'Search reporting, analysis, sources, and updates connected to this campaign.'],
       '/feeds': ['Feeds', 'Subscribe to SabotPress feeds for the whole archive, formats, projects, collections, and author labels.'],
-      '/aberdeen-local-1312-gallery': ['Gallery', 'Browse the publication image archive.'],
+      '/gallery': ['Gallery', 'Browse the publication image archive.'],
       '/search': ['Search', 'Search the SabotPress archive.'],
       '/about': ['About', 'About this publication.'],
       '/contact': ['Contact', 'Contact this publication.'],
@@ -302,8 +302,8 @@ export default function App() {
               <Route path="/contribute/:slug" element={<CampaignContributorPage />} />
               <Route path="/campaigns/:slug/instagram-connect" element={<CampaignInstagramConnectPage />} />
               <Route path="/campaigns/:slug/benefit-kit" element={<CampaignBenefitKitPage />} />
-              <Route path={publicRoutes.aiCampaign} element={<CampaignPage />} />
-              <Route path={publicRoutes.aiCampaignCoverage} element={<CampaignCoverageArchivePage />} />
+              <Route path={publicRoutes.featuredCampaign} element={<CampaignPage />} />
+              <Route path={publicRoutes.featuredCampaignCoverage} element={<CampaignCoverageArchivePage />} />
               <Route path={publicRoutes.campaign} element={<CampaignRoute />} />
               <Route path={publicRoutes.feeds} element={<PublicFeedsPage />} />
               <Route path={publicRoutes.gallery} element={<GalleryArchivePage />} />

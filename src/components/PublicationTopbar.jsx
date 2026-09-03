@@ -3,7 +3,7 @@ import sabotPressMasthead from '../assets/sabotpress-masthead.svg'
 import { EditableLink } from './EditableLink'
 import { editableContentRegistry } from '../lib/editableContentRegistry'
 import { publicRoutes } from '../routing/routes'
-import { SHOW_AI_CAMPAIGN_LINKS } from '../config/campaignVisibility'
+import { SHOW_FEATURED_CAMPAIGN_LINKS } from '../config/campaignVisibility'
 import { useResolvedConfig } from '../lib/useResolvedConfig'
 import { getConfiguredBlock, getConfiguredText } from '../lib/publicConfig'
 
@@ -53,7 +53,7 @@ export function PublicationTopbar() {
                 labelField={item.labelField}
               />
             ))}
-            {SHOW_AI_CAMPAIGN_LINKS ? <EditableLink className="publication-topbar__campaign-link" labelField="nav.campaign.label" hrefField="nav.campaign.href" defaultLabel="Campaign" defaultHref={publicRoutes.aiCampaign} /> : null}
+            {SHOW_FEATURED_CAMPAIGN_LINKS ? <EditableLink className="publication-topbar__campaign-link" labelField="nav.campaign.label" hrefField="nav.campaign.href" defaultLabel="Campaign" defaultHref={publicRoutes.featuredCampaign} /> : null}
             <EditableLink className="publication-topbar__campaigns-link" labelField="nav.campaigns.label" hrefField="nav.campaigns.href" defaultLabel="Campaigns" defaultHref={publicRoutes.campaigns} />
           </nav>
         </div>

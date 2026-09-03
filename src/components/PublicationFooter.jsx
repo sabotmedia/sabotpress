@@ -4,7 +4,7 @@ import { EditableText } from './EditableText'
 import { editableContentRegistry } from '../lib/editableContentRegistry'
 import { useAdminAuth } from './AdminAuthContext'
 import { publicRoutes } from '../routing/routes'
-import { SHOW_AI_CAMPAIGN_LINKS } from '../config/campaignVisibility'
+import { SHOW_FEATURED_CAMPAIGN_LINKS } from '../config/campaignVisibility'
 import { getFeaturedPublicProjects } from '../lib/projectCatalog'
 
 export function PublicationFooter() {
@@ -54,8 +54,8 @@ export function PublicationFooter() {
                   />
                 ))
               )}
-              {section.id === 'site' && SHOW_AI_CAMPAIGN_LINKS ? <EditableLink className="publication-footer__campaign-link" labelField="footer.site.campaign.label" hrefField="footer.site.campaign.href" defaultLabel="A/I Campaign" defaultHref={publicRoutes.aiCampaign} /> : null}
-              {section.id === 'site' ? <EditableLink labelField="footer.site.gallery.label" hrefField="footer.site.gallery.href" defaultLabel="Gallery" defaultHref="/aberdeen-local-1312-gallery" /> : null}
+              {section.id === 'site' && SHOW_FEATURED_CAMPAIGN_LINKS ? <EditableLink className="publication-footer__campaign-link" labelField="footer.site.campaign.label" hrefField="footer.site.campaign.href" defaultLabel="Featured Campaign" defaultHref={publicRoutes.featuredCampaign} /> : null}
+              {section.id === 'site' ? <EditableLink labelField="footer.site.gallery.label" hrefField="footer.site.gallery.href" defaultLabel="Gallery" defaultHref="/gallery" /> : null}
             </nav>
           </div>
         ))}

@@ -31,8 +31,8 @@ export function PublicEditProvider({ children }) {
   const [backendMode, setBackendMode] = useState('unknown')
   const [selectedField, setSelectedField] = useState(null)
 
-  // D1 is the only published source of truth. A legacy browser cache must not
-  // become the initial rendered site configuration, even briefly.
+  // The active runtime authoritative store is the only published source of truth.
+  // Legacy browser caches never become public configuration implicitly.
   const [savedConfig, setSavedConfig] = useState(() => emptyConfig())
   const [draft, setDraft] = useState(() => {
     try {
@@ -192,7 +192,7 @@ export function PublicEditProvider({ children }) {
   }), [effectiveConfig])
 
   const hasDraftChanges = changedFields.length > 0
-  const isConfigReady = backendMode === 'd1' && loadState === 'loaded'
+  const isConfigReady = ['d1', 'browser-local'].includes(backendMode) && loadState === 'loaded'
 
   const startEditing = useCallback(() => {
     if (!isAdmin) return false

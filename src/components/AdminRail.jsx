@@ -99,6 +99,7 @@ export function AdminRail({ collapsed, onToggleCollapsed }) {
   const canCreate = hasCapability('content:write') || hasCapability('media:write') || hasCapability('publishing:write')
   const canManageSite = hasCapability('site:manage')
   const canManageUsers = hasCapability('users:manage')
+  const desktopLocal = typeof window !== 'undefined' && Boolean(window.sabotDesktop)
 
   useEffect(() => {
     if (!activeGroup) return
@@ -163,10 +164,12 @@ export function AdminRail({ collapsed, onToggleCollapsed }) {
           <button type="button" className="wp-admin-topbar__button wp-admin-topbar__command" aria-label="Open command palette" onClick={() => setPaletteOpenTick((tick) => tick + 1)}>⌘K</button>
         </div>
         <div className="wp-admin-topbar__right">
-          <AdminBarMenu label={session?.user?.displayName || session?.user?.email || session?.role || 'Account'} className="wp-admin-topbar__menu--right">
+          <AdminBarMenu label={desktopLocal ? 'Local owner' : (session?.user?.displayName || session?.user?.email || session?.role || 'Account')} className="wp-admin-topbar__menu--right">
             {canManageUsers ? <Link to={adminRoutes.users} className="wp-admin-topbar__dropdown-link">Users & Access</Link> : null}
-            <span className="wp-admin-topbar__dropdown-link" aria-disabled="true">Role: {session?.role || 'unknown'}</span>
-            <Link to="/logout" className="wp-admin-topbar__dropdown-link">Log Out</Link>
+            <span className="wp-admin-topbar__dropdown-link" aria-disabled="true">Role: {session?.role || 'owner'}</span>
+            {desktopLocal
+              ? <span className="wp-admin-topbar__dropdown-link" aria-disabled="true">Local desktop session stays signed in</span>
+              : <Link to="/logout" className="wp-admin-topbar__dropdown-link">Log Out</Link>}
           </AdminBarMenu>
         </div>
       </div>

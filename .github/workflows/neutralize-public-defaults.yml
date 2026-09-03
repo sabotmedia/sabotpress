@@ -25,7 +25,6 @@ jobs:
           python - <<'PY'
           from pathlib import Path
 
-          # Generic route names. Keep the example campaign feature, lose production-era naming.
           for filename in ['src/routing/routes.js', 'src/components/PublicationTopbar.jsx', 'src/App.jsx']:
               p = Path(filename)
               s = p.read_text()
@@ -39,23 +38,19 @@ jobs:
           p = Path('src/config/campaignVisibility.js')
           p.write_text("// Optional direct link to one featured campaign. Generic campaign listings remain available separately.\nexport const SHOW_FEATURED_CAMPAIGN_LINKS = false\n")
 
-          # Browser-local config uses the same public config shape as the server and desktop adapters.
           p = Path('src/lib/browserLocalApi.js')
           s = p.read_text()
           start = s.index('const DEFAULT_PUBLIC_CONFIG = {')
           end = s.index('\n}\n\nlet installed', start) + 2
-          replacement = "const DEFAULT_PUBLIC_CONFIG = { text: {}, styles: {}, blocks: {} }"
-          s = s[:start] + replacement + s[end:]
+          s = s[:start] + "const DEFAULT_PUBLIC_CONFIG = { text: {}, styles: {}, blocks: {} }" + s[end:]
           p.write_text(s)
 
-          # Browser-local IndexedDB is an explicit authoritative public-config store.
           p = Path('src/components/PublicEditContext.jsx')
           s = p.read_text()
           s = s.replace("const isConfigReady = backendMode === 'd1' && loadState === 'loaded'", "const isConfigReady = ['d1', 'browser-local'].includes(backendMode) && loadState === 'loaded'")
           s = s.replace('// D1 is the only published source of truth. A legacy browser cache must not\n  // become the initial rendered site configuration, even briefly.', '// The active runtime authoritative store is the only published source of truth.\n  // Legacy browser caches never become public configuration implicitly.')
           p.write_text(s)
 
-          # Defaults are examples for a blank publication, not a disguised copy of a source site.
           p = Path('src/content/publicSiteDefaults.js')
           s = p.read_text()
           replacements = {

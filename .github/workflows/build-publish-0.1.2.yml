@@ -1,0 +1,88 @@
+name: build and publish 0.1.2
+
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/build-publish-0.1.2.yml']
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            name: windows-x64
+            command: npm run desktop:dist:win -- --publish never
+          - os: macos-latest
+            name: macos-arm64
+            command: npm run desktop:dist:mac -- --arm64 --publish never
+          - os: macos-latest
+            name: macos-x64
+            command: npm run desktop:dist:mac -- --x64 --publish never
+          - os: ubuntu-latest
+            name: linux-x64
+            command: npm run desktop:dist:linux -- --x64 --publish never
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm install --package-lock-only --ignore-scripts
+      - run: npm ci
+      - run: npm test
+      - run: ${{ matrix.command }}
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: desktop-${{ matrix.name }}-0.1.2
+          path: |
+            release/*.exe
+            release/*.dmg
+            release/*.zip
+            release/*.AppImage
+            release/*.deb
+          if-no-files-found: error
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tag 0.1.2
+        run: |
+          git tag v0.1.2 "$GITHUB_SHA"
+          git push origin v0.1.2
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v0.1.2
+          name: SabotPress 0.1.2
+          body: |
+            Desktop onboarding cleanup from first real-world testing.
+
+            - Makes the first-run interface visually neutral instead of inheriting the Sabot Media look.
+            - Fixes low-contrast preset buttons.
+            - Keeps the $0 publishing explanation inside the app instead of dumping new users into GitHub documentation.
+            - Removes Log Out from the local desktop owner session so a new user cannot strand themselves at a login screen before accounts exist.
+
+            ### Unsigned desktop builds
+            SabotPress currently distributes unsigned desktop builds so the project does not require paid code-signing services or publisher identity verification.
+
+            **Windows:** SmartScreen may identify SabotPress as an unrecognized app. Click **More info**, then **Run anyway** after verifying the download came from this release page.
+
+            **macOS:** Gatekeeper may block first launch of an unsigned build. Use Finder's **Open** action or Privacy & Security controls after verifying the download came from this repository.
+          files: |
+            artifacts/**/*.exe
+            artifacts/**/*.dmg
+            artifacts/**/*.zip
+            artifacts/**/*.AppImage
+            artifacts/**/*.deb

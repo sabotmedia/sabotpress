@@ -52,8 +52,10 @@ function buildMenu() {
     {
       label: 'Help',
       submenu: [
-        { label: 'Install and hosting guide', click: () => shell.openExternal('https://github.com/sabotmedia/sabotpress/blob/main/docs/INSTALL.md') },
-        { label: 'Noblogs / WordPress migration', click: () => shell.openExternal('https://github.com/sabotmedia/sabotpress/blob/main/docs/NOBLOGS_MIGRATION.md') },
+        { label: 'Getting started / install help', click: () => openLocal('/help.html#install') },
+        { label: '$0 hosting and publishing', click: () => openLocal('/help.html#free-hosting') },
+        { label: 'Noblogs / WordPress migration', click: () => openLocal('/help.html#noblogs') },
+        { label: 'Backups', click: () => openLocal('/help.html#backups') },
       ],
     },
   ])

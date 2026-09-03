@@ -1,6 +1,7 @@
 import { downloadSnapshot, exportSystemSnapshot, summarizeSnapshot } from '../lib/systemBackup'
 import { useState } from 'react'
 import { AdminFrame } from './AdminRail'
+import { helpUrl } from '../lib/helpUrl'
 
 export function SystemBackupPage() {
   const [state, setState] = useState('idle')
@@ -42,7 +43,7 @@ export function SystemBackupPage() {
           <h2>Backup schedule</h2>
           <p className="description"><strong>SabotPress is not currently running automatic scheduled backups.</strong> This screen creates a backup only when you click the export button below. Browser-local users get periodic reminders to export a portable backup, and a server host may have its own infrastructure backup schedule.</p>
           <p className="description">For a backup you can move between browser, desktop and server editions, use <strong>Publish Online → Export complete backup</strong>. Automatic local snapshots are a separate feature and are not being silently created in the background.</p>
-          <div className="review-card__actions"><a className="button" href="/help.html#backups">Backup help</a></div>
+          <div className="review-card__actions"><a className="button" href={helpUrl('backups')}>Backup help</a></div>
         </section>
 
         <section className="wp-meta-box">

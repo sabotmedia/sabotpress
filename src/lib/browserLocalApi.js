@@ -210,9 +210,9 @@ async function saveMediaFile(file, form = new FormData(), role = '') {
   const now = new Date().toISOString()
   const asset = {
     id,
-    url: `/__local_media/${encodeURIComponent(id)}`,
-    publicUrl: `/__local_media/${encodeURIComponent(id)}`,
-    downloadUrl: `/__local_media/${encodeURIComponent(id)}?download=1`,
+    url: `./__local_media/${encodeURIComponent(id)}`,
+    publicUrl: `./__local_media/${encodeURIComponent(id)}`,
+    downloadUrl: `./__local_media/${encodeURIComponent(id)}?download=1`,
     filename,
     title: String(form.get('title') || filename.replace(/\.[^.]+$/, '') || 'Media'),
     mimeType,

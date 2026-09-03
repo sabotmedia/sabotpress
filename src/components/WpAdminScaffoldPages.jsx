@@ -8,6 +8,7 @@ import { DesktopPublishOnlineCard } from './DesktopPublishOnlineCard'
 import { getPieces } from '../lib/pieces'
 import { adminRoutes } from '../routing/routes'
 import { publicPageRegistry, withSiteEdit } from '../lib/publicPageRegistry'
+import { helpUrl } from '../lib/helpUrl'
 
 export { AdminUsersPage as UsersAdminPage } from './AdminUsersPage'
 
@@ -68,7 +69,7 @@ export function SettingsAdminPage() {
             <Link className="button" to={adminRoutes.backup}>Backups</Link>
             <Link className="button" to={adminRoutes.sites}>Domain setup</Link>
             <Link className="button" to={adminRoutes.siteHealth}>Advanced / Site Health</Link>
-            <a className="button" href="/help.html#install">Help</a>
+            <a className="button" href={helpUrl('install')}>Help</a>
           </div>
         </section>
       </main>
